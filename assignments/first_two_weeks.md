@@ -4,7 +4,7 @@ out the survey before class on Friday.
 # Assignments
 
 - (Required) By Friday at 2 pm, fill out this class survey:
-https://goo.gl/forms/XYZ [UNDER CONSTRUCTION].  This is required and will be
+https://goo.gl/forms/Bj2jEotkuEaqVpC23.  This is required and will be
 counted as part of problem set 1.
 
 - (Optional) If you are not comfortable with the basic UNIX usage we

@@ -1,6 +1,8 @@
 # stat243-fall-2018
 This repository holds all course materials for the fall 2018 offering of Statistics 243 at UC Berkeley.
 
+If you're not yet familiar with Git, go to the upper right of this page and click on 'Clone or download' and then 'Download ZIP'.
+
 ## Logistics
 
 Instructor office hours:
@@ -12,7 +14,7 @@ GSI: TBD
 
 The `howtos` directory has information on installing and/or getting access to the software you'll need for the course. In particular, in the first week of class you'll need to get access to the UNIX command line in some fashion. See `howtos/accessingUnixCommandline.txt` for some options on how to do this. 
 
-One way to get access to the software is to get an SCF account. This will either involve getting a paper form from Chris or requesting an account [here](http://statistics.berkeley.edu/computing/accounts).
+One way to get access to the software is to get an SCF account. This will either involve getting a paper form from Chris or requesting an account [here](http://statistics.berkeley.edu/computing/accounts) -- Chris will make this clear shortly.
 
 ## Submitting assignments
 

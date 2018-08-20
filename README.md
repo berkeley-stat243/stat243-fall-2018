@@ -7,8 +7,8 @@ If you're not yet familiar with Git, go to the upper right of this page and clic
 
 Instructor office hours:
 
-Chris: TBD
-GSI: TBD
+  - Chris: TBD
+  - Omid: TBD
 
 ## Software
 

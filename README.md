@@ -3,6 +3,8 @@ This repository holds all course materials for the fall 2018 offering of Statist
 
 If you're not yet familiar with Git, go to the upper right of this page and click on 'Clone or download' and then 'Download ZIP'.
 
+If you would like to audit the class, enroll as a concurrent enrollment student (i.e., for visiting students), or for some other reason are not enrolled but would like access to course announcements and discussions, please fill out [this survey](https://goo.gl/forms/Bj2jEotkuEaqVpC23).
+
 ## Logistics
 
 Instructor office hours:

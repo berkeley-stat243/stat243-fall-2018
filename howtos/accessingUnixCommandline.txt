@@ -26,6 +26,6 @@ If you have access to a Linux machine, you very likely know how to access a term
 
 Access via the Statistical Computing Facility
 
-1. With an SCF account (please get an account form from Chris), you can login to our various Linux servers and access a bash shell that way. Please see http://statistics.berkeley.edu/computing/access.
+1. With an SCF account (please see the main course page for info on how to get an account), you can login to our various Linux servers and access a bash shell that way. Please see http://statistics.berkeley.edu/computing/access.
 
 2. With an SCF account, you can also access a bash shell via the SCF Jupyterhub interface; please see the JupyterLogin.txt instructions. 

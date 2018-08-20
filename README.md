@@ -14,7 +14,10 @@ Instructor office hours:
 
 The `howtos` directory has information on installing and/or getting access to the software you'll need for the course. In particular, in the first week of class you'll need to get access to the UNIX command line in some fashion. See `howtos/accessingUnixCommandline.txt` for some options on how to do this. 
 
-One way to get access to the software is to get an SCF account. This will either involve getting a paper form from Chris or requesting an account [here](http://statistics.berkeley.edu/computing/accounts) -- Chris will make this clear shortly.
+One way to get access to the software is to get an SCF account as follows:
+
+  - If you are a Statistics graduate student, request an account [here](http://statistics.berkeley.edu/computing/accounts)
+  - If you are not affiliated with Statistics, get a paper form from Chris (if you are not a Statistics grad student).
 
 ## Submitting assignments
 

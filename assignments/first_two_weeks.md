@@ -12,7 +12,7 @@ saw in the first class, please work through the [UNIX basics tutorial here](http
 before 2 pm on Friday and answer the questions at the end. You don't need to turn anything
 in. If you'd like help, please come to the install/UNIX help session listed below. 
 
-- (Required) Please turn in, in class on Monday August 27 at 2:10 pm, answers on paper to the first
+- (Required) Please turn in, **in class on Monday August 27 at 2:10 pm**, answers **on paper** to the first
 10 problems at the end of this [tutorial on using the bash shell](https://github.com/berkeley-scf/tutorial-using-bash/archive/master.zip).
 This is not a formal problem set, so you don't need to worry about
 formatting - handwritten and just showing your code is fine. I just
@@ -36,16 +36,11 @@ by September 4.
 
 - (Optional) Friday August 24: Help session for installing software, accessing a UNIX command line and basic UNIX usage. 3-5 pm, location TBD.
 
-- (Required) Tuesday August 28: First section on using Git, setting up your Github repository for problem sets, and using R Markdown/knitr to generate dynamic documents. Please come only to the session you are registered for given space limits in the room. 
+- (Required) Tuesday August 28: First section on using Git, setting up your Github repository for problem sets, and using R Markdown/knitr to generate dynamic documents. Please come only to the section you are registered for given space limits in the room. 
 
-- (Optional) Week of August 27: R help session, date/time/location TBD.
-If you are not familiar with R at the level of
+- (Optional) Week of August 27: R help session, date/time/location TBD, for those not yet familiar with R at the level of
 modules 1-5 of the R bootcamp
-(https://github.com/berkeley-scf/r-bootcamp-2017/archive/master.zip), work through those
-modules and the breakout problems associated with the modules and
-(optionally) attend the special catch-up session on R to be held
-during the week. Some other resources for R are listed at the end of module 11
-of the bootcamp materials, so you could also use those resources. 
+(https://github.com/berkeley-scf/r-bootcamp-2017/archive/master.zip).
 
-- (Optional) August 23, August 30, September 6: [introductory LaTeX sessions](https://berkeley.libcal.com/calendar/workshops) run by the library. In particular you should know how to create equations in LaTeX (September 6). 
+- (Optional) August 23, August 30, September 6: [introductory LaTeX sessions](https://berkeley.libcal.com/calendar/workshops) run by the library. In particular I highly recommend (in particular if you are a Statistics graduate student) that you know how to create equations in LaTeX (covered in the September 6 session). 
 

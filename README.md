@@ -22,3 +22,7 @@ One way to get access to the software is to get an SCF account as follows:
 ## Submitting assignments
 
 The file `howtos/submitting-electronically.txt` has information on setting up a Github repository for the class and submitting your assignments by committing your solution to Github. We'll discuss this in section on Tuesday August 28.
+
+## Online discussion and questions.
+
+We will use the [course Google group](https://groups.google.com/a/calgroups.berkeley.edu/d/forum/stat-classes-2188-stat-243-all) for communication (announcements, questions, and discussion). You can post and view through the browser interface of you can email the group at stat-classes-2188-stat-243-all@calgroups.berkeley.edu. If you're enrolled in the class you should be a member of the group and be able to access it. If you're auditing or not yet enrolled and would like access, email Chris.

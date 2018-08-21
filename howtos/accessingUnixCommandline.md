@@ -1,10 +1,10 @@
 You have several options for UNIX command-line access. You'll need to choose one of these and get it working.
 
-Mac OS:
+### Mac OS:
 
 Open a Terminal by going to Applications -> Utilities -> Terminal
 
-Windows:
+### Windows:
 
 1.  You may be able to use the Ubuntu bash shell available in Windows.
 
@@ -18,14 +18,14 @@ Windows:
 
 2. There's an older program called cygwin that provides a UNIX command-line interface.
 
-   Note that when you install Git on Windows, you will get Git Bash. While you can use this to control Git, the functionality is limited so this will not be enough for general UNIX command-line access for the course.
+Note that when you install Git on Windows, you will get Git Bash. While you can use this to control Git, the functionality is limited so this will not be enough for general UNIX command-line access for the course.
 
-Linux:
+### Linux:
 
 If you have access to a Linux machine, you very likely know how to access a terminal.
 
-Access via the Statistical Computing Facility
+### Access via the Statistical Computing Facility
 
-1. With an SCF account (please see the main course page for info on how to get an account), you can login to our various Linux servers and access a bash shell that way. Please see http://statistics.berkeley.edu/computing/access.
+1. With an SCF account (please see the main course page for info on how to get an account), you can login to our various Linux servers and access a bash shell that way. Please see [http://statistics.berkeley.edu/computing/access](http://statistics.berkeley.edu/computing/access).
 
-2. With an SCF account, you can also access a bash shell via the SCF Jupyterhub interface; please see the JupyterLogin.txt instructions. 
+2. With an SCF account, you can also access a bash shell via the SCF Jupyterhub interface; please see the JupyterLogin.md instructions. 

@@ -1,3 +1,5 @@
+### Using Jupyter to access a Terminal or RStudio
+
 0) You need to be logged into AirBears2 or EduRoam wireless. You cannot use CalVisitor. To use AirBears2 based on your CalNet ID, see the instructions at the bottom before proceeding to the next step.
 
 1) Go to https://jupyter.stat.berkeley.edu
@@ -9,6 +11,7 @@
 4) Under 'Spawner Options' leave all the defaults and just click on 'Spawn'.
 
 5) Click on 'New' in the mid-upper right of the next page. At this point you have several options:
+
    - 'Terminal' will give you an interactive terminal (bash shell) session.
    - 'RStudio Session' will give you
    - 'Bash' will give you a Jupyter notebook where you enter bash code in the chunks of the notebook. 

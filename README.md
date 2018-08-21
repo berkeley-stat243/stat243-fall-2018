@@ -3,7 +3,9 @@ This repository holds all course materials for the fall 2018 offering of Statist
 
 If you're not yet familiar with Git, go to the upper right of this page and click on 'Clone or download' and then 'Download ZIP'.
 
-If you would like to audit the class, enroll as a concurrent enrollment student (i.e., for visiting students), or for some other reason are not enrolled but would like access to course announcements and discussions, please fill out [this survey](https://goo.gl/forms/Bj2jEotkuEaqVpC23).
+If you would like to audit the class, enroll as a UC Berkeley undergraduate, or enroll as a concurrent enrollment student (i.e., for visiting students), or for some other reason are not enrolled, please fill out [this survey](https://goo.gl/forms/Bj2jEotkuEaqVpC23) as soon as possible. All those enrolled should fill it out by Friday at 2 pm.
+
+Please see [https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/assignments/first_two_weeks.md] for information on what is due Friday and next week, and for various optional events Friday and next week.
 
 ## Logistics
 

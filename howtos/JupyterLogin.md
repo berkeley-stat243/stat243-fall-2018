@@ -1,4 +1,4 @@
-### Using Jupyter to access a Terminal or RStudio
+### Using Jupyter to access a Terminal or RStudio via your SCF account
 
 0) You need to be logged into AirBears2 or EduRoam wireless. You cannot use CalVisitor. To use AirBears2 based on your CalNet ID, see the instructions at the bottom before proceeding to the next step.
 

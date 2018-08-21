@@ -34,9 +34,9 @@ by September 4.
 
 # Events
 
-- (Optional) Friday August 24: Help session for installing software, accessing a UNIX command line and basic UNIX usage. 3-5 pm, location TBD.
+- (Optional) Friday August 24: Help session for installing software, accessing a UNIX command line, and basic UNIX usage. Time is likely to be 3-5 pm, location TBD in Evans Hall.
 
-- (Required) Tuesday August 28: First section on using Git, setting up your Github repository for problem sets, and using R Markdown/knitr to generate dynamic documents. Please come only to the section you are registered for given space limits in the room. 
+- (Required) Tuesday August 28: First section on using Git, setting up your Github repository for problem sets, and using R Markdown/knitr to generate dynamic documents. Please come only to the section you are registered for given space limits in the room, unless you have talked with Chris and have his permission. 
 
 - (Optional) Week of August 27: R help session, date/time/location TBD, for those not yet familiar with R at the level of
 modules 1-5 of the R bootcamp

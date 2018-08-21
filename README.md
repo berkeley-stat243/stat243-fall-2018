@@ -9,8 +9,8 @@ If you would like to audit the class, enroll as a concurrent enrollment student 
 
 Instructor office hours:
 
-  - Chris: TBD
-  - Omid: TBD
+  - Chris (Evans 495): TBD or drop by if more door is open or schedule an appointment.
+  - Omid (location TBD): TBD
 
 ## Software
 
@@ -27,4 +27,4 @@ The file `howtos/submitting-electronically.txt` has information on setting up a 
 
 ## Online discussion and questions.
 
-We will use the [course Google group](https://groups.google.com/a/calgroups.berkeley.edu/d/forum/stat-classes-2188-stat-243-all) for communication (announcements, questions, and discussion). You can post and view through the browser interface of you can email the group at stat-classes-2188-stat-243-all@calgroups.berkeley.edu. If you're enrolled in the class you should be a member of the group and be able to access it. If you're auditing or not yet enrolled and would like access, email Chris.
+We will use the [course Google group](https://groups.google.com/a/calgroups.berkeley.edu/d/forum/stat-classes-2188-stat-243-all) for communication (announcements, questions, and discussion). You can post and view through the browser interface or you can email the group at stat-classes-2188-stat-243-all@calgroups.berkeley.edu. If you're enrolled in the class you should be a member of the group and be able to access it. If you're auditing or not yet enrolled and would like access, email Chris.

@@ -1,0 +1,790 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage{times,graphics}
+%\renewcommand{\baselinestretch}{1.5}
+\usepackage[unicode=true]{hyperref}
+\hypersetup{unicode=true, pdfusetitle,
+bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true,}
+\end_preamble
+\use_default_options false
+\begin_modules
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize letterpaper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Unit 2: The bash shell and UNIX utilities
+\end_layout
+
+\begin_layout Standard
+Note that it can be difficult to distinguish what is shell-specific and
+ what is just part of UNIX.
+ Some of the material here is not bash-specific but general to UNIX.
+ 
+\end_layout
+
+\begin_layout Standard
+Any tutorials mentioned below are available at
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://statistics.berkeley.edu/computing/training/tutorials"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Reference: Newham and Rosenblatt, Learning the bash Shell, 2nd ed.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+setup, include=FALSE
+\end_layout
+
+\end_inset
+
+opts_chunk$set(engine='bash', eval=FALSE)
+\end_layout
+
+\begin_layout Plain Layout
+
+read_chunk('unit2-bash.sh')
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Shell basics
+\end_layout
+
+\begin_layout Standard
+The shell is the interface between you and the UNIX operating system.
+ When you are working in a terminal window (i.e., a window with the command
+ line interface), you're interacting with a shell.
+\end_layout
+
+\begin_layout Standard
+There are multiple shells (
+\emph on
+sh
+\emph default
+, 
+\emph on
+bash
+\emph default
+, 
+\emph on
+csh
+\emph default
+, 
+\emph on
+tcsh
+\emph default
+, 
+\emph on
+ksh
+\emph default
+).
+ We'll assume usage of 
+\emph on
+bash
+\emph default
+, as this is a very commonly-used shell in Linux, plus it's the default
+ for Mac OS X, the SCF machines, and the UC Berkeley campus cluster (Savio).
+\end_layout
+
+\begin_layout Standard
+UNIX shell commands are designed to each do a specific task really well
+ and really fast.
+ They are modular and composable, so you can build up complicated operations
+ by combining the commands.
+ These tools were designed decades ago, so using the shell might seem old-fashio
+ned, but the shell still lies at the hard of modern scientific computing.
+ By using the shell you can automate your work and make it reproducible.
+ 
+\end_layout
+
+\begin_layout Section
+Using the bash shell
+\end_layout
+
+\begin_layout Standard
+Please see the tutorial on using the bash shell.
+ For our purposes in this Unit, you should work through all of the material
+ EXCEPT as follows:
+\end_layout
+
+\begin_layout Itemize
+You can skip Section 1.4.1.
+\end_layout
+
+\begin_layout Itemize
+You can skip regular expressions (Section 3), but do look at Sections 3.6.1
+ and 3.6.2
+\end_layout
+
+\begin_layout Itemize
+You can skip 
+\emph on
+screen
+\emph default
+ (Section 4.3.4)
+\end_layout
+
+\begin_layout Itemize
+Feel free to skim over Section 4 for now; I'll ask you to read it more carefully
+ later.
+\end_layout
+
+\begin_layout Standard
+When we talk about string processing and regular expressions in R in Unit
+ 4, we'll come back to the material on regular expressions.
+\end_layout
+
+\begin_layout Standard
+When looking at Sections 3.6.1 and 3.6.2, note that you can use 
+\emph on
+grep
+\emph default
+ to look for and 
+\emph on
+sed
+\emph default
+ to replace simple strings in files without needing to know how to specify
+ patterns based on regular expressions.
+ So try to see how to do that without getting bogged down in the examples
+ in those sections that use the complicated regular expression syntax.
+ For example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+simple-grep-sed
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+bash shell examples
+\end_layout
+
+\begin_layout Standard
+Here we'll work through a few examples to start to give you a feel for using
+ the bash shell to manage your workflows and process data.
+\end_layout
+
+\begin_layout Standard
+First let's get the files from the 243 class in 2017 so we have a sufficient
+ body of files we can do interesting things with.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+git-clone
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Our first mission
+\series default
+ is some basic manipulation of a data file.
+ Suppose we want to get a sense for the number of weather stations in different
+ states using the 
+\emph on
+coop.txt
+\emph default
+ file.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now I could of course read the data in R at this stage (or I could read
+ the original dataset, though sometimes it's good to read just the fields
+ of interest to reduce memory use).
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Our second mission
+\series default
+: how can I count the number of fields in a CSV file programmatically?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+mission2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Trouble-shooting: How could the syntax above get the wrong answer? 
+\end_layout
+
+\begin_layout Standard
+Extension: We could write a function that can count the number of fields
+ in any file.
+\end_layout
+
+\begin_layout Standard
+Extension: How could I see if all of the lines have the same number of fields?
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Our third mission
+\series default
+: was 
+\emph on
+example.pdf
+\emph default
+ created in the five most recently modified R code files in the units directory?
+ Note that here grep is expecting a file name as input so we can just use
+ the pipe without the xargs.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+mission3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that 
+\family typewriter
+man tail
+\family default
+ indicates it can take input from a FILE or from 
+\emph on
+stdin
+\emph default
+.
+ Here it uses 
+\emph on
+stdin
+\emph default
+, so it is gives the last five lines of the output of 
+\emph on
+ls
+\emph default
+, not the last five lines of the files indicated in that output.
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+man grep
+\family default
+ also indicates it can take input from a FILE or from 
+\emph on
+stdin
+\emph default
+.
+ However, we want grep to operate on the content of the files indicated
+ in stdin.
+ So we use 
+\emph on
+xargs
+\emph default
+ to convert 
+\emph on
+stdin
+\emph default
+ to be recognized as arguments, which then are the FILE inputs to 
+\emph on
+grep
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Our fourth mission
+\series default
+: automate the process of determining what R packages are used in all of
+ the R code here and install those packages on a new machine.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+mission4
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+mission4a
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Our fifth mission
+\series default
+: suppose I've accidentally started a bunch of jobs (perhaps with a for
+ loop in bash!) and need to kill them.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+mission5
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+mission5a
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+bash shell challenges
+\end_layout
+
+\begin_layout Subsection
+First challenge
+\end_layout
+
+\begin_layout Standard
+Consider the file 
+\emph on
+unit2-bash.sh
+\emph default
+.
+ How would you write a shell command that returns "There are 2 occurrences
+ of the word 'bash' in this file." 
+\end_layout
+
+\begin_layout Standard
+Extra: make your code into a function that can operate on any file indicated
+ by the user and any word of interest.
+\end_layout
+
+\begin_layout Subsection
+Second challenge
+\end_layout
+
+\begin_layout Enumerate
+For Belgium, determine the minimum unemployment value (field #6) in 
+\emph on
+cpds.csv
+\emph default
+ in a programmatic way.
+\end_layout
+
+\begin_layout Enumerate
+Have what is printed out to the screen look like 
+\begin_inset Quotes eld
+\end_inset
+
+Belgium 6.2
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Now store the unique values of the countries in a variable, first stripping
+ out the quotation marks and removing the space in 
+\begin_inset Quotes eld
+\end_inset
+
+New Zealand
+\begin_inset Quotes erd
+\end_inset
+
+, which causes problems because of the space in its name.
+\end_layout
+
+\begin_layout Enumerate
+Figure out how to automate step 1 to do the calculation for all the countries
+ and print to the screen.
+ 
+\end_layout
+
+\begin_layout Enumerate
+How would you instead store the results in a new file?
+\end_layout
+
+\begin_layout Subsection
+Third challenge
+\end_layout
+
+\begin_layout Standard
+Consider the data in the 
+\emph on
+RTADataSub.csv
+\emph default
+ file.
+ This is a subset of data giving freeway travel times for segments of a
+ freeway in an Australian city.
+ The data are from a kaggle.com competition.
+ We want to try to understand the kinds of data in each field of the file.
+ The following would be particularly useful if the data were in many files
+ or the data were many gigabytes in size.
+ 
+\end_layout
+
+\begin_layout Standard
+First, take the fourth column.
+ Figure out the unique values in that column.
+ 
+\end_layout
+
+\begin_layout Standard
+Next, automate the process of determining if any of the values are non-numeric
+ so that you don't have to scan through all of the unique values looking
+ for non-numbers.
+ You'll need to look for the following regular expression pattern 
+\begin_inset Quotes eld
+\end_inset
+
+[^0-9]
+\begin_inset Quotes erd
+\end_inset
+
+, which is interpreted as NOT any of the numbers 0 through 9.
+\end_layout
+
+\begin_layout Standard
+Now, do it for all the fields, except the first one.
+ Have your code print out the result in a human-readable way understandable
+ by someone who didn't write the code.
+\end_layout
+
+\begin_layout Subsection
+Fourth challenge
+\end_layout
+
+\begin_layout Standard
+Here's an advanced one - you'll probably need to use sed, but the brief
+ examples of text substitution in the using bash tutorial should be sufficient
+ to solve the problem.
+\end_layout
+
+\begin_layout Standard
+Consider a CSV file that has rows that look like this: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+1,"America, United States of",45,96.1,"continental, coastal" 
+\end_layout
+
+\begin_layout Plain Layout
+
+2,"France",33,807.1,"continental, coastal"
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{verbatim}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+While R would be able to handle this using `read.table()`, using 
+\emph on
+cut
+\emph default
+ in UNIX won't work because of the commas embedded within the fields.
+ The challenge is to convert this file to one that we can use 
+\emph on
+cut
+\emph default
+ on, as follows.
+\end_layout
+
+\begin_layout Standard
+Figure out a way to make this into a new delimited file in which the delimiter
+ is not a comma.
+ At least one solution that will work for this particular two-line dataset
+ does not require you to use regular expressions, just simple replacement
+ of fixed patterns.
+\end_layout
+
+\end_body
+\end_document

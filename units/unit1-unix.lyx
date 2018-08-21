@@ -236,8 +236,23 @@ Version control
 \end_layout
 
 \begin_layout Standard
-We'll be using Git extensively to do version control.
- Git stores the files for a project in a 
+A very popular and powerful tool for version control is Git.
+ We'll be using Git extensively to do version control.
+ 
+\end_layout
+
+\begin_layout Standard
+More information is available in the tutorial on the basics of using Git.
+ You'll have a chance to work through the tutorial and practice with Git
+ in the first section/lab.
+ During the course, you'll make use of Git for submitting problem sets and
+ for doing the final project.
+ I recommend you practice using it more generally while preparing your problem
+ set solutions.
+\end_layout
+
+\begin_layout Standard
+Git stores the files for a project in a 
 \emph on
 repository
 \emph default
@@ -308,6 +323,47 @@ We'll see a lot more about Git in section, where you'll learn to set up
  versons of the repository.
  The section material will follow our tutorial on the basics of Git, Github,
  and version control.
+\end_layout
+
+\begin_layout Standard
+Some links to more resources:
+\end_layout
+
+\begin_layout Itemize
+Git for Scientists: A Tutorial: 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://nyuccl.org/pages/GitTutorial/"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Gitwash: workflow for scientific Python projects:
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://matthew-brett.github.io/pydagogue/gitwash_build.html"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Git branching demo: 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://pcottle.github.io/learnGitBranching/"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section

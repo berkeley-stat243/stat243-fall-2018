@@ -8,17 +8,17 @@ Windows:
 
 1.  You may be able to use the Ubuntu bash shell available in Windows.
 
-Your PC must be running a 64-bit version of Windows 10 Anniversary Update or later (build 1607+).
+    Your PC must be running a 64-bit version of Windows 10 Anniversary Update or later (build 1607+).
 
-Please see these links for more information:
+    Please see these links for more information:
 
-http://blog.revolutionanalytics.com/2017/12/r-in-the-windows-subsystem-for-linux.html
+    http://blog.revolutionanalytics.com/2017/12/r-in-the-windows-subsystem-for-linux.html
 
-https://msdn.microsoft.com/en-us/commandline/wsl/install_guide
+    https://msdn.microsoft.com/en-us/commandline/wsl/install_guide
 
 2. There's an older program called cygwin that provides a UNIX command-line interface.
 
-Note that when you install Git on Windows, you will get Git Bash. While you can use this to control Git, the functionality is limited so this will not be enough for general UNIX command-line access for the course.
+   Note that when you install Git on Windows, you will get Git Bash. While you can use this to control Git, the functionality is limited so this will not be enough for general UNIX command-line access for the course.
 
 Linux:
 

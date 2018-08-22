@@ -15,7 +15,7 @@ in. If you'd like help, please come to the install/UNIX help session listed belo
 - (Required) Please turn in, **in class on Monday August 27 at 2:10 pm**, answers **on paper** to the first
 10 problems at the end of this [tutorial on using the bash shell](https://github.com/berkeley-scf/tutorial-using-bash/archive/master.zip).
 This is not a formal problem set, so you don't need to worry about
-formatting - handwritten and just showing your code is fine. I just
+formatting nor do you need to put your answers in your Github class repository - handwritten or typed and just showing your code is fine. I just
 want to make sure you've worked through the tutorial. You don't need
 to look at all the sections in the tutorial. Please see
 units/unit2-bash.pdf in the course repository for a list of the

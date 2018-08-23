@@ -5,7 +5,7 @@ If you're not yet familiar with Git, go to the upper right of this page and clic
 
 If you would like to audit the class, enroll as a UC Berkeley undergraduate, or enroll as a concurrent enrollment student (i.e., for visiting students), or for some other reason are not enrolled, please fill out [this survey](https://goo.gl/forms/Bj2jEotkuEaqVpC23) as soon as possible. All those enrolled should fill it out by Friday at 2 pm.
 
-Please see [https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/assignments/first_two_weeks.md] for information on what is due Friday and next week, and for various optional events Friday and next week.
+Please see https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/assignments/first_two_weeks.md for information on what is due Friday and next week, and for various optional events Friday and next week.
 
 ## Logistics
 
@@ -16,7 +16,7 @@ Instructor office hours:
 
 ## Software
 
-The `howtos` directory has information on installing and/or getting access to the software you'll need for the course. In particular, in the first week of class you'll need to get access to the UNIX command line in some fashion. See `howtos/accessingUnixCommandline.txt` for some options on how to do this. 
+The `howtos` directory has information on installing and/or getting access to the software you'll need for the course. In particular, in the first week of class you'll need to get access to the UNIX command line in some fashion. See https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/howtos/accessingUnixCommandline.md` for some options on how to do this. 
 
 One way to get access to the software is to get an SCF account as follows:
 

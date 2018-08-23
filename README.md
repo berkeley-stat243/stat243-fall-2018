@@ -16,7 +16,7 @@ Instructor office hours:
 
 ## Software
 
-The `howtos` directory has information on installing and/or getting access to the software you'll need for the course. In particular, in the first week of class you'll need to get access to the UNIX command line in some fashion. See https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/howtos/accessingUnixCommandline.md` for some options on how to do this. 
+The `howtos` directory has information on installing and/or getting access to the software you'll need for the course. In particular, in the first week of class you'll need to get access to the UNIX command line in some fashion. See https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/howtos/accessingUnixCommandline.md for some options on how to do this. 
 
 One way to get access to the software is to get an SCF account as follows:
 
@@ -25,7 +25,7 @@ One way to get access to the software is to get an SCF account as follows:
 
 ## Submitting assignments
 
-The file `howtos/submitting-electronically.txt` has information on setting up a Github repository for the class and submitting your assignments by committing your solution to Github. We'll discuss this in section on Tuesday August 28.
+The file https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/howtos/submitting-electronically.txt [UNDER CONSTRUCTION] has information on setting up a Github repository for the class and submitting your assignments by committing your solution to Github. We'll discuss this in section on Tuesday August 28.
 
 ## Online discussion and questions.
 

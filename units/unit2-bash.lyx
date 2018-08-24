@@ -417,8 +417,7 @@ Our third mission
 example.pdf
 \emph default
  created in the five most recently modified R code files in the units directory?
- Note that here grep is expecting a file name as input so we can just use
- the pipe without the xargs.
+ 
 \end_layout
 
 \begin_layout Standard

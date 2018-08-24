@@ -34,7 +34,10 @@ by September 4.
 
 # Events
 
-- (Optional) Friday August 24: Help session for installing software, accessing a UNIX command line, and basic UNIX usage. Time is likely to be 3-5 pm, location TBD in Evans Hall.
+- (Optional) Friday August 24: Help session for installing software, accessing a UNIX command line, and basic UNIX usage. Time:
+
+  - 3-4 pm in Evans 444, focusing on problems with installation and accessing the UNIX command line
+  - 4-5 pm: Evans 342, focusing on general help with using the command line and the material in the UNIX basics tutorial
 
 - (Required) Tuesday August 28: First section on using Git, setting up your Github repository for problem sets, and using R Markdown/knitr to generate dynamic documents. Please come only to the section you are registered for given space limits in the room, unless you have talked with Chris and have his permission. 
 

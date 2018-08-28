@@ -18,8 +18,8 @@ Instructor office hours:
      - generally available immediately after class
      - feel free to schedule an appointment or drop by if my door is open
    - Omid (location TBD):
-     - Monday 3-4:30 pm (location TBD)
-     - Tuesday during unused section time, generally 3-4 pm, 5-5:30 pm
+     - Monday 3-4:30 pm (Evans 444)
+     - Tuesday during unused section time, generally 3-4 pm, 5-5:30 pm (Evans 330)
 
 ## Software
 

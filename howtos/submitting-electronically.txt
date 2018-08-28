@@ -1,5 +1,5 @@
 You will need to create a private repository on GitHub for submitting your
-problem sets (in addition to submitting a paper copy).
+problem sets (in addition to submitting them on bCourses).
 
 1. If you don't have a GitHub account, you will need to create one:
 https://github.com/join

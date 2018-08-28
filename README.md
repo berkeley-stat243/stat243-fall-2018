@@ -11,8 +11,15 @@ Please see https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/ass
 
 Instructor office hours:
 
-  - Chris (Evans 495): TBD or drop by if more door is open or schedule an appointment.
-  - Omid (location TBD): TBD
+  - Chris (Evans 495):
+     - Wednesday 3-4 pm
+     - Thursday 3:30-4:30 pm
+     - Friday 12:30-1:30 pm
+     - generally available immediately after class
+     - feel free to schedule an appointment or drop by if my door is open
+   - Omid (location TBD):
+     - Monday 3-4:30 pm (location TBD)
+     - Tuesday during unused section time, generally 3-4 pm, 5-5:30 pm
 
 ## Software
 

@@ -52,13 +52,18 @@ grep --no-filename "^library" *.R | sort | uniq | cut -d'#' -f1 | \
 grep -v "help =" libs.txt > tmp2.txt
 sed 's/;/\n/g' tmp2.txt | sed 's/ //g' |
     sed 's/library(//' | sed 's/)//g' > libs.txt
-## note: on a Mac, use 's/;/\\\n/g'   -- see https://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x
+## note: on a Mac, use $'s/;/\\\n/g'   -- see https://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x
 echo "There are $(wc -l libs.txt | cut -d' ' -f1) \
 unique packages we will install."
+## note: on Linux, wc-l puts the number as the first characters of the output
+## on a Mac, there may be a bunch of spaces preceding the number, so try this:
+## echo "There are $(wc -l libs.txt | tr -s ' ' | cut -d' ' -f2) \
+## unique packages we will install."
+
 
 ## @knitr mission4a               -
 Rscript -e "pkgs <- scan('libs.txt', what = 'character'); \
-install.packages(pkgs, repos = 'http:/cran.cnr.berkeley.edu')"
+install.packages(pkgs, repos = 'https://cran.cnr.berkeley.edu')"
 
 ## @knitr mission5               
 echo "Sys.sleep(1e5)" > job.R 

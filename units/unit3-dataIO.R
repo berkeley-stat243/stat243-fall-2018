@@ -268,13 +268,6 @@ head(data$loans)
 
 ### 3.4.1 HTTP requests
 
-## @knitr http-get
-URL <- "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population"
-library(RCurl)
-html <- getURLContent(URL)
-tbls <- readHTMLTable(html)
-
-
 ## @knitr http-byURL
 
 ## example URL:
@@ -293,7 +286,7 @@ url <- paste0(baseURL, filter, args1, args2)
 ## but it zips the file
 temp <- tempfile()  ## give name for a temporary file
 download.file(url, temp)
-dat <- read.csv(unzip(temp))
+dat <- read.csv(unzip(temp))  ## using a connection (see Section 2)
 
 head(dat)
                      

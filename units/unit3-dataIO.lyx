@@ -1503,7 +1503,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-XPath2
+XPath2, eval=FALSE
 \end_layout
 
 \end_inset
@@ -2965,7 +2965,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<unicode-example>>=
+<<unicode-example, eval=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout
@@ -2976,6 +2976,11 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+(I have turned off evaluation of that chunk as something strange is going
+ on when I create the PDF.)
 \end_layout
 
 \begin_layout Standard

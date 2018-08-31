@@ -192,7 +192,7 @@ head(listOfANodes)
 sapply(listOfANodes, xmlGetAttr, "href")[1:10]
 sapply(listOfANodes, xmlValue)[1:10]
 
-## @knitr using XPath2
+## @knitr XPath2
 URL <- "https://www.nytimes.com"
 headlines <- read_html(URL) %>% html_nodes("h2") %>% html_text()
 head(headlines)

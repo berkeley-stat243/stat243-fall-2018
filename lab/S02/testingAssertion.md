@@ -483,7 +483,13 @@ If all tests are okay, you should be able to see some output similar to the scre
 
 ![Basic R-GUI console](test-report.png)
 
-Problem 3 of PS1
-----------------
+Exercise
+--------
+
+### Write your own context file
+
+Write a test file for the `standardize()` function which contains at least 2 tests and each test contains 2 expectations. Create a folder `lab`, under which create `S02`, then push this test file into that directory.
+
+### Problem 3 of PS1
 
 What assertions and unit tests can you think of for this problem?

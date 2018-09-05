@@ -398,6 +398,8 @@ sprintf("The temperature in %s was %9.4f C.", city, temps[1])
 ## 0a is a newline (at least in Linux/Mac)
 ## 3a is ':'     
 x <- as.raw(c('0x39','0x0a','0x3a'))  ## i.e., "9\n:" in ascii
+x
+charToRaw('9\n:')      
 writeBin(x, 'tmp.txt')
 readLines('tmp.txt')
 system('ls -l tmp.txt', intern = TRUE)

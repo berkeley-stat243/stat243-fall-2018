@@ -132,6 +132,19 @@ Unit 3: Data input/output and webscraping
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+For some reason this is only compiling by outputing .tex and then using pdflatex
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 References: 
 \end_layout
 
@@ -2903,6 +2916,34 @@ sprintf()
 
 \begin_layout Section
 File and string encodings
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+difference between Unicode and UTF-8 (or other encodings): https://stackoverflow.
+com/questions/643694/what-is-the-difference-between-utf-8-and-unicode (and
+ see 
+\begin_inset Quotes eld
+\end_inset
+
+let me use an example
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+basically Unicode gives binary representation and UTF says how to put on
+ computer so that it's known where the character stops and starts.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

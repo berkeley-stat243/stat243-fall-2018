@@ -1,5 +1,5 @@
 You will need to create a private repository on GitHub for submitting your
-problem sets (in addition to submitting them on bCourses).
+problem sets (in addition to submitting the PDF or your solutions on bCourses).
 
 1. If you don't have a GitHub account, you will need to create one:
 https://github.com/join
@@ -16,7 +16,9 @@ please request one here: https://education.github.com/
 
 You are a `Student` and you want an `Individual account`.
 
-Once you have a GitHub account and the ability to create private GitHub
+(If you are unable to get the student discount on Github -- for some reason some students have been rejected by Github -- please instead set up an account at h ttps://github.berkeley.edu.)
+
+Once you have a GitHub account (at either github.com or github.berkeley.edu) and the ability to create private GitHub
 repos, you will need to complete the following steps:
 
 1. Create a private repository on GitHub called `stat243` (without the quotes).
@@ -24,12 +26,13 @@ You will need to use this exact name (no space, no capital letters, etc.).
 Select `Initialize this repository with a README` and choose `R` in the
 pull-down menu to add a `.gitignore` file.
 
-2. Add Chris (use his GitHub name: paciorek) and Omid (use his GitHub name:
-osolari) as collaborators so we can push and pull to your private GitHub
-repo. In the lower right-hand corner of your repository's main page, you should
-see a button labelled `Settings`. Click on the `Settings` button will take you
-to a page where you can edit various settings for your repository. Choose the
-`Collaborators` button on the `Settings` page.
+2. Add Chris (use his GitHub name: paciorek) and Omid (use his GitHub
+name: osolari on github.com and XYZ on github.berkeley.edu) as
+collaborators so we can push and pull to your private GitHub repo. In
+the lower right-hand corner of your repository's main page, you should
+see a button labelled `Settings`. Click on the `Settings` button will
+take you to a page where you can edit various settings for your
+repository. Choose the `Collaborators` button on the `Settings` page.
 
 3. Clone the repo to your home directory (I would clone it into a directory
 just for repositories (e.g., I use `~/repos`). In the top-level of your working
@@ -49,8 +52,6 @@ The variable names (name, SID, email, github_name) have to be exactly as specifi
 i.e. Only change the items in the quotation marks.  
 An example `info.json` file can be found in this directory.
 Your status should be one of `"enrolled"`, `"waitlist"`, or `"audit"`.
-When you're finished, add, commit, push, and then fill out this google form:
-https://goo.gl/forms/XXXX [under construction]
 
 If you need additional details, here are more detailed directions that Jarrod
 Millman provided to undergraduates for a different class.

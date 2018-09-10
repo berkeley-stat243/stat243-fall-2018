@@ -1,6 +1,6 @@
 ##################################################
 ### Demo code for Unit 4 of Stat243, "Programming"
-### Chris Paciorek, September 2017
+### Chris Paciorek, September 2018
 ##################################################
 
 #####################################################
@@ -530,6 +530,24 @@ long
 wide
                                            
 
+## @knitr dplyr-example
+
+library(dplyr)
+
+cpds <- read.csv(file.path('..', 'data', 'cpds.csv'),
+                 stringsAsFactors = FALSE)
+
+cpds2 <- cpds %>% group_by(country) %>% mutate(mean_unemp = mean(unemp))
+
+
+## @knitr dplyr-nse
+
+add_mean <- function(data, group_var, summarize_var) {
+    data %>% group_by(group_var) %>% mutate(mean_of_var = mean(summarize_var))
+}
+
+try(cpds2 <- add_mean(cpds, country, unemp))
+try(cpds2 <- add_mean(cpds, 'country', 'unemp'))
 
 ## @knitr
 

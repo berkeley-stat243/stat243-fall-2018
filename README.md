@@ -17,8 +17,8 @@ Instructor office hours:
      - Friday 12:30-1:30 pm
      - generally available immediately after class
      - feel free to schedule an appointment or drop by if my door is open
-   - Omid (location TBD):
-     - Monday 3-4:30 pm (Evans 444)
+   - Omid:
+     - Monday 4-5:30 pm (Evans 434)
      - Tuesday during unused section time, generally 3-4 pm, 5-5:30 pm (Evans 330)
 
 ## Software

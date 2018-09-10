@@ -221,23 +221,6 @@ use lobstr for memory use, copying etc?
 status open
 
 \begin_layout Plain Layout
-regex cheat sheet: https://www.rstudio.com/resources/cheatsheets/ 
-\end_layout
-
-\begin_layout Plain Layout
-see stringr one 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 Note that in this material, I often sneak an extra trick into my example
  code.
  Focus first on the key thing I'm illustrating and then you might absorb
@@ -3260,8 +3243,12 @@ Standard dataset manipulations
 
 \begin_layout Standard
 Base R provides a variety of functions for manipulating data frames, but
- now many researchers use add-on packages (many written by Hadley Wickham)
- to do these manipulations in a more elegant, often more efficient way.
+ now many researchers use add-on packages (many written by Hadley Wickham
+ as part of a group of packages called the 
+\emph on
+tidyverse
+\emph default
+) to do these manipulations in a more elegant, often more efficient way.
  Module 5 of the R bootcamp describes some of these new tools, but I'll
  summarize them here.
 \end_layout
@@ -3397,6 +3384,128 @@ unstack()
 \emph default
  functions
 \emph on
+.
+\end_layout
+
+\begin_layout Subsection
+Non-standard evaluation and the tidyverse
+\end_layout
+
+\begin_layout Standard
+Many tidyverse packages use non-standard evaluation to make it easier to
+ code.
+ For example in the following dplyr example, you can refer directly to 
+\emph on
+country
+\emph default
+ and 
+\emph on
+unemp
+\emph default
+, which are variables in the data frame, without using 
+\family typewriter
+data$country
+\family default
+ or 
+\family typewriter
+data$unemp
+\family default
+ and without using 
+\family typewriter
+
+\begin_inset Quotes eld
+\end_inset
+
+country
+\begin_inset Quotes erd
+\end_inset
+
+
+\family default
+ or 
+\family typewriter
+
+\begin_inset Quotes eld
+\end_inset
+
+unemp
+\begin_inset Quotes erd
+\end_inset
+
+
+\family default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+dplyr-example
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This 'magic' is done by capturing the code expression you write and evaluating
+ it in a special way in the context of the data frame.
+ I believe this uses R's environment class (discussed in Section 6), but
+ haven't looked more deeply.
+ 
+\end_layout
+
+\begin_layout Standard
+While this has benefits, this so-called non-standard evaluation makes it
+ harder to program functions in the usual way.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+dplyr-nse
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For more details on how to avoid this problem when writing functions that
+ involve tidyverse manipulations, see 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://dplyr.tidyverse.org/articles/programming.html"
+
+\end_inset
+
 .
 \end_layout
 

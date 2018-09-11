@@ -1,1 +1,0 @@
-Today I will be covering [Chris's tutorial on debugging](https://github.com/berkeley-scf/tutorial-R-debugging) along with some simple examples.

@@ -1,5 +1,5 @@
 # stat243-fall-2018
-This repository holds all course materials for the fall 2018 offering of Statistics 243 at UC Berkeley.
+This repository holds all course materials for the fall 2018 offering of Statistics 243 at UC Berkeley. Note that the various tutorials referred to in the class materials (e.g., the UNIX and bash shell tutorials, the dynamic documents tutorial, the Git tutorial, the string processing tutorial, etc., are available [here](http://statistics.berkeley.edu/computing/training/tutorials)
 
 If you're not yet familiar with Git, go to the upper right of this page and click on 'Clone or download' and then 'Download ZIP'.
 

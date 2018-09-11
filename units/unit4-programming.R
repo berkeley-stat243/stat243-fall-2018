@@ -431,84 +431,94 @@ showClass("data.frame")
 
 ## @knitr
                                            
-### 4.4.3 Reference classes
+### 4.4.3 R6 classes
 
-## @knitr refclass
-tsSimClass <- setRefClass("tsSimClass", 
-    fields = list(
-        n = "numeric", 
-        times = "numeric",
-        corMat = "matrix",
-        corParam = "numeric",
-        U = "matrix",
-        currentU = "logical"),
+## @knitr R6class
 
-    methods = list(
-        initialize = function(times = 1:10, corParam = 1, ...){
-            ## we seem to need default values for the copy() method
-            ## to function properly
-            require(fields)
-            times <<- times # field assignment requires using <<-
-            n <<- length(times)
-            corParam <<- corParam
-            currentU <<- FALSE
-            calcMats()
-            callSuper(...) # calls initializer of base class (envRefClass)
-        },
-        
-        calcMats = function(){
-            ## Python-style doc string
-            ' calculates correlation matrix and Cholesky factor ' 
-            lagMat <- rdist(times) # local variable
-            corMat <<- exp(-lagMat / corParam) # field assignment
-            U <<- chol(corMat) # field assignment
-            cat("Done updating correlation matrix and Cholesky factor\n")
-            currentU <<- TRUE
+library(R6)
+
+tsSimClass <- R6Class("tsSimClass",
+    ## class for holding time series simulators
+    public = list(
+        initialize = function(times, mean = 0, corParam = 1){
+            library(fields)
+            stopifnot(is.numeric(corParam), length(corParam) == 1)
+            stopifnot(is.numeric(times))
+            private$times <- times
+            private$n <- length(times)
+            private$mean <- mean
+            private$corParam <- corParam
+            private$currentU <- FALSE
+            private$calcMats()
         },
         
         changeTimes = function(newTimes){
-            times <<- newTimes
-            calcMats()
+            private$times <- newTimes
+            private$calcMats()
         },
         
-        show = function(){ # 'print' method
-            cat("Object of class 'tsSimClass' with ", n, " time points.\n",
-                sep = '')
+        getTimes = function(){
+            return(private$times)
+        },
+
+        print = function(){ # 'print' method
+            cat("R6 Object of class 'tsSimClass' with ",
+                private$n, " time points.\n", sep = '')
+            invisible(self)
         }
+    ),
+
+    ## private methods and functions not accessible externally
+    private = list(
+        calcMats = function() {
+            ## calculates correlation matrix and Cholesky factor
+            lagMat <- fields::rdist(private$times) # local variable
+            corMat <- exp(-lagMat^2 / private$corParam^2)
+            private$U <- chol(corMat) # square root matrix
+            cat("Done updating correlation matrix and Cholesky factor.\n")
+            private$currentU <- TRUE
+            invisible(self)
+        },
+        n = NULL, 
+        times = NULL,
+        mean = NULL,
+        corParam = NULL,
+        U = NULL,
+        currentU = FALSE
     )
-)
+)   
 
+## @knitr R6method
+tsSimClass$set("public", "simulate", function() {
+    if(!private$currentU)
+        private$calcMats()
+    ## analogous to mu+sigma*z for generating N(mu, sigma^2)
+    return(private$mean + crossprod(private$U, rnorm(private$n)))
+})
 
-## @knitr refMethod
-tsSimClass$methods(list(
-
-	simulate = function(){
-		  ' simulates random processes from the model ' 
-		   if(!currentU)
-		  	 calcMats()
-		   return(crossprod(U, rnorm(n)))
-	})
-)
-                                           
-
-## @knitr refUse, fig.width=4, eval=FALSE
-master <- tsSimClass$new(1:100, 10)
+## @knitr R6use, fig.width=7
+master <- tsSimClass$new(1:100, 2, 1)
 master
-tsSimClass$help('calcMats')
+set.seed(1)
 devs <- master$simulate()
-plot(master$times, devs, type = 'l')
+plot(master$getTimes(), devs, type = 'l', xlab = 'time',
+      ylab = 'process values')
+master <- tsSimClass$new(1:100, 2, 3)
+set.seed(1)
+devs <- master$simulate()
+lines(master$getTimes(), devs, col = 'red')
 mycopy <- master
-myDeepCopy <- master$copy()
-master$changeTimes(seq(0,1, length = 100))
-mycopy$times[1:5]
-myDeepCopy$times[1:5]
+myRealCopy <- master$clone()
+master$changeTimes(seq(0,1000, length = 100))
+mycopy$getTimes()[1:5]
+myRealCopy$getTimes()[1:5]
 
                                            
-## @knitr refAccess, eval=FALSE
-master$field('times')[1:5]
-## the next line is dangerous in this case, since
-## currentU will no longer be accurate
-master$field('times', 1:10) 
+## @knitr R6access, eval=FALSE
+
+## the next line would be dangerous if 'times' were public, since
+## currentU would no longer be accurate
+master$times <- 1:10 
 
 
                                            
@@ -537,13 +547,16 @@ library(dplyr)
 cpds <- read.csv(file.path('..', 'data', 'cpds.csv'),
                  stringsAsFactors = FALSE)
 
-cpds2 <- cpds %>% group_by(country) %>% mutate(mean_unemp = mean(unemp))
+cpds2 <- cpds %>% group_by(country) %>%
+                  mutate(mean_unemp = mean(unemp))
 
+head(cpds2)
 
 ## @knitr dplyr-nse
 
 add_mean <- function(data, group_var, summarize_var) {
-    data %>% group_by(group_var) %>% mutate(mean_of_var = mean(summarize_var))
+    data %>% group_by(group_var) %>%
+             mutate(mean_of_var = mean(summarize_var))
 }
 
 try(cpds2 <- add_mean(cpds, country, unemp))
@@ -921,7 +934,8 @@ mod <- lm(y ~ x)
 ### 6.9 Frames and the call stack
 
 ## @knitr frames, eval=FALSE
-## NOTE: run this chunk outside RStudio as it seems to inject additional frames
+## NOTE: run this chunk outside RStudio as it seems to
+##       inject additional frames
 sys.nframe()
 f <- function() {
 	cat('f: Frame number is ', sys.nframe(),

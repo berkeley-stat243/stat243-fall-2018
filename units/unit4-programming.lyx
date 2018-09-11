@@ -2256,7 +2256,7 @@ generic
 \begin_layout Standard
 In many cases there will be a default method (here, 
 \emph on
-mean.default()
+summary.default()
 \emph default
 ), so if no method is defined for the class, R uses the default.
  Sidenote: arguments to a generic method are passed along to the selected
@@ -3023,22 +3023,22 @@ named lifeform
 \end_layout
 
 \begin_layout Subsubsection
-Reference classes
+R6 classes
 \end_layout
 
 \begin_layout Standard
-Reference classes are a new construct in R.
- They are classes somewhat similar to S4 that allow us to access their fields
- by reference.
+R6 classes are a new construct in R.
+ They are classes somewhat similar to S4.
  Importantly, they behave like pointers (the fields in the objects are 'mutable'
 ).
  Let's work through an example where we set up the fields of the class (like
  S4 slots) and class methods, including a constructor.
- Note that one cannot add fields to an already existing class.
+ 
 \end_layout
 
 \begin_layout Standard
-Here's the initial definition of the class.
+Here's the initial definition of the class, with both public (user-facing)
+ and private (internal use only) methods and fields.
 \end_layout
 
 \begin_layout Standard
@@ -3051,7 +3051,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-refclass
+R6class
 \end_layout
 
 \end_inset
@@ -3065,7 +3065,8 @@ refclass
 \end_layout
 
 \begin_layout Standard
-We can add methods after defining the class.
+We can add methods after defining the class (but those methods wouldn't
+ be accessible to objects of the class that have already been created.
 \end_layout
 
 \begin_layout Standard
@@ -3078,7 +3079,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-refMethod
+R6method
 \end_layout
 
 \end_inset
@@ -3105,7 +3106,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-refUse, fig.width=4, eval=FALSE
+R6use, fig.width=7, fig.height=4, eval=TRUE
 \end_layout
 
 \end_inset
@@ -3126,7 +3127,7 @@ A few additional points:
 As we just saw, a copy of an object is just a pointer to the original object,
  unless we explicitly invoke the 
 \emph on
-copy()
+clone()
 \emph default
  method.
 \end_layout
@@ -3148,26 +3149,13 @@ tsSimClass
 \begin_layout Standard
 
 \family typewriter
-setRefClass("tsSimClass", contains = "simClass") 
-\end_layout
-
-\begin_layout Itemize
-We can call a method inherited from the superclass from within a method
- of the same name with 
-\emph on
-callSuper(...)
-\emph default
-, as we saw for our 
-\emph on
-initialize()
-\emph default
- method.
+R6Class("tsSimClass", inherit = "simClass", ...) 
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
-If we need to refer to a field or change a field we can do so without hard-codin
-g the field name as:
+Here we see that use of private fields shields them from modification by
+ users, which might cause problems:
 \end_layout
 
 \begin_layout Standard
@@ -3180,7 +3168,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-refAccess, eval=FALSE
+R6access, eval=TRUE
 \end_layout
 
 \end_inset
@@ -3209,32 +3197,37 @@ tsSimClass$help()
 \end_layout
 
 \begin_layout Itemize
-If you need to refer to the entire object within an object method, you refer
- to it as 
+If you need to refer to methods and fields you refer to the entire object
+ as either 
 \emph on
-.self
+self
+\emph default
+ or 
+\emph on
+private
 \emph default
 .
- E.g., with our 
-\emph on
-tsSimClass
-\emph default
- object, 
-\family typewriter
-.self$U
-\family default
- would refer to the Cholesky factor.
- This is sometimes necessary to distinguish a class field from an argument
- to a method.
 \end_layout
 
 \begin_layout Itemize
-There is a new, more efficient version of ReferenceClasses call R6 classes.
+There is a older, more complicated, slower variation on R6 classes called
+ ReferenceClasses.
  See the 
 \emph on
-R6
+help(ReferenceClasses)
 \emph default
- package.
+.
+\end_layout
+
+\begin_layout Standard
+More details on R6 classes can be found in the Advanced R book: 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://adv-r.hadley.nz/r6.html"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -3472,6 +3465,9 @@ This 'magic' is done by capturing the code expression you write and evaluating
 \begin_layout Standard
 While this has benefits, this so-called non-standard evaluation makes it
  harder to program functions in the usual way.
+ (For some reason the error messages from running the following chunk are
+ not being printed in the PDF, but you can see them by running the code
+ yourself.)
 \end_layout
 
 \begin_layout Standard
@@ -4259,6 +4255,524 @@ return-list
 \end_layout
 
 \begin_layout Subsection
+Frames and the call stack
+\end_layout
+
+\begin_layout Standard
+R keeps track of the call stack, which is the series of nested calls to
+ functions.
+ The stack operates like a stack of cafeteria trays - when a function is
+ called, it is added to the stack (pushed) and when it finishes, it is removed
+ (popped).
+ There are a bunch of functions that let us query what frames are on the
+ stack and access objects in particular frames of interest.
+ This gives us the ability to work with objects in the frame from which
+ a function was called.
+ 
+\end_layout
+
+\begin_layout Standard
+Some terminology: for our purposes we'll use the terms 
+\emph on
+frame
+\emph default
+ and 
+\emph on
+environment
+\emph default
+ somewhat interchangeably for the moment.
+ A 
+\emph on
+frame
+\emph default
+ or 
+\emph on
+environment
+\emph default
+ is a collection of named objects.
+ (Note that when we talk about variable scope in Section 6.8, we'll have
+ to be more careful with our terminology.)
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+sys.nframe()
+\emph default
+ returns the number of the current frame/environment and 
+\emph on
+sys.parent()
+\emph default
+ the number of the parent, while 
+\emph on
+parent.frame()
+\emph default
+ gives the name of the frame/environment of the parent (i.e., the calling)
+ frame.
+ 
+\emph on
+sys.frame()
+\emph default
+ gives the name of the frame/environment for a given frame number (for non-negat
+ive numbers).
+ For negative numbers, it goes back that many frames in the call stack and
+ returns the name of the frame/environment.
+ I won't print the results here because 
+\emph on
+knitr
+\emph default
+ messes up the frame counting somehow.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+frames, eval=FALSE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now let's look at some code that gets more information about the call stack
+ and the frames involved using 
+\emph on
+sys.status()
+\emph default
+, 
+\emph on
+sys.calls()
+\emph default
+, 
+\emph on
+sys.parents()
+\emph default
+ and 
+\emph on
+sys.frames()
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+frames2, eval=FALSE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Challenge: why did I not do 
+\family typewriter
+print(sys.status())
+\family default
+ directly?
+\end_layout
+
+\begin_layout Standard
+If you're interested in parsing a somewhat complicated example of frames
+ in action, Adler provides a user-defined timing function that evaluates
+ statements in the calling frame.
+\end_layout
+
+\begin_layout Subsection
+Operators
+\end_layout
+
+\begin_layout Standard
+Operators, such as '
+\family typewriter
+\emph on
++
+\family default
+\emph default
+', '
+\emph on
+[
+\emph default
+' are just functions, but their arguments can occur both before and after
+ the function call:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+operators, tidy=FALSE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In general, you can use back-ticks to refer to the operators as operators
+ instead of characters.
+ In some cases single or double quotes also work.
+ We can look at the code of an operator as follows using back-ticks to escape
+ out of the standard R parsing, e.g., 
+\family typewriter
+`%*%`.
+\end_layout
+
+\begin_layout Standard
+Finally, since an operator is just a function, you can use it as an argument
+ in various places:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+pass-operator
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+You can define your own 
+\emph on
+binary
+\emph default
+ operator (an operator taking two arguments) using a string inside 
+\emph on
+%
+\emph default
+ symbols.
+ Here's how we could do Python-style string addition:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+define-operator
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since operators are just functions, there are cases in which there are optional
+ arguments that we might not expect.
+ Here's how to pass a sometimes useful argument to the bracket operator
+ (in this case avoiding conversion from a matrix to a vector, which can
+ mess up subsequent code).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+operator-args
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Unexpected functions and replacement functions
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Unexpected-functions-and"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All code in R can be viewed as a function call.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The subset assignment operator is '[<-'.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+> animals <- c("cow", "chicken", "pig", "tuba")
+\end_layout
+
+\begin_layout Plain Layout
+> '[<-'(animals, 4, 
+\begin_inset Quotes eld
+\end_inset
+
+duck
+\begin_inset Quotes erd
+\end_inset
+
+)
+\begin_inset Newline newline
+\end_inset
+
+So animals[4] <- 
+\begin_inset Quotes eld
+\end_inset
+
+duck
+\begin_inset Quotes erd
+\end_inset
+
+ is actually parsed by R to run the code above.
+ We'll talk about expression parsing a bit later.
+ Note that the parser has to be clever enough to realize that the animals
+ argument comes before the operator syntax and the '4' argument is in the
+ middle of it.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+Challenge: How could you write R code that itself parses an R statement
+ such as animals[4] <- 
+\begin_inset Quotes eld
+\end_inset
+
+duck
+\begin_inset Quotes erd
+\end_inset
+
+?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+What do you think is the functional version of the following code? What
+ are the arguments?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+all-is-fun, eval = FALSE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assignments that involve functions or operators on the left-hand side (LHS)
+ are called 
+\emph on
+replacement expressions
+\emph default
+ or 
+\emph on
+replacement functions.
+ 
+\emph default
+These can be quite handy.
+ Here are a few examples:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+replace-funs, eval = FALSE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Replacement expressions are actually function calls.
+ The R interpreter calls the replacement function (which often creates a
+ new object that includes the replacement) and then assigns the result to
+ the name of the original object.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+replace-funs2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The old version of 
+\emph on
+mat
+\emph default
+ still exists until R's memory management cleans it up, but it's no longer
+ referred to by the symbol '
+\emph on
+mat
+\emph default
+'.
+ Occasionally this sort of thing might cause memory usage to increase (for
+ example it's possible if you're doing replacements on large objects within
+ a loop), but in general things should be fine.
+\end_layout
+
+\begin_layout Standard
+You can define your own replacement functions like this, with the requirements
+ that the last argument be named '
+\emph on
+value
+\emph default
+' and that the function return the entire object:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+create-replace
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Approaches to passing arguments to functions
 \begin_inset CommandInset label
 LatexCommand label
@@ -4299,7 +4813,7 @@ pass-by-reference
  object.
  However, passing by reference can sometimes be very helpful, and we'll
  see ways of passing by reference later in this Unit (and also note our
- discussion of Reference Classes).
+ discussion of R6 classes).
 \end_layout
 
 \begin_layout Standard
@@ -4783,372 +5297,6 @@ status open
 
 \begin_layout Plain Layout
 function(x, y = mean(rnorm(1e6)) print(x)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Operators
-\end_layout
-
-\begin_layout Standard
-Operators, such as '
-\family typewriter
-\emph on
-+
-\family default
-\emph default
-', '
-\emph on
-[
-\emph default
-' are just functions, but their arguments can occur both before and after
- the function call:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-operators, tidy=FALSE
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In general, you can use back-ticks to refer to the operators as operators
- instead of characters.
- In some cases single or double quotes also work.
- We can look at the code of an operator as follows using back-ticks to escape
- out of the standard R parsing, e.g., 
-\family typewriter
-`%*%`.
-\end_layout
-
-\begin_layout Standard
-Finally, since an operator is just a function, you can use it as an argument
- in various places:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-pass-operator
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-You can define your own 
-\emph on
-binary
-\emph default
- operator (an operator taking two arguments) using a string inside 
-\emph on
-%
-\emph default
- symbols.
- Here's how we could do Python-style string addition:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-define-operator
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Since operators are just functions, there are cases in which there are optional
- arguments that we might not expect.
- Here's how to pass a sometimes useful argument to the bracket operator
- (in this case avoiding conversion from a matrix to a vector, which can
- mess up subsequent code).
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-operator-args
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Unexpected functions and replacement functions
-\begin_inset CommandInset label
-LatexCommand label
-name "sub:Unexpected-functions-and"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-All code in R can be viewed as a function call.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-The subset assignment operator is '[<-'.
- 
-\end_layout
-
-\begin_layout Plain Layout
-> animals <- c("cow", "chicken", "pig", "tuba")
-\end_layout
-
-\begin_layout Plain Layout
-> '[<-'(animals, 4, 
-\begin_inset Quotes eld
-\end_inset
-
-duck
-\begin_inset Quotes erd
-\end_inset
-
-)
-\begin_inset Newline newline
-\end_inset
-
-So animals[4] <- 
-\begin_inset Quotes eld
-\end_inset
-
-duck
-\begin_inset Quotes erd
-\end_inset
-
- is actually parsed by R to run the code above.
- We'll talk about expression parsing a bit later.
- Note that the parser has to be clever enough to realize that the animals
- argument comes before the operator syntax and the '4' argument is in the
- middle of it.
- 
-\end_layout
-
-\begin_layout Plain Layout
-Challenge: How could you write R code that itself parses an R statement
- such as animals[4] <- 
-\begin_inset Quotes eld
-\end_inset
-
-duck
-\begin_inset Quotes erd
-\end_inset
-
-?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-What do you think is the functional version of the following code? What
- are the arguments?
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-all-is-fun, eval = FALSE
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Assignments that involve functions or operators on the left-hand side (LHS)
- are called 
-\emph on
-replacement expressions
-\emph default
- or 
-\emph on
-replacement functions.
- 
-\emph default
-These can be quite handy.
- Here are a few examples:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-replace-funs, eval = FALSE
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Replacement expressions are actually function calls.
- The R interpreter calls the replacement function (which often creates a
- new object that includes the replacement) and then assigns the result to
- the name of the original object.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-replace-funs2
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The old version of 
-\emph on
-mat
-\emph default
- still exists until R's memory management cleans it up, but it's no longer
- referred to by the symbol '
-\emph on
-mat
-\emph default
-'.
- Occasionally this sort of thing might cause memory usage to increase (for
- example it's possible if you're doing replacements on large objects within
- a loop), but in general things should be fine.
-\end_layout
-
-\begin_layout Standard
-You can define your own replacement functions like this, with the requirements
- that the last argument be named '
-\emph on
-value
-\emph default
-' and that the function return the entire object:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-create-replace
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -5672,139 +5820,6 @@ lm()
 \end_layout
 
 \begin_layout Subsection
-Frames and the call stack
-\end_layout
-
-\begin_layout Standard
-R keeps track of the call stack, which is the series of nested calls to
- functions.
- The stack operates like a stack of cafeteria trays - when a function is
- called, it is added to the stack (pushed) and when it finishes, it is removed
- (popped).
- There are a bunch of functions that let us query what frames are on the
- stack and access objects in particular frames of interest.
- This gives us the ability to work with objects in the environment(s) from
- which a function was called.
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-sys.nframe()
-\emph default
- returns the number of the current frame and 
-\emph on
-sys.parent()
-\emph default
- the number of the parent, while 
-\emph on
-parent.frame()
-\emph default
- gives the name of the environment of the parent frame.
- Careful: here, 
-\emph on
-parent
-\emph default
- refers to the parent in terms of the call stack and has nothing to do with
- enclosing environments.
- 
-\emph on
-sys.frame()
-\emph default
- gives the name of the environment for a given frame number (for non-negative
- numbers).
- For negative numbers, it goes back that many frames in the call stack and
- returns the name of the associated environment.
- I won't print the results here because 
-\emph on
-knitr
-\emph default
- messes up the frame counting somehow.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-frames, eval=FALSE
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Now let's look at some code that gets more information about the call stack
- and the frames involved using 
-\emph on
-sys.status()
-\emph default
-, 
-\emph on
-sys.calls()
-\emph default
-, 
-\emph on
-sys.parents()
-\emph default
- and 
-\emph on
-sys.frames()
-\emph default
-.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-frames2, eval=FALSE
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Challenge: why did I not do 
-\family typewriter
-print(sys.status())
-\family default
- directly?
-\end_layout
-
-\begin_layout Standard
-If you're interested in parsing a somewhat complicated example of frames
- in action, Adler provides a user-defined timing function that evaluates
- statements in the calling frame.
-\end_layout
-
-\begin_layout Subsection
 Alternatives to pass by value in R
 \end_layout
 
@@ -5817,7 +5832,7 @@ There are occasions we do not want to pass by value.
 \end_layout
 
 \begin_layout Enumerate
-We can use Reference Class (or R6) objects.
+We can use R6 (or Reference Class) objects.
  
 \end_layout
 
@@ -6064,8 +6079,10 @@ new.env
 \end_layout
 
 \begin_layout Standard
-Before the existence of Reference Classes, using an environment was one
- way to pass objects by reference, avoiding having to re-assign the output.
+Before the existence of R6 and Reference Classes, using an environment was
+ one way to pass objects by reference, avoiding having to re-assign the
+ output (and in fact R6 classes are just a wrapper around the use of environment
+s).
  Here's an example where we iteratively update a random walk.
 \end_layout
 

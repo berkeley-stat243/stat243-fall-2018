@@ -748,9 +748,36 @@ if
 \emph on
 for
 \emph default
- loops;
+ loops:
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+use 
+\emph on
+seq_len()
+\emph default
+ and 
+\emph on
+seq_along()
+\emph default
+ instead of 
+\family typewriter
+1:n
+\family default
+ in setting up for loops
+\end_layout
+
+\begin_layout Itemize
+use 
+\family typewriter
+if(isTRUE(condition))
+\family default
+ in if statements in case condition is NA (which would otherwise cause an
+ error)
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 provide reasonable default arguments;
 \end_layout

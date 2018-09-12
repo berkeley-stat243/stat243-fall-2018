@@ -3182,21 +3182,6 @@ R6access, eval=TRUE
 \end_layout
 
 \begin_layout Itemize
-Note that reference classes have Python style doc strings.
- We get help on a class with 
-\emph on
-class$help()
-\emph default
-, e.g.
- 
-\family typewriter
-tsSimClass$help()
-\family default
-.
- This prints out information, including the doc strings.
-\end_layout
-
-\begin_layout Itemize
 If you need to refer to methods and fields you refer to the entire object
  as either 
 \emph on

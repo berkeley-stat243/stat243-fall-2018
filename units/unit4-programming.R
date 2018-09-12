@@ -70,8 +70,8 @@ cat("First arg is: ", numericArg, "; second is: ",
 #####################################################
 
 ## @knitr library
-library(fields)
-library(help = fields)
+library(dplyr)
+library(help = dplyr)
 ## library()  # I don't want to run this on my SCF machine
 ##  because so many are installed
 
@@ -82,11 +82,11 @@ searchpaths()
 
 
 ## @knitr install, eval=FALSE
-install.packages('fields', lib = '~/Rlibs') # ~/Rlibs needs to exist!
+install.packages('dplyr', lib = '~/Rlibs') # ~/Rlibs needs to exist!
 
 
 ## @knitr install-source, eval=FALSE
-install.packages('fields.tar.gz', repos = NULL, type = 'source')
+install.packages('dplyr_VERSION.tar.gz', repos = NULL, type = 'source')
                                            
 
 ## @knitr namespace

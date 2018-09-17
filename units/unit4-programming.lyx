@@ -4947,7 +4947,7 @@ Why have we gone into this? In C, you can pass a pointer as an argument
 \begin_layout Standard
 
 \family typewriter
-int myCal(int* ptr){
+int myCal(int* data_ptr){
 \end_layout
 
 \begin_layout Standard
@@ -4964,7 +4964,7 @@ int myCal(int* ptr){
 \begin_inset space ~
 \end_inset
 
-*ptr = *ptr + *ptr;
+*data_ptr = *data_ptr + *data_ptr;
 \end_layout
 
 \begin_layout Standard
@@ -6036,7 +6036,8 @@ Creating and working in an environment
 
 \begin_layout Standard
 We've already talked extensively about the environments that R creates.
- Occasionally you may want to create an environment in which to store objects.
+ Occasionally you may want to create your own environment in which to store
+ objects.
  
 \end_layout
 
@@ -6068,7 +6069,8 @@ Before the existence of R6 and Reference Classes, using an environment was
  one way to pass objects by reference, avoiding having to re-assign the
  output (and in fact R6 classes are just a wrapper around the use of environment
 s).
- Here's an example where we iteratively update a random walk.
+ Here's an example where we iteratively update a random walk (but note that
+ if I were actually doing this I would use an R6 class and not an environment).
 \end_layout
 
 \begin_layout Standard

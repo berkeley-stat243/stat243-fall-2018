@@ -698,46 +698,50 @@ is.list(mod)
 
 ## @knitr
                                            
-### 6.4 Approaches to passing arguments to functions
+### 6.4 Frames and the call stack
 
-### 6.4.1 Pass by value vs. pass by reference
-
-## @knitr par, eval=FALSE
-f <- function(){
-	oldpar <- par()
-	par(cex = 2)
-	# body of code
-	par() <- oldpar
+## @knitr frames, eval=FALSE
+## NOTE: run this chunk outside RStudio as it seems to
+##       inject additional frames
+sys.nframe()
+f <- function() {
+	cat('f: Frame number is ', sys.nframe(),
+            '; parent frame number is ', sys.parent(), '.\n', sep = '')
+	cat('f: Frame (i.e., environment) is: ')
+	print(sys.frame(sys.nframe()))
+	cat('f: Parent is ')
+	print(parent.frame())
+	cat('f: Two frames up is ')
+	print(sys.frame(-2))
 }
-                                          
-
-
-## @knitr
-                                           
-### 6.4.2 Promises and lazy evaluation
-
-## @knitr lazy-eval, eval=FALSE
-f <- function(a, b = d) {
-	d <- log(a); 
-	return(a*b)
+f()
+f2 <- function() {
+	cat('f2: Frame (i.e., environment) is: ')
+	print(sys.frame(sys.nframe()))
+	cat('f2: Parent is ')
+	print(parent.frame())	
+	f()
 }
-f(7)
+f2() 
+
+
+## @knitr frames2, eval=FALSE
+## exploring functions that give us information the frames in the stack
+g <- function(y) {
+	gg <- function() {
+            ## this gives us the information from sys.calls(),
+            ##  sys.parents() and sys.frames() as one object
+		## print(sys.status()) 
+		tmp <- sys.status()
+            print(tmp)
+	}
+	if(y > 0) g(y-1) else gg()
+}
+g(3)
+
+
+
                                            
-
-## @knitr lazy-eval2
-f <- function(x) print("hi")
-system.time(mean(rnorm(1000000)))
-system.time(f(3))
-system.time(f(mean(rnorm(1000000)))) 
-
-
-## @knitr args-eval
-z <- 3
-x <- 100
-f <- function(x, y = x*3) {x+y}
-f(z*5)
-
-
 ## @knitr
                                            
 ### 6.5 Operators
@@ -754,19 +758,19 @@ a + b
 x <- 1:3; y <- c(100,200,300)
 outer(x, y, `+`)
 
-myList <- list(list(a = 1:5, b = "sdf"), list(a = 6:10, b = "wer"))
-myMat <- sapply(myList, `[[`, 1)
-## note that the index "1" is the additional argument to the [[ function
+myList <- list(list(a = 'new york', b = 1:5), list(a = 'california', b = 6:10))
+result <- lapply(myList, `[[`, 2)
+result
+## note that the index "2" is the additional argument to the [[ function
+myMat <- sapply(myList, `[[`, 2)
 myMat
-cbind(myList[[1]][[1]], myList[[2]][[1]])  ## equivalent but doesn't scale
-
+cbind(myList[[1]][[2]], myList[[2]][[2]])  ## equivalent but doesn't scale
 
 
 ## @knitr define-operator
 `%+%` <- function(a, b) paste0(a, b, collapse = '')
 "Hi " %+% "there"
                                            
-
 
 ## @knitr operator-args
 mat <- matrix(1:4, 2, 2)
@@ -810,7 +814,49 @@ firstName(yog) <- 'Yogisandra'
                                            
 ## @knitr
                                            
-### 6.7 Variable scope
+### 6.7 Approaches to passing arguments to functions
+
+### 6.7.1 Pass by value vs. pass by reference
+
+## @knitr par, eval=FALSE
+f <- function(){
+	oldpar <- par()
+	par(cex = 2)
+	# body of code
+	par() <- oldpar
+}
+                                          
+
+
+## @knitr
+                                           
+### 6.7.2 Promises and lazy evaluation
+
+## @knitr lazy-eval, eval=FALSE
+f <- function(a, b = d) {
+	d <- log(a); 
+	return(a*b)
+}
+f(7)
+                                           
+
+## @knitr lazy-eval2
+f <- function(x) print("hi")
+system.time(mean(rnorm(1000000)))
+system.time(f(3))
+system.time(f(mean(rnorm(1000000)))) 
+
+
+## @knitr args-eval
+z <- 3
+x <- 100
+f <- function(x, y = x*3) {x+y}
+f(z*5)
+
+
+## @knitr
+
+### 6.8 Variable scope
 
 ## @knitr scope-example
 f <- function(y) {
@@ -899,7 +945,7 @@ tmp()
                                            
 ## @knitr
                                            
-### 6.8 Environments and the search path
+### 6.9 Environments and the search path
 
 ## @knitr search
 search()
@@ -928,56 +974,10 @@ mod <- stats::lm(y ~ x) # an alternative
 rm(lm)
 mod <- lm(y ~ x)
 
-
-## @knitr
-                                           
-### 6.9 Frames and the call stack
-
-## @knitr frames, eval=FALSE
-## NOTE: run this chunk outside RStudio as it seems to
-##       inject additional frames
-sys.nframe()
-f <- function() {
-	cat('f: Frame number is ', sys.nframe(),
-            '; parent frame number is ', sys.parent(), '.\n', sep = '')
-	cat('f: Frame (i.e., environment) is: ')
-	print(sys.frame(sys.nframe()))
-	cat('f: Parent is ')
-	print(parent.frame())
-	cat('f: Two frames up is ')
-	print(sys.frame(-2))
-}
-f()
-f2 <- function() {
-	cat('f2: Frame (i.e., environment) is: ')
-	print(sys.frame(sys.nframe()))
-	cat('f2: Parent is ')
-	print(parent.frame())	
-	f()
-}
-f2() 
-
-
-## @knitr frames2, eval=FALSE
-## exploring functions that give us information the frames in the stack
-g <- function(y) {
-	gg <- function() {
-            ## this gives us the information from sys.calls(),
-            ##  sys.parents() and sys.frames() as one object
-		## print(sys.status()) 
-		tmp <- sys.status()
-            print(tmp)
-	}
-	if(y > 0) g(y-1) else gg()
-}
-g(3)
-
-
-
-                                           
 ## @knitr
                                            
 ### 6.10 Alternatives to pass by value in R
+
 ## @knitr closures
 x <- rnorm(10)
 f <- function(input){

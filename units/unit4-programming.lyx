@@ -168,46 +168,6 @@ serialize expands it out...
 status open
 
 \begin_layout Plain Layout
-see 'The Pragmatic Programmer' by Hunt & Thomas 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-incorporate info from Efficient R Programming by Michel Lang into class
- or my tutorial 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-use R6 instead of RefClasses? 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 use lobstr for memory use, copying etc? 
 \end_layout
 
@@ -4947,7 +4907,7 @@ Why have we gone into this? In C, you can pass a pointer as an argument
 \begin_layout Standard
 
 \family typewriter
-int myCal(int* data_ptr){
+int myCal(int* ptr){
 \end_layout
 
 \begin_layout Standard
@@ -4964,7 +4924,7 @@ int myCal(int* data_ptr){
 \begin_inset space ~
 \end_inset
 
-*data_ptr = *data_ptr + *data_ptr;
+*ptr = *ptr + *ptr;
 \end_layout
 
 \begin_layout Standard

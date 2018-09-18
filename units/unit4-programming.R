@@ -1069,14 +1069,16 @@ evalq(pos <- pos + sample(c(-1, 1), 1), envir = myWalk)
 
 ## @knitr byte
 library(compiler); library(rbenchmark)
-f <- function(x){
-	for(i in 1:length(x)) x[i] <- x[i] + 1
-	return(x)
+f <- function(vals){
+    x <- as.numeric(NA)
+    length(x) <- length(vals)
+    for(i in seq_along(vals)) x[i] <- exp(vals[i])
+    return(x)
 }
 fc <- cmpfun(f)
 fc # notice the indication that the function is byte compiled.
 x <- rnorm(100000)
-benchmark(f(x), fc(x), x <- x + 1, replications = 5)
+benchmark(f(x), fc(x), y <- exp(x), replications = 5)
 
 ## @knitr
 

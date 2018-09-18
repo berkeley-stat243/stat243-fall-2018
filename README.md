@@ -1,11 +1,11 @@
 # stat243-fall-2018
-This repository holds all course materials for the fall 2018 offering of Statistics 243 at UC Berkeley. Note that the various tutorials referred to in the class materials (e.g., the UNIX and bash shell tutorials, the dynamic documents tutorial, the Git tutorial, the string processing tutorial, etc., are available [here](http://statistics.berkeley.edu/computing/training/tutorials)
+This repository holds all course materials for the fall 2018 offering of Statistics 243 at UC Berkeley. Note that the various tutorials referred to in the class materials (e.g., the UNIX and bash shell tutorials, the dynamic documents tutorial, the Git tutorial, the string processing tutorial, etc., are available [here](http://statistics.berkeley.edu/computing/training/tutorials).
 
 If you're not yet familiar with Git, go to the upper right of this page and click on 'Clone or download' and then 'Download ZIP'.
 
-If you would like to audit the class, enroll as a UC Berkeley undergraduate, or enroll as a concurrent enrollment student (i.e., for visiting students), or for some other reason are not enrolled, please fill out [this survey](https://goo.gl/forms/Bj2jEotkuEaqVpC23) as soon as possible. All those enrolled should fill it out by Friday at 2 pm.
+If you would like to audit the class, enroll as a UC Berkeley undergraduate, or enroll as a concurrent enrollment student (i.e., for visiting students), or for some other reason are not enrolled, please fill out [this survey](https://goo.gl/forms/Bj2jEotkuEaqVpC23) as soon as possible. All those enrolled should have filled it out by Friday at 2 pm.
 
-Please see https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/assignments/first_two_weeks.md for information on what is due Friday and next week, and for various optional events Friday and next week.
+Please see https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/assignments/first_two_weeks.md for information on what was due during the initial two weeks of class.
 
 ## Logistics
 
@@ -32,7 +32,7 @@ One way to get access to the software is to get an SCF account as follows:
 
 ## Submitting assignments
 
-The file https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/howtos/submitting-electronically.txt [UNDER CONSTRUCTION] has information on setting up a Github repository for the class and submitting your assignments by committing your solution to Github. We'll discuss this in section on Tuesday August 28.
+The file https://github.com/berkeley-stat243/stat243-fall-2018/blob/master/howtos/submitting-electronically.txt has information on setting up a Github repository for the class and submitting your assignments by committing your solution to Github. We discussed this in section on Tuesday August 28.
 
 ## Online discussion and questions.
 

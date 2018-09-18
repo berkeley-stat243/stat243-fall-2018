@@ -1227,6 +1227,17 @@ obj <- list(a = rnorm(5), b = list(d = "adfs"))
 address(x)  # from pryr
 address(obj$a)
 
+## @knitr sequences
+
+library(microbenchmark)
+
+n <- 1e6
+microbenchmark(tmp <- 1:n)
+object.size(tmp)  # incorrect as of R 3.5
+object_size(tmp)  # incorrect as of R 3.5
+mem_change(tmp2 <- 1:n)
+length(serialize(tmp, NULL)) # expands the object out
+
 
 ## @knitr
                                            

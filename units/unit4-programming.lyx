@@ -141,33 +141,6 @@ Unit 4: Programming concepts, illustrated with R
 status open
 
 \begin_layout Plain Layout
-in R-3.5.0, 1:n is not stored in memory as expanded vec but object.size() does
- calc what the full memory usage would be 
-\end_layout
-
-\begin_layout Plain Layout
-object.size and object_size fail here 
-\end_layout
-
-\begin_layout Plain Layout
-mem_used and mem_change work correctly 
-\end_layout
-
-\begin_layout Plain Layout
-serialize expands it out...
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 use lobstr for memory use, copying etc? 
 \end_layout
 
@@ -6384,6 +6357,11 @@ When R runs code such as just below, it actually creates a vector 1,2,....,n,
  (which can be computationally and memory intensive for large n) and then
  iterates over the values in the vector.
  pqR avoids this vector creation.
+ As discussed and illustrated in Section 8, 
+\series bold
+this improvement is incorporated into R 3.5.0 and later versions
+\series default
+.
 \end_layout
 
 \begin_deeper
@@ -6792,6 +6770,12 @@ where the denominator serves as a normalizing constant to ensure this is
 \begin_layout Standard
 
 \series bold
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\series bold
 Challenge 7
 \series default
 : Yet another problem from a student's PhD research.
@@ -6799,7 +6783,7 @@ Challenge 7
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Fact 1: DNA sequencing involves chopping up the long sequence of DNA on
  a chromosome into many short 
 \emph on
@@ -6809,14 +6793,14 @@ reads
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Fact 2: DNA is composed of interspersed chunks of DNA that code for proteins
  (exons) and chunks that do not code for proteins (introns).
  The introns are stripped out during creation of the protein.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 As part of a workflow, the student needed to determine, for a large number
  of exons, how many reads each exon overlapped with.
  The file 
@@ -6843,10 +6827,15 @@ reads
  
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 
 \series bold
-Challenge 8
+Challenge 7
 \series default
 : And yet another problem from a student's PhD research (this one from a
  discussion just a few weeks ago).
@@ -6895,7 +6884,11 @@ Fisher-Yates-Knuth-Durstenfeld shuffle algorithm: This involves considering
 \begin_layout Standard
 Here are implementations of the two algorithms.
  Can we speed up either of them without resorting to coding in a faster
- language?
+ language or directly using 
+\emph on
+sample()
+\emph default
+ (which calls out to a fast C function)?
 \end_layout
 
 \begin_layout Standard
@@ -6920,7 +6913,7 @@ status open
 \begin_layout Standard
 
 \series bold
-Challenge 9: 
+Challenge 8: 
 \series default
 Suppose we have a matrix in which each row is a vector of probabilities
  that add to one, and we want to generate a categorical sample based on
@@ -7385,6 +7378,71 @@ status open
 \begin_layout Plain Layout
 .Internal(inspect(x[1])) is presumably creating a 1-vec temporraily which
  is why it is not the same address as x itself
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Faster representations of sequences
+\end_layout
+
+\begin_layout Standard
+As mentioned above, as of R 3.5.0, 
+\family typewriter
+1:n
+\family default
+ is not stored in memory as a vector of length 
+\emph on
+n
+\emph default
+, but rather is represented by the first and last value in the sequence.
+ However, some of the functions we use to determine object size don't give
+ us the right answer in this case.
+ I haven't run this when generating this document as my current machine
+ is still using R 3.4.3.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+sequences, eval=FALSE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+object.size and object_size fail here 
+\end_layout
+
+\begin_layout Plain Layout
+mem_used and mem_change work correctly 
+\end_layout
+
+\begin_layout Plain Layout
+serialize expands it out...
+ 
 \end_layout
 
 \end_inset

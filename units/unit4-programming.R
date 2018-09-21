@@ -942,6 +942,16 @@ tmp <- function() {
   print(rnorm(1)) 
 }
 tmp()
+
+## @knitr findGlobals
+
+library(codetools)
+f <- function() {
+    y <- 3
+    print(x + y)
+}
+findGlobals(f)
+
                                            
 ## @knitr
                                            

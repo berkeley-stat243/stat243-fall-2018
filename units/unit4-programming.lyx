@@ -2597,12 +2597,17 @@ on, when you simply type '
 \emph on
 q
 \emph default
-' (no parentheses!)? 
+' (no parentheses!) instead of '
+\emph on
+quit()
+\emph default
+'? 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Hint: if you type 'q', what function is R going to use?
+Hint: if you type 'q', what function is R going to use? point of confusion
+ here that you define q but there is a q()
 \end_layout
 
 \end_inset
@@ -5538,6 +5543,46 @@ status open
 
 \end_layout
 
+\begin_layout Paragraph*
+Detecting non-local variables
+\end_layout
+
+\begin_layout Standard
+We can use 
+\emph on
+codetools::findGlobals
+\emph default
+ to detect non-local variables when we are programming.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+findGlobals
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Is that result what you would expect? What does it say about my statement
+ that using non-local variables is a bad idea?
+\end_layout
+
 \begin_layout Subsection
 Environments and the search path
 \end_layout
@@ -5825,13 +5870,17 @@ target "https://en.wikipedia.org/wiki/Closure_(computer_programming)"
 \end_inset
 
  nicely summarizes the idea, which is not an R-specific construct.
- This involves creating one or more functions within a function call and
+ This involves creating one (or more functions) within a function call and
  returning the function(s) as the output.
- When one executes the original function, the new functions are created
- and returned as a list and one can call the functions in that list.
- Those functions then can access objects in the enclosing environment (the
+ When one executes the original function, the new function(s) is created
+ and returned and one can then call that new function(s).
+ The new function then can access objects in the enclosing environment (the
  environment of the original function) and can use `<<-` to assign into
- the enclosing environment, to which all the functions have access.
+ the enclosing environment, to which the function (or the multiple functions)
+ have access.
+ The nice thing about this compared to using a global variable is that the
+ data in the closure is bound up with the function(s) and is protected from
+ being changed by the user of the closure.
  Chambers provides an example of this in Sec.
  5.4.
 \begin_inset Newline newline
@@ -6099,7 +6148,7 @@ What happens when an R function is evaluated? The user-provided function
  Any look-up of variables not found in the environment is done using R's
  lexical scoping rules to look in the series of enclosing environments.
  When the function finishes, the return value is passed back to the calling
- frame and the frame is taken off the stack.
+ frame and the function frame is taken off the stack.
  The environment is removed, unless the environment serves as the enclosing
  environment of another environment.
 \end_layout

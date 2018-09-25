@@ -1,0 +1,135 @@
+How rank which best practices most important? How decide what projects
+need careful reproducibility?
+
+I agree with the general suggestions regarding computational
+reproducibility and documentation. However, there is a gray area as to
+what volume or sophistication of code warrants the above
+features. When is it appropriate within a research group to begin
+version control, unit testing, etc.? If I am exploring data and/or
+testing out an idea, I am not necessarily in the mindset to have
+documentation or code that is ready for public viewing/use.
+
+Assuming that reproducible research is the main aim and the paper or
+the manuscript is the byproduct is a very heavy assumption. While the
+community in general may consider that ‘unethical’ etc, should the
+reputation of the scientist’s work suffer?
+
+How useful is test-driven development?
+
+I think the subsection on "Dependencies, Build Systems and Packaging"
+touches on one of the major challenges I've come across in my (brief)
+encounter with reproduceable research: that creating a research
+project that's reproducible for myself is much easier than making one
+reproducible for others.
+
+I believe replicability is far more important than reproducibility.
+
+ Also, from my personal experience, other people are just so much
+ better at spotting the mistakes that you wrote in your work.
+
+However, I really think I should use version control much more often
+because I the way I do my version control is to save my code into a
+new file every time I made changes. This is stupid. And sometimes I
+forgot to make a copy and would lost everything I have before.
+
+Several people commented on the importance of meaningful variable
+names.
+
+Once I needed to work on a coding project with another person, and
+initially we found it hard to share processes with each other and it
+was even tougher to merge two different lines of code together. We
+chose to physically sit together every time we worked on the
+project. However, as soon as we learned Git, each of us created a
+branch and worked separately and all we needed to do was to merge
+these branches once we were both done.
+
+I believe what is important it is to check what the input for a function _should_
+be, not what it shouldn't be.
+
+ Having worked on an economics research project last year with a group
+ of PhDs, I found it remarkable how dramatically their limited
+ programming skills and habits constrained their ability to conduct
+ analyses and research. I also found that they had been sharing code
+ through email and Dropbox as the paper mentioned - I urged the use of
+ Git thereafter but their was resistance due to unfamiliarity.
+
+ I think the hardest part of coding is writing consistent tests and
+ making sure individuals do not copy and paste code.
+
+First, it is important that the code should be easily understood by
+other people. I used to write very short variable names and no
+comments in order to save time typing the code, but later I found out
+that I cannot understand my own code after a few weeks. At the moment
+I wrote down the code, everything is clear to me, and I think the code
+is just one-time use. However, I actually need to show those code to
+the employers to demonstrate my class project. I then realized that
+the importance of distinctive and meaningful variable names, and also
+the helpfulness of the comments.
+
+But I’ve also experienced when I can’t fix a bug for hours if I try to
+do all in once, and the bug gets fixed within an hour if I take a rest
+and try doing it again later.
+
+Nevertheless, the thing that concerns me the most is the difficulty in
+actually mastering these reproducibility techniques. Unlike the
+standard operating procedures I would expect to learn in programming
+classes, these techniques seem very general.
+
+ Among the ten practices, I believe that the most useful one that I
+ might have ignored in the past is No.7- plan for mistakes. I used to
+ believe that as long as I write my code carefully enough, there shall
+ be no mistake.
+
+it is also about controlling the length of code so that it would not
+be too long to hold in human memory. Therefore, limiting length of
+code chunks and modularizing code is helpful when others are trying to
+understand and reproduce your code.
+
+What are the best practices (tips and tricks) for documenting complex
+steps required to reproduce an experiment? In my area of research
+(large-scale computations) some experiments can be very complex to
+setup, run and then process data.
+
+They mention the importance of keeping track on the files used and
+using version control to seamlessly improve reproductivity for a whole
+group of people, just like how modern scientific researchers keep a
+lab report to ensure everybody keeps updated with the changes to their
+lab experiment. This was one of the main problems I had during my
+employment at the IMF in DC where I had to report updated codes to a
+data project every morning. By the time I had 23 updates to a code
+file, I did not know which one was the most updated one and somehow
+got a different result from the first draft of the code.
+
+It feels to me like these principles aretuaght as canonical for
+computer scientists, but optional for statisticians and other people
+that use computers. It raises two questions for me: 1) Should a
+comprehensive comp sci class (e.g. CS61a) be required for any social
+science discipline that uses computers; and 2) What are implications
+for these principles on the base R vs Tidyverse debate. Base R feels
+very esoteric and out of line with some of these principles
+(especially creating code for humans), and I don’t feel like you can
+follow these problems perfectly while simultaneously advocating for
+base R.
+
+One reason given for a lack of scientific evidence in experiments is
+the impracticality of repeating certain expensive experiments from
+scratch, such as the CERN and Hubble Space Telescope. This leads to
+many difficult questions. For instance: Are we supposed to take the
+results of said experiments as valid without independent validation of
+the results?
+
+As an intern, I did a little bit of pair programming, and I really
+felt like the knowledge was transferred much more faster that way.
+
+The most enlightening part for the paper I read is that DRY Principle.
+
+From my own experience, the most difficult part of making a research
+project reproducible is data restriction. Sometimes the research was
+based on confidential data or survey results. It is usually impossible
+to share the data with other people. On the other hand, the
+researchers invest a lot in collecting these data and there are few
+incentives for them to share these data with external researchers.
+
+Other techniques I have been trying to use include, keeping a
+consistent naming style and paying attention to "DRY" - write
+functions when possible to reduce code clones.

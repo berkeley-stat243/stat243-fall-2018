@@ -881,25 +881,25 @@ x
 
                                            
 ## @knitr scope, eval=FALSE
-x <- 3
-f <- function() { 
-    f2 <- function() { print(x) }
-    f2()
-} 
-f() # what will happen?
-
-f <- function() {
-    f2 <- function() { print(x) }
-    x <- 7
-    f2()
-}
-f() # what will happen?
-
 f2 <- function() print(x)
 f <- function() {
     x <- 7
     f2()
 }
+f() # what will happen?
+
+f <- function() {
+    f2 <- function() { print(x) }
+    x <- 7
+    f2()
+}
+f() # what will happen?
+
+x <- 3
+f <- function() { 
+    f2 <- function() { print(x) }
+    f2()
+} 
 f() # what will happen?
 
                                            

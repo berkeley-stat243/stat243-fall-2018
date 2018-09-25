@@ -1,0 +1,937 @@
+While I find the best practices described in Wilson et al. (2012) to
+be crucial for reproducible research, one aspect that I thought was
+somewhat missing from this article was the issue of ranking different
+best practices in terms of how vital they are. Given infinite amount
+of time, one could perhaps incorporate all of these best practices
+into one's code, but what if the task at hand faces some serious time
+constraint; then which of these best practices are absolutely
+necessary, and which can be left out? Directly related to this, not
+all projects are equally important, so some discussion of calibrating
+how much of these best practices is necessary depending on the
+vitality of the task at hand would have been good.
+
+One question that I have from reading this article (Gentzkow and
+Shapiro) and from the code review discussion in lab is what are good
+test functions for when the output of your code is content? For
+example, for PS2 problem 3a), would be there be a way to test that
+your function does indeed output the correct url and html from the
+page using a test function and not just clicking on the google scholar
+page to make sure it matches with the output of the function? I
+understand using testing to make sure inputs are the right class or
+that a math function does equal what you'd expect, but I felt like for
+3c), I could only think of more "superficial" tests instead of the
+actual html output of the function. This reading helped solidify for
+me the importnce of using testing functions, as it's more reproducible
+to write test functions than to test interactively, but I think I
+still need practice on how to write test functions.
+
+Is there a standard convention for naming variables that only exist as
+midpoints between forms of an object? For instance, if I have a data
+frame and I need to perform several operations on it to get it into a
+useful form (and I can't pipe them all together), is there a
+convention for the variable names used in those transitional steps?
+
+It is really a problem that many processes in the paper is not
+reproducible, which will cause some error and incomplete and things
+other than science. For the software engineering, I think we can avoid
+these problems by testing the program rigorously, but if the research
+is about dealing with some inaccessible data, then things will be much
+difficult to solve. So it is still something to be discussed.
+
+In Best Practices for Scientific Computing, they don't advocate for
+test-driven development because a study reported that it did not
+impact productivity. What are your thoughts/experiences using
+test-driven development?
+
+Through the readings, I learn about many software development
+practices which can improve the program’s productivity and
+reliability. I totally agree with the statement from “Best Practices
+for Scientific Computing”, “a program should not require its reader to
+hold more than a handful of facts in memory at once”. Actually I’m
+trying to implementing some practices mentioned in the paper right
+now. For example, I try to pick the meaningful names for each function
+I built. So when others use them, they can understand the purpose of
+functions directly from their names. I’m also trying to avoid hard
+codes. So every piece of data have a single authoritative
+representation in the system. If I want to change the value of a
+particular variable, I only need to change one place. I think the
+place I would make self-improvements is the defensive programming. I
+need to add assertions to check if there’s something wrong with my
+codes, which is helpful for debugging. Moreover, I will try to use
+Version Control in the future. But I think for languages like R,
+Python and C++, documentation may be a tricky task. Perhaps the only
+way to solve it is to save different versions of codes and add
+comments about the changes every time we make it. The paper mentions
+about TDD(test-driven development) and I think it’s too compelling for
+me. Because I don’t think it’s possible to write all of the test cases
+even before writing the codes. Sometimes it’s just so hard to test
+something that does not even exist. The other practice I think it’s
+compelling is the suggestion that scientists should always write code
+in the highest-level language possible. Different languages have
+different advantages. Sometimes it’s much easier to use lower-level
+languages to do visualization. And it’s time-consuming to shift the
+codes from the higher-level to the lower-level.
+
+An interesting distinction (Kitzes et al 2018) made are the difference
+between Reproducibility and Replicability. The first concept implies
+that there are no hidden steps in a study and a different researcher
+can use the exact same data and software and get to the exact same
+answer. Replicability means that the reviewer can use similar but not
+exactly the same tools and data and draw similar conclusions. I
+believe the second test if far more important because it also checks
+how sensitive the answer is to the different decisions the researchers
+have made.  Another important remark is that, many journals are
+interested in only publishing “ground breaking” research. This has
+consequences both in reproducible research but also in the usefulness
+of the research as well. For example, in civil engineering, studies
+often analyze structures under very specific conditions to have
+noteworthy results that make the findings inapplicable to real
+conditions.
+
+I took Data Science class when I was an undergraduate student, and the
+Professor for the class also emphasized the importance of
+reproducibility of any piece of work. Even if I thought I made sure my
+work was reproducible, I frequently received comments back from the TA
+and Professor that there were some issues when they tried to reproduce
+my results. So I know that reproducibility of work is not only
+important, but also very difficult! As I expected, The Practice of
+Reproducible Research (first reading material) also states, "the
+attempts to replicate experiments or data analyses often fail to
+support the original claims."  The following excerpt from the reading
+especially resonated within me; it re-emphasized the importance of
+reproducibility in my mind: "Modern data analysis typically involves
+dozens ... of steps, ... performed by numerous algorithms that are
+nominally identical but differ in detail, and each of which involves
+at least some ad hoc choices. If researchers do not make their code
+available, there is little hope of ever knowing what was done to the
+data, much less assessing whether it was the right thing to do."
+Nowadays, there are plethora of datasets available to each of us, but
+most, if not all, of the datasets need to be altered and cleaned
+before any formal statistical analyses can be performed. Therefore,
+even BEFORE any kind of scientific or statistical analyses are
+performed, the datasets already get transformed into a completely
+unique shape. Only the coder who cleaned the raw dataset will know
+what has been done to the dataset. If she wants to receive
+well-deserved credit for her own work, she should make her work
+reproducible.  The reading briefly mentioned about this, but
+reproducibility is not only about being able to replicate the same
+results. It very much goes beyond that, in my opinion. Only when
+others can look at your work clearly, they can criticize which part of
+your work should be changed or can praise which part of your work is
+absolutely brilliant. Also, from my personal experience, other people
+are just so much better at spotting the mistakes that you wrote in
+your work. I was always amazed by how quickly other people could spot
+very simple (and silly) mistakes in my codes that I thought were free
+of any mistakes. In other words, reproducibility helps you improve
+your analysis constructively because more people can give comments
+after viewing your work.  There were several good coding practices
+that I learned from the reading and want to practice myself. First, I
+should also start creating a metadata. I have never created a metadata
+for any of my previous works. After reading the materials, I
+understand that when someone wants to reproduce my work, they need to
+understand exactly 'what' they are trying reproduce. For that,
+metadata is necessary. So next time, I will include a metadata that at
+least explains where the raw data is obtained from and what I am
+trying to do with the dataset. Second, I like the idea of putting raw
+and cleaned data into separate folders. I have been creating a folder
+where I put raw data, but I do not think I have always created another
+folder where I put cleaned up dataset. Lastly, the reading also talked
+about creating a shell script that can automate my entire work in just
+few lines. I think it is a really nice way to submit your work to
+anyone and very quickly prove that your work is actually valid.  Last
+but not least, I will include another quote from the reading that was
+memorable: "I consider a study to be (computationally) reproducible
+when I can send a colleague a zip file containing my raw data and code
+and he or she can push a single button to create all of the results,
+tables, and figures in my analysis."
+
+The Wilson, et al., article touched on a lot of the same practices
+that we have discussed in class, such as making code easy to
+understand when read by a person, and to add in frequent assertions to
+make sure that things are working as intended and to catch the
+inevitable mistakes that will crop up. To me, the notion of
+reproducibility that is discussed in this article is critical. Making
+sure that anyone could read your code and generate the exact same
+results is not only imperative from the scientific research
+perspective, but the practice of design code in such a way helps
+ensure that the code is more robust when faced with various test-cases
+and potential bugs. This process can make coding more tedious and
+requires a careful attention to detail, which may be a factor in why
+some researchers fail to design comprehendible and reproducible code.
+
+I read the article by Wilson et.al. I found out the practices
+suggested that seem particularly compelling to me: (1) break programs
+up into easily understood functions, each of which conducts a single,
+easily understood, task. When I write my code, I tend to solve
+everything within one function call. This actually makes my function
+to be long, dense and hard to debug. So I would definitely separate
+different tasks and complish them individually.  (2) I should have
+consistent, distinctive, and meaningful names. Sometimes I just name
+my data frame as "data" and my variables as "var", I was too lazy to
+even think of a meaningful name. However,it somethimes makes even
+myself hard to understand my code when I look back at my code. I don't
+know what my "var" represents and what my "data" is about.  (3) Use
+version control: I don't know github when I first started programming
+in R. And even though I know github later, I don't really use that
+often because I'm not so familiar with it. However, I really think I
+should use it much more often because I the way I do my version
+control is to save my code into a new file every time I made
+changes. This is stupid. And sometimes I forgot to make a copy and
+would lost everything I have before.  (4) add assertions: I don't know
+how to add assertions before the third lab. It's a really useful
+practice. Even though I don't need assertions for myself to run my
+code because I always know what the correct input should be. Others
+may not know. And the assertions provide hints for them.  Some
+comments about automating repetitive tasks: even though many people
+told me that you may automate repetitive task and it seems smarter to
+write a program that makes computer to automate the process instead of
+me doing everything manually. I sometimes would still prefer to
+manully do things. Because I only need to copy paste my code many
+times without thinking hard about how to generalize my
+code. Generalizing my codes takes me even more time compared to do
+everything manually.
+
+Though the methods learned from this passage(Wilson et.al.) can not
+all be applied to the coding in my assignment, I do find some methods
+useful. For example, name the variables meaningful and make clear
+documentations, which will help you easily recall what you have done
+before.  But one thing I'm still confused about is how could the
+Github be used as a tool for version control?
+
+In the individual work, researchers have many options for interactive
+computing environments such as microsoft office kit and R. However,
+these tools do not allow the possibility to collaborate nor
+reproduce. Traditionally, file and code sharing were done by emails
+and other platforms such as Google Drive. However, we could do this in
+a more efficient way and that was one of the largest advantages of
+tools like GitHub. Reproducibility and Collaboration do not only allow
+testable workflows that ensure the validity of previous results, but
+also makes further study easier with much efficient duplications. Once
+I needed to work on a coding project with another person, and
+initially we found it hard to share processes with each other and it
+was even tougher to merge two different lines of code together. We
+chose to physically sit together every time we worked on the
+project. However, as soon as we learned Git, each of us created a
+branch and worked separately and all we needed to do was to merge
+these branches once we were both done.
+
+For this problem, I chose to focus on paper "Best Practices for
+Scientific Computing" written by Wilson et.al. This paper provides a
+very extensive discussion on how to write more efficient and effective
+program with less effort. The topic is being raised up here because
+some of the scientists don't come from a background of computer
+science requiring rigorous training in writing codes in good
+quality. Many of them [lack exposure to basic software development
+practices such as maintainable code, using version control and issue
+tracker, code reviews, unit testing, and task automation].  For me
+coming from a mathematics and statistics background during my
+undergraduate years, I didn't write many codes back then. But I did
+read other's code when I was doing a group project for some techinical
+classes, such as Econometrics and Time series analysis. Even though
+`R` and `Matlab` are high-level programming language and statistical
+analysis tools, I still found it so difficult to understand the codes
+written by my group members. As the paper mentions, [To be productive,
+software developers must therefore take several aspects of human
+cognition into account: in particular, that human working memery is
+limited, human pattern matching abilities are finely tuned, and human
+attention span is short.]  [names should be consistant, distinctive,
+and meaningful.]  Not only is developing software, analyzing data is
+also a collaborative work and requires a group of people to help each
+other. If one of the programming codes in a bad style (e.g. keep using
+`x1`, `x2` and so on to denote variables), it will make other people's
+life really hard since the code is hardly readable and they have to go
+back to that person who wrote these codes to figure out what exactly
+he was trying to do and this will somehow lower the productivity of
+the team. In short, no matter we are doing data analysis or writing
+software development, we should always keep in mind that our work is
+for people to read, verify, and use.  In the section of "Automate
+repetitive tasks", the paper mentions [In practice, scientists should
+rely on the computer to repeat tasks and save recent commands in a
+file for re-use.] Most of the time, some typical data processing will
+be essentially the same, and we could write a function in script
+(e.g. scraping webpages in similar formats) so that every time we want
+to do the similar work, we just need to pull them out, make a minor
+modification, and let it do the work for us. While sometimes the code
+we write in one kind of programming language might not be the
+preferred approach we want to do in another programming language. For
+example, in `R`, everything is vectorized, but it's not usually the
+case for other language, so the same programming logic may not work
+and we would have come up with a new approach instead.  In the section
+of "Using version control", the paper mentions [The standard solution
+in both industry and open source is to use a version control system. A
+VCS stores snapshots of a project's files in a repository.] Version
+control is a very crucial footstone for a good project in terms of its
+tremendous power in managing the progress of each member in the
+group. By doing so, group members will be able to know in time how
+others are doing and whether they come up with new ideas or methods
+for a specific step of the project so that they could also make some
+changes accordingly. Especially for me, it is also a way to learn good
+coding practice from others because some version control tools work
+like a platform where programmer can exchange their own ways of
+approaching some types of questions. It is always helpful to open to
+all kinds of coding styles and analyze the pros and cons between yours
+and codes written by others because in this way you can be familiar
+with more coding styles and develop your ability in quickly
+understanding the codes not only written by yourself but for anyone
+else.  In the section of "Plan for mistakes: Defensive Programming",
+the paper mentions [These assertions serve two perposes. First, they
+ensure that if something does go wrong, the program will halt
+immediately, which simplifies debugging,...; Second, assertions are
+executable documentation ... . This makes them more useful in many
+cases than comments since the reader can be sure that they are
+accurate and up to date.] Usually when I am coding, I like to put
+inline comments instead of using assertion. One of the reason for
+doing that is I am lazy, and the other one is sometimes including many
+assertions when coding will boost the running time (sometimes it takes
+a while for a function to spit out result, especially those
+pre-optimized). But it is still a good habit to use assertions for
+some very crucial steps in our function or programs, and creating some
+useful tests will be also good coding practices.  In the section of
+"Collaborate", the paper mentions [A large body of research has shown
+that code reviews are the most cost-effective way of finding bugs in
+code], and [Experience shows that if reviews don't have to be done in
+order to get the code into the repository, they will soon not be doen
+at all.] I think it applies to analyze data because usually in data
+analysis, there are many ways to do the same thing, for example, we
+want to avoid looping over the matrix or data frame, if we can use the
+vectorization style coding, becasue it takes much time for `R` to do
+looping. Also, in time reviews are always preferred since people have
+their own job and task to do, if group members don't conduct reviews
+before the codes go into repository, there will be some significant
+consequences not limited to bad style coding like the one I mentioned
+above, and also recursive errors produced by a few lines of bad codes.
+In general, we as programmer or data analyst should always keep these
+good practices in mind. Even though it is almost impossible to satisfy
+all of them because some of them may take a lot of time but have less
+contribution when it comes to real work. Some of them are still very
+benefitial. For example, the time we spent on implementing these kind
+of tools will be immediately offset by the gains in productivity of
+the programmers involved.
+
+I read the second option and found it refreshing that a discussion of
+reproducibility isn't trying to convince me of how horrible Windows
+is. There was nothing in it that I fundamentally disagree with, but
+maybe I would have liked a comment about how important it is to check
+what the input for a function _should_ be, not what it shouldn't
+be. This is something I have been thinking about a lot lately because
+often I find myself writing code that contains checks and checks for
+erroneous inputs, when really I should be checking for what I know the
+input I want should look like. It makes most checks shorter and means
+that I don't actually have to think of all the ways a user of a
+function could break it.
+
+I read the Wilson, et.al. piece
+(https://arxiv.org/pdf/1210.0530v3.pdf) and agreed with a lot of what
+it said. Having worked on an economics research project last year with
+a group of PhDs, I found it remarkable how dramatically their limited
+programming skills and habits constrained their ability to conduct
+analyses and research. This is not a knock on them or their effort -
+they simply haven't been taught properly how to code reproducibly and
+efficiently.  I helped rewrite several scripts to make them more
+efficient and found that several automatable tasks had not been
+functionalized. I also found that they had been sharing code through
+email and Dropbox as the paper mentioned - I urged the use of Git
+thereafter but their was resistance due to unfamiliarity. I think Git,
+which is relatively simple to teach, should be taught to all academics
+(and anyone who codes, really) because it can completely change the
+way people collaborate, and revise their own code. I even think it
+would be helpful to have a one day module on Git in this class, as I
+have seen many of my fellow students struggle with it.
+
+The "Best Practices for Scientific Computing" has a lot of great
+advice that I find useful. I agree with all the sections. I find the
+version control section great, but working at my old company, some of
+our clients did not allow for GitHub or Git due to organizational
+restrictions. I think the hardest part of coding is writing consistent
+tests and making sure individuals do not copy and paste code,
+especially when version control tools aren't available to you. I found
+it interesting that individuals write the same amount of lines
+regardless of coding language.
+
+I read the item called "Best practices for scientific
+computing". First of all, I would say that as I just started to learn
+how R works, my code is quite easy to read and understand for other
+programmers or people having experience with R. I try to do my best
+with naming my variables but sometimes I read other people's code and
+realize another name could have been better to make more obvious what
+I do. I also usually use a lot of space between my different lines of
+codes. It is very clear and not messy, but I think I should try to
+have less of it. Sometimes, I could easily have 2 lines together
+instead of a blank space between them.  I did not write any big code
+in my life yet, but based on several web pages I have read, it looks
+very important to save codes before to make big changes to it
+(importance of keepking track of changes). It looks like GitHub could
+be a great version control system. As we have seen in the lab,
+assertions are very important and I doubt every researcher uses
+them. It is very useful to indicate what can be wrong and the reason
+the program does not work. Adding comments is very useful and needed
+for many reasons. As Chris several times told us in class, if I am
+working on a code, stop for 6 months and want to come back to it, I
+need to be able to clearly understand it 6 months later. However, as I
+am learning how to use R, I tend to write comments on everything, even
+very simple commands in order for me to understand if I go back to it
+in a month for example. This is however not very useful for the
+experienced readers of my code. Code reviews is something we have done
+about a week ago, where another student that never read my code before
+had a look at my ps2. It was very interesting to see what what
+confusing her, what she thought about my code and what are the ways I
+could improve it.
+
+Reading: Wilson, Greg et.al. "Best Practices for Scientific
+Computing." Arxiv.org, 29 Nov. 2012.  4.1 “Programers should work in
+small steps with frequent feedback and course correction rather than
+trying to plan months or years of work in advance” (Wilson, 2). => For
+some big projects, it is hard to have a complete plan in a short time,
+and the implementation based on a rough plan can fail easily. On the
+one hand, it might takes a long time for a great comprehensive plan,
+which can delay the progress of the project. On the other hand, the
+success of the project relies on a thoughtful plan.  7.1 “Programers
+should add assertions to programs to check their operation” (Wilson,
+3). => It is difficult to include a perfect well-rounded assertion
+statements to ensure every potential error, since the user and the
+programer always have totally different perspectives.  9.1 “Scientific
+programmers document interfaces and reasons, not implementations”
+(Wilson, 5). => Sometimes there might be gaps between reasons and
+implementations. Thus, brief explanation of some complex codes is
+necessary for better understanding. Also, comments are helpful to
+break codes into parts.
+
+After reading the paper Best Practices for Scientific Computing, there
+are a few things I want to comment and share. First, it is important
+that the code should be easily understood by other people. I used to
+write very short variable names and no comments in order to save time
+typing the code, but later I found out that I cannot understand my own
+code after a few weeks. At the moment I wrote down the code,
+everything is clear to me, and I think the code is just one-time
+use. However, I actually need to show those code to the employers to
+demonstrate my class project. I then realized that the importance of
+distinctive and meaningful variable names, and also the helpfulness of
+the comments. So I changed my coding styles later. Besides, automating
+repetitive tasks will save time writing codes in the future. Some
+functions can solve common issues in various cases, such as functions
+about reading and formatting files to the environment or doing a KNN
+calculation. Usually spending a little bit more time on generalizing
+the function now will save a lot time in the future is the function
+can be commonly reused. One of the tools I think is the most difficult
+to use is optimizing the code after it works correctly. To reduce the
+running time, we need to find the slowest step and optimize
+it. Usually the slowest step is the most complicated step, so we need
+to be creative. I am wondering how can we gradually approach it?
+
+I read the article "Developing open source scientific pracitce" by
+Professor Millman and Professor Pérez. In the article, they outlined
+their fastforward vision of scientific researach with specific
+recommendations for computational work.  The question I have: The
+article listed a few version control software such as Github and
+Latex. While it seems that no version control of data software is
+recommended in the paper. I would imagine there are some software now
+can control different version of data at a high efficiency, probably
+Chris or Omid can introduce more.  The following comments are a few of
+their statements I agree with.  Firstly, the problems they listed in
+2.1 are both technical and social. We can always develop some tools to
+overcome the technical difficulty. However, only if when researcher
+make a conscious decision to adopt better work habits will we see
+substantial improvements.  Secondly, version control of code, data,
+documents are extremely important. From the code consistancy point of
+view, one research project cannot be developed on multiple version of
+code. Those versions may differ from each other wih differnt sequence
+of applying functions or integration. There will be invisible bugs
+hidden to different version of code which should apply the same
+methodology. Maybe one version normalize and preprocess the data
+before some critical points of the workflow, while the other does
+not. The minor issues may lead to tremendous divergence in the end.
+Next, I highly agree with the Testing part of computational
+research. From the perspective of whole research workflow from
+individual exploration to final educational resources, a stable
+testing environment will help to keep the research processes and
+outcomes at a high consistancy and integrated level. For example,
+during some machine learning research, there are data tests (to test
+data features, schema, meta-level requirements, etc.), model tests (to
+test model quality, all the hyperparameters, offline and online
+metrics etc.), infrastructure test (to test pipeline integration,
+model debuggablility, models rolled back or forth ability etc.) and
+monitoring tests (to test numerical stability, dependency changes
+influences, etc). For industrial researchers, there will be some large
+teams to integrate and monitor all the different levels of tests,
+while it seems to hard for small group of researchers.  Last but not
+least, the readability is extremely important for reproducible
+research. Any good code will be junk if it is not easy to understand
+by a third professional. If the current research results will be used
+for further development base for other researchers, it need to be
+testable and reproducible easily. On a larger scope such as some open
+source community, a comment needs to follow the documentation string
+standard.
+
+I find the article to be extremely helpful for future programming. At
+first, the article talked about organizing code and work into chunks
+of an hour, and in a larger scale, for a week. I’ve never heard about
+that before and has had the habit of writing code for a continuous 4-5
+hours, or depending on how long the work is, as I thought that a
+continuous mind flow would be more helpful then taking breaks and
+breaking the mind flow. But I’ve also experienced when I can’t fix a
+bug for hours if I try to do all in once, and the bug gets fixed
+within an hour if I take a rest and try doing it again later. I’ll
+definitely take that advice next time when I’m coding.
+
+The item I read was Wilson's Best Practices for Scientific
+Computing. The article is very straightforward in that it breaks down
+the good practices into the ten numbered points. These tips include
+writing the program readible for people, automating repetitive tasks,
+using version controls, and planning for mistakes. Nevertheless, the
+thing that concerns me the most is the difficulty in actually
+mastering these techniques. Unlike the standard operating procedures I
+would expect to learn in programming classes, these techniques seem
+very general. I believe that, in addition to reading this paper, time
+and experience is crucial in order to implement these practices
+successfully and efficiently.
+
+After reading the material in 1a, I feel that the most challenging
+problem with reproducibility research is the available of a coherent
+technology and tools. It is because most of the scientists want to
+share their finding and allow other people to reproduce their
+work. However, due to the variety of tools, lack of hardware access,
+and unable to familiarize with different tools make reproducibility
+hard. Moreover, the reading allows me to have a deeper understanding
+about reproducibility research such the goals of it and how to create
+a reproducible codes.
+
+I read the paper 'Best Practices for Scientific Computing', this paper
+gives a set of best practices for scientific software development
+improve scientists’ productivity and the reliability of their
+software, I knew some of these princeples before reading the paper,
+but some are new to me. such as the princeple of Don’t repeat
+yourself, when we want to use a constant or subject a lot of times, it
+better to define it as a variable, when we change the defined value,
+all the application will be updated at the same time.  Questions: 1) I
+have no experience of collaborating with others, so I couldn't
+understand the technique item pair programming very well. 2) Maybe it
+is better go give some spececial examples (such as a few lines of
+python/R codes) for these princeples.
+
+There is a balance between writing readable program and writing smart
+program. I think it is worth to think about under which situation one
+is outweigh another. I think if researchers determine the core value
+of the code is to improve efficiency of certain task, a smarter coding
+is encouraged. And if they believe the work can be applied in
+different context, reproducibility is more encouraged.
+
+I read the third article, "Best Practices for Scientific
+Computing". In this paper, 10 practices were introduced for scientists
+to write robust and maintainable code. One of the most essential
+factors in scientific coding is the consistency of the coding
+standard, just like when software developers write a software
+system. This is because it positively impacts the quality of the
+system. While writing codes, we need to ensure that the parts do not
+contradict each other and as if the code has been written by a single
+developer in a single session. Among the ten practices, I believe that
+the most useful one that I might have ignored in the past is No.7-
+plan for mistakes. I used to believe that as long as I write my code
+carefully enough, there shall be no mistake. However, I have
+discovered on my way working on the problem sets in the passing
+weeks. I would remember to do defensive programming, write and run
+tests, use oracles, turn bugs into test cases and use symbolic
+debuggers.  As for the problem set, I haven't work on all the
+questions. Currently, I have the problem of keeping word like
+"Mr. Donald Trump" as one single word.
+
+From the reading of Wilson's 'Best Practices for Scientific
+Computing', I learned that writing "human-readable" code is not only
+about writing clearly explained functions and comments, naming
+meaningfully and writing in consistent style, it is also about
+controlling the length of code so that it would not be too long to
+hold in human memory. Therefore, limiting length of code chunks and
+modularizing code is helpful when others are trying to understand and
+reproduce your code. What's more, I think the notion of "turning bugs
+to test cases" is really helpful, because it would be efficient to
+think of defensive programming in the process of writing functions and
+debugging. This would help with developing more complete and thorough
+test cases, and therefore a good practice to develop reproducible
+research and computing with robustness.
+
+Question 1) What does 'Version Control' exactly mean? I search for it
+on 'git', however, it is equivocal to understand clearly. And what
+kind of software should I install for my personal computer to conduct
+version control. 2) How to demarcate whether a code chunk need a
+detailed document? Because in a coding-extensive project, it is
+time-consuming to document all the code chunk in detail. And I think
+writing program for people with different level of foundation of
+statistics knowledge and code programming require different kind of
+documents.  Comment Previously, I never find it important to make
+one's workflow replicable until when I was assigned to work on a
+machine learning project in another lesson IEOR290. In that project,
+we are expected to put forward a new method to improve the NLP model
+based on original work from students last year. Fortunately, students
+last year make all their work replicable. They upload the data and
+code to Github and separate script, code, instruction, document and
+result into different subdirectory. Furthermore, they write a
+README. file to illustrate the original thought and exact order of
+their workflow. Those behaviors make it super convenient for us to
+continue their work or develop new branches of this project. Although
+there are millions of reason for a student not to attach importance to
+make his work replicable because of time, effort, data restrictions, a
+lack of reward, we should enhance our determination to change this
+situation. Python is famous and popular because it is a completely
+open source language. This era of data is bound to be more open and we
+all should contribute our strength to be more academic, which means we
+are expected to conduct more transparent and replicable programming or
+analysis.
+
+A part that struck me was In the “Lessons Learned” chapter, under the
+“People and Skills” section: “…the bottleneck to adopting practices
+was related to a diversity of skills, the indication was universally
+that the process might have been more efficient or reproducible were
+there a greater and more homogeneous distribution of tool familiarity
+among their research group members. Time was wasted when simple tasks
+like communicating results or simultaneously editing a manuscript were
+crippled by one or more collaborators unfamiliar with tools used by
+their colleagues. The concern also extended far beyond mere
+efficiency. One case study author noted that if a collaborator is
+unable to use the tools that are being employed, then they are at risk
+of being disenfranchised from the scientific process. This
+disenfranchisement is especially ethically problematic if a
+collaborator is unable to directly or simultaneously edit a
+co-authored manuscript due to their lack of familiarity with the
+processing tools…” It seems like this might be an almost ever-present
+problem given that new packages, new software, new models are
+regularly released and become popularized. To tackle this bottleneck,
+we’d need to ask researchers to not only be experts in their field,
+but to also keep up with, at least, the most crucial and widely used
+software. In terms of reproducibility, we would also need researchers
+to not only publish their code with their papers, but to also clean up
+the code, document it properly and ensure it can be read through and
+understood by other researchers, who also may not be exactly
+comfortable sifting through foreign code. How can we move forward in
+bettering this situation?
+
+The three stages of basic reproducible workflow are data acquisition,
+data processing and data analysis. Data can be collected through
+survey, experiment, observation and also through web-scraping. Data is
+commonly save in CSV file with README. txt created to tell the source
+and the description of data. Speaking of processing and cleaning data,
+we need to keep the part necessary for further analysis. The result is
+save as CSV file with the commands saved as a script in src directory.
+When analyzing data, all outputs are save in the results directory and
+the commands of analysis is separately saved in src
+directory. Finally, we can combine all the scripts of command into one
+single script, and run it to test whether it works. If I have several
+raw data files, should I explain them in single README. txt or
+separated ones? If I do something like “gsub” when I doing data
+analysis, is it belonged to data-cleaning?
+
+What are the best practices (tips and tricks) for documenting complex
+steps required to reproduce an experiment? In my area of research
+(large-scale computations) some experiments can be very complex to
+setup, run and then process data. I would like to hear what kind of
+tools/processes people use to document these steps.
+
+Reproducibility is important for the scientific research. But there
+are many obstacles, including the familiarity with the software tools,
+configuration and build systems, time and so on. So it’s necessary to
+set up some principles or rules in reproducibility to improve the
+efficiency.
+
+Replicating an experiment is becoming an important foundation of the
+scientific method. While it is important to value reproducibility, it
+raises two questions. Firstly, that the scientist is intact interested
+or even cares about bringing about reproducubility. Assuming that
+reproducible research is the main aim and the paper or the manuscript
+is the byproduct is a very heavy assumption. While the community in
+general may consider that ‘unethical’ etc, should the reputation of
+the scientist’s work suffer? Should preconceived notions be excused in
+such cases? Secondly, social sciences are different from physical
+sciences, but require the same if not more practice of computational
+(specially statistical) tools. The ‘problem’ of reproducibility then
+ceases to be one of following best practices. Some social studies
+cannot be repeated due to problems with the initial study, while
+others aren't replicable because the follow-up research did not follow
+the methods or use the same tools as the original study, or maybe that
+the study simply cannot be replicated? For example, a study of race
+and affirmative action performed at Stanford University was
+"replicated" at the University of Amsterdam in the Netherlands, in
+another country with different racial diversity. When the study was
+later repeated at Stanford, the original published results were indeed
+replicated. (Source: How scientists are addressing the
+'reproducibility problem’ By Deborah Berry)
+
+Which language is better for data analysis: R or Python?
+
+I read the preface and workflow template chapter of The Practice of
+Reproducible Research. It illustrates the necessity and significance
+of reproducible research. Hard as it is, we should try to work as
+transparently and reproducibly as possible so that our claims or
+results can be replicated by others. To achieve that, it’s important
+to establish the basic workflow template. The basic reproducible
+research workflow contains three main stages: data acquisition, data
+processing and data analysis. In this chapter the author demonstrates
+this workflow by a simple project. I find this workflow very practical
+and useful as I walk through the whole process. It introduces a common
+convention of how the structure should be and how the files are named,
+etc. Also it emphasizes making the code readable and automating the
+process. I reckon that it would be more convenient and possible for me
+to use or assess others’ work under this workflow. But I do have some
+questions after reading it. Would this workflow applicable to all
+projects? What if their are some confidential data that others’ don’t
+have access to? Is there still a way to assess the work and automate
+the process? Also, sometimes the research uses some simulations to
+generate raw data and it’s likely to produce different data every
+time. In that case, how would it be possible to verify the
+claim/results?
+
+I read Wilson et al. and particularly liked his comparison of
+computational problem solving to a modern physical scientific
+research. They mention the importance of keeping track on the files
+used and using version control to seamlessly improve reproductivity
+for a whole group of people, just like how modern scientific
+researchers keep a lab report to ensure everybody keeps updated with
+the changes to their lab experiment.  This was one of the main
+problems I had during my employment at the IMF in DC where I had to
+report updated codes to a data project every morning. By the time I
+had 23 updates to a code file, I did not know which one was the most
+updated one and somehow got a different result from the first draft of
+the code. Then I had to repeat the same code over and over again to
+spot mistakes, which brought a dent to my overall efficiency. Working
+in a group setting was very different from working on an individual
+coding project since sometimes the code I wrote could become part of a
+critical addition to the bigger chunks of code authored by many. This
+showed my code's unreliability and was difficult to update my codes to
+the group's repository. If I were aware of version control through git
+and github, I would have debugged the codes both through the group
+repository as well as my own individual directory.
+
+I read the fourth article by Millman and Perez.  The authors discuss
+that daily practices may not create reproducible results: -
+Programming packages can be relatively slow and do not have a rich
+document format - A mix of different tools including emails, Drop Box,
+Version Control are used for collaboration - Extensive knowledge and
+effort to master production-scale execution such as C, C++, Fortran,
+Hadoop. Researchers have two separate tools for private programming
+practice and production-scale execution - Results are manually pasted
+for education and presentation purposes Suggestions by the author to
+create reproducible research: - Use version control to track
+individual research changes, and to collaborate with others - Automate
+excution - Test research/codes/results for robustness - Create
+readable code: good style and format - Utilize literate programming
+where the final document are for human consumption: IPython notebook,
+LATEX, R Markdown are possible tools Question: In my previous job, I
+tried to implement version control in my daily work but failed.  Below
+are the reasons: - Other co-workers, including managers, cannot or are
+not willing to use version controls - For a large organization with
+existing work structure, it is difficult to implement new methods - If
+there are conflicts between codes produced by two separate
+collaboraters, SVN and Github cannot work smoothly Would you please
+guide us what to do when there are conflicts in the code files and
+merge them togethervia Github. How people in the group can work on
+different parts of the project, then merge all the results using
+GitHub?  How two people working simultaneously on the same file can
+merge the results without creating conflicts via Github?
+
+In chapter 7 of Gentzkow and Shapiro
+(http://www.brown.edu/Research/Shapiro/pdfs/CodeAndData.pdf) the
+authors claim that documentation should be largely replaced by
+self-explanatory code. While this certainly helps to clarify code
+function for the reader, there are certain scenarios in which I find
+myself struggling with coming up with good and self-explanatory names
+for functions and variables. This is particularly the case when I am
+writing recursive functions as their inherent logic is hard to convey
+solely by variable names. And recursion is certainly not the only
+place where a more complicated logical underlying structure is hard to
+grasp for a reader without proper annotation. I therefore want to add
+to the author’s point of view, that it is a coder’s responsibility to
+not only choose names wisely and design code in a clear structure, but
+to also take into account that certain operations require more
+elaborate annotation just based on the complexity of the operation.
+
+I read the article "Best Practices of Scientific Computing.” I find
+most of these practices compelling. I’m currently taking a computer
+science where we’ve already applied many of these principles
+(e.g. DRY, automation of repetitive tasks, plan for mistakes.) It
+feels to me like these principles aretuaght as canonical for computer
+scientists, but optional for statisticians and other people that use
+computers. It raises two questions for me: 1) Should a comprehensive
+comp sci class (e.g. CS61a) be required for any social science
+discipline that uses computers; and 2) What are implications for these
+principles on the base R vs Tidyverse debate. Base R feels very
+esoteric and out of line with some of these principles (especially
+creating code for humans), and I don’t feel like you can follow these
+problems perfectly while simultaneously advocating for base R.
+
+A big point of the excerpts from "The Practice of Reproducible
+Research" centers around others being able to confirm or review an
+experiment’s findings. One reason given for a lack of scientific
+evidence in experiments is the impracticality of repeating certain
+expensive experiments from scratch, such as the CERN and Hubble Space
+Telescope. This leads to many difficult questions. For instance: Are
+we supposed to take the results of said experiments as valid without
+independent validation of the results? During these experiments,
+should the researchers be extremely detailed in detailing the
+experiment process, so that an independent third party could follow
+the process and offer a theoretical critique of the experiment? Or is
+a theoretical critique insufficient and should every research
+project's budget include costs for an independent replication? I
+believe the answer to these questions depends on the scope of the
+research experiment. For instance, something along the lines of my
+second suggestion (a theoretical evaluation) might be sufficient /
+possible in most cases. It would be ideal if third parties could
+exactly replicate every experiment per my third suggestion, but as the
+paper alludes to, that just isn’t feasible for some cases due to costs
+and such. In order to ease the financial obstacles for high-cost
+validation of experiments, multiple countries could jointly conducting
+research would allow greater funding compared to the means of a single
+country. However, political barriers stand in the way of multiple
+countries cooperating. In addition, with the sheer number of fields
+vying for funding, it’s difficult to draw the line between whether the
+extra independent review costs outweigh performing an additional
+experiment.
+
+In best practices for Scientific computing, it is mentioned that "all
+aspects of software development should be broken down into tasks
+roughly an hour long and programmers should pace themselves to
+maximize long-term productivity”.  I totally agree with this aspect,
+and have experienced both aspects during internships.  In my first
+internship as a software engineer, each employee was given projects to
+work on, and each project would differ in scope. It was at the
+employee discretion to divide his/her project in smaller tasks before
+working on it. Personally, I tried to do so, but I did not receive
+much feedback on my smaller tasks, and ended working on different
+tasks at the same time. While this made me very productive some times,
+I spent a lot of time rewriting what I wrote, doing small
+modifications to adjust the different parts.  During my second
+internship, the company was operating in 2-week sprints, where tasks
+could only be added to the sprint program if their scope was deemed
+easy and self-contained enough. When a project was assigned to
+someone, it was his task to scope it into a well established plan,
+defining different subtasks, each self-contained and as independent as
+possible. To do so, a bi-weekly meeting was set up for the team to
+discuss these scoping and give their thoughts. I realize that working
+this way enabled me to produce a lot more in terms of features
+implemented and lines of code.  Also, it is said use "pair programming
+when bringing someone new up to speed and when tackling particularly
+tricky problems”, and the importance of reviews is highlighted. I
+specifically agree with these points. As an intern, I did a little bit
+of pair programming, and I really felt like the knowledge was
+transferred much more faster that way.
+
+The most enlightening part for the paper I read is that DRY
+Principle. It means that don’t repeat yourselves or others.  At small
+scales, it tells us code should be modularized rather than copied and
+pasted. My understanding of it is that, for example, if I am trying to
+create a function which has several functionalities illustrating by
+several chunks and some chunks’ results need to be used in other
+chunks, then it is better to split them into several functions and
+then call the functions that return the desired results inside other
+functions rather than just copying and pasting the code even if
+sometimes the function called just contains a few lines. The reason is
+that otherwise every time a change or correction is made for achieving
+this particular functionality, multiple locations must be updated (if
+this chunk of code is copied and pasted inside many other functions),
+which increases the chance of errors and inconsistencies.
+
+I agree with the general suggestions regarding computational
+reproducibility and documentation. However, there is a gray area as to
+what volume or sophistication of code warrants the above
+features. When is it appropriate within a research group to begin
+version control, unit testing, etc.? If I am exploring data and/or
+testing out an idea, I am not necessarily in the mindset to have
+documentation or code that is ready for public
+viewing/use. Additionally, a majority of the coding that I currently
+do consists of small combinations of scripts that I may not
+necessarily come back to or re-use. A lot of time can be spent here
+(productively or even wastefully) trying to repurpose code for re-use
+and for community use. I agree with the growing push - via community
+standards, pilot studies on scientific notebooks/repositories with
+publications, etc. - to make scientfic software/data/scripts
+reproducible. This is driven mostly by the general community, and it
+will be up to individuals within a research group (i.e., among
+research staff, investigators, students, etc.) to agree on the
+relevant software (e.g., Git for version control; Slack or email for
+task management; etc.) and to hold each other accountable for these
+best practices.  One question is about the git. As a version control
+system, we seems to only learn about pull and push, but never use the
+most powerful feature of it. Maybe we should do some exercise during
+lab to get back to a former version. A point that is different than I
+used to think is that, it is a better idea to modify the name of
+variables and functions to reduce the demand of documentation. Also
+never write documentation that I will not maintain in the first place,
+which may actually later mess with my workflow. It is also a goo habit
+to build directory and make the structure of the project clear. Have
+been there for the pain of identifying which file is need as a input
+and which is just a temporary one. Miserable internship experience.
+
+I think the subsection on "Dependencies, Build Systems and Packaging"
+touches on one of the major challenges I've come across in my (brief)
+encounter with reproduceable research: that creating a research
+project that's reproducible for myself is much easier than making one
+reproducible for others.  For example, in my field (nuclear
+engineering) many codes upon which my analysis depends are export
+controlled, most are written in Fortran with specific configuration
+flags, and few are cross-platform (most are Linux only).  Once I get
+them compiled and running on my machine it's possible to create a
+reproducible workflow, but reproducing the build environment on
+someone else's computer is quite challenging.  What is the best
+approach for making my workflow accessible in this situation, and how
+concerned should I be with this "push button" reproducibility, if it's
+widely acknowledged that the dependencies for a project may introduce
+errors or uncertainties?
+
+From my own experience, the most difficult part of making a research
+project reproducible is data restriction. Sometimes the research was
+based on confidential data or survey results. It is usually impossible
+to share the data with other people. On the other hand, the
+researchers invest a lot in collecting these data and there are few
+incentives for them to share these data with external
+researchers. Currently I don’t think there is a good solution to this
+problem. However, I do agree that there are some aspects that we can
+work on to make our research more reproducible. For example, I haven’t
+use git or any other version control tools for research before. It is
+partly due to lack of training from my research supervisors. I used
+various tools/programming languages interchangeably during the
+research process. My supervisors didn’t require me to document these
+code and files until the last step before publication. If I get the
+second chance, I will definitely document all the data and files and
+try my best to automate every step of the data cleaning and analysis
+process.
+
+For the purpose of reproducibility of a code script, one should always
+follow a basic workflow which includes data acquisition, data
+processing, and data analysis. The workflow should be followed by a
+single controller script that can automatically execute all three
+stages to produce a finished result. At times, when complete
+automation is not possible, one should ensure proper documentation to
+guide any manual intervention required. It's optimal to design
+sequential steps (functions) where output of every function feeds into
+the subsequent function as an input. In addition, testing the code
+script is an important step in ensuring the correctness of the
+algorithm. A good script requires the programmer to be both a good
+maker as well as an efficient checker. There is a golden rule while
+writing any programming script, one should always write the code
+scripts keeping in mind -- "Will I understand this script two years
+down the lane?" One of the first step in this direction is to have a
+clear directory structure for your data, source files, and documents.
+
+I read the paper by Wilson et al in 2012. A lot of the techniques that
+the authors covered in the paper were also covered in my introduction
+to programming class, but I still sometimes fail to use those
+techniques while writing code for this class. I learned c++ in my
+programming class and was mainly thinking in this language while
+writing code in R. Because R and c++ are such different languages,
+writing in R but thinking in c++ leads to code inefficiency. I am not
+quite sure how to "convert" my thinking from one language. I think
+getting to know more syntax and common functions would be the first
+step.  I did use some of the techniques that the authors mentioned in
+my introduction to programming class, including pair programming
+(however, what's pre-merge code reviews?), which I found very helpful
+when the two people are paired in the appropriate way, otherwise, only
+one person will benefit from doing pair programming. If possible,
+paring students in this class (people who know R fairly well and
+people who don't) might help some student? Other techniques I have
+been trying to use include, keeping a consistent naming style and
+paying attention to "DRY" - write functions when possible to reduce
+code clones.  Some new tricks that I have learned from the paper
+include mentioning version numbers for programs and libraries,
+reducing the number of lines in a code chunk to a reasonable amount,
+adding assertions to the codes to make sure they compute the correct
+results, and commenting the reasons and interfaces instead of
+implementations.  Some questions that I have raised while reading
+were: the author mentioned using a build tool to automate the
+scientific workflows. I don't quite understand what he meant by a
+build tool. The definition of an oracle was also not clear.

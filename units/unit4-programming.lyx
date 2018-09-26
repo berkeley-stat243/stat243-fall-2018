@@ -6691,7 +6691,7 @@ for a large number of observations,
  that the calculations can be done quickly.
  The data file 
 \emph on
-mixed-member.Rda
+mixedMember.Rda
 \emph default
  contains example data for two scenarios: Scenario A has many 
 \begin_inset Formula $\mu$
@@ -7478,6 +7478,48 @@ sequences, eval=FALSE
 \end_layout
 
 \begin_layout Standard
+One implication is that in older versions of R, indexing large subsets can
+ involve a lot of memory use.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+hidden3, eval=FALSE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this case, in older versions of R, more memory is used than just for
+ 
+\emph on
+x
+\emph default
+ and 
+\emph on
+y
+\emph default
+, because the index sequence itself uses a bunch of memory.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -7513,7 +7555,15 @@ To understand how much memory is available on your computer, one needs to
  to read the information from disk.
  While the cached information is using memory, that same memory is immediately
  available to other processes, so the memory is available even though it
- is in use.
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+in use
+\begin_inset Quotes erd
+\end_inset
+
+.
  
 \end_layout
 
@@ -7737,7 +7787,11 @@ Mem
 \end_layout
 
 \begin_layout Standard
-Swap is essentially the reverse of disk caching.
+
+\emph on
+Swap
+\emph default
+ is essentially the reverse of disk caching.
  It is disk space that is used for memory when the machine runs out of physical
  memory.
  You never want your machine to be using swap for memory because your jobs
@@ -7861,51 +7915,6 @@ hidden2, eval=TRUE
 \end_inset
 
 
-\end_layout
-
-\begin_layout Itemize
-Indexing large subsets can involve a lot of memory use.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Flex Chunk
-status open
-
-\begin_layout Plain Layout
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-hidden3, eval=FALSE
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Why was more memory used than just for 
-\emph on
-x
-\emph default
- and 
-\emph on
-y
-\emph default
-? Note that this is a limitation of R.
- Note that R could be designed to avoid this problem (see our discussion
- of 
-\emph on
-pqR
-\emph default
- earlier in this Unit).
 \end_layout
 
 \begin_layout Subsection

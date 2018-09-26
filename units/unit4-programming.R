@@ -1097,7 +1097,20 @@ benchmark(f(x), fc(x), y <- exp(x), replications = 5)
 ## @knitr mixture-example
 lik <- matrix(as.numeric(NA), nr = n, nc = p)
 for(j in 1:p) lik[ , j] <- dnorm(y, mns[j], sds[j])
-                  
+
+## @knitr mixed-membership
+
+load('mixedMember.Rda')
+
+wgtsB[1:5]
+IDsB[1:5]
+
+f1 <- function(wgts, IDs, mu)   
+	sapply(seq_along(wgts), function(i) sum(mu[IDs[[i]]]*wgts[[i]])) 
+
+f1(wgtsB, IDsB, muB) 
+
+
 ## @knitr challenge5
 for (i in 1:n) {        
   for (j in 1:n) {
@@ -1230,6 +1243,7 @@ x <- rnorm(5)
 .Internal(inspect(x))
 obj <- list(a = rnorm(5), b = list(d = "adfs"))
 .Internal(inspect(obj$a))
+.Internal(inspect(obj))
 
                                            
 ## @knitr pryr-address
@@ -1247,6 +1261,12 @@ object.size(tmp)  # incorrect as of R 3.5
 object_size(tmp)  # incorrect as of R 3.5
 mem_change(tmp2 <- 1:n)
 length(serialize(tmp, NULL)) # expands the object out
+
+## @knitr hidden3, eval=FALSE
+x <- rnorm(1e7)
+gc()
+y <- x[1:(length(x) - 1)]
+gc()
 
 
 ## @knitr
@@ -1270,12 +1290,6 @@ x[5] <- 7
 address(x)
 gc()
 
-
-## @knitr hidden3, eval=FALSE
-x <- rnorm(1e7)
-gc()
-y <- x[1:(length(x) - 1)]
-gc()
 
 
 ## @knitr

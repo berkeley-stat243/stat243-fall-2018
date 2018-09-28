@@ -1003,6 +1003,9 @@ myFun <- f(x)
 object.size(myFun) # hmmm
 object.size(environment(myFun)$data)
 
+library(pryr)
+object_size(myFun) # that's better!
+
 
 ## @knitr closure-boot
 make_container <- function(n) {
@@ -1035,7 +1038,7 @@ rm(x)
 myFun2(3)
 x <- rnorm(1e7)
 myFun2 <- with(list(data = x), function(param) return(param * data))
-object.size(myFun2)
+object_size(myFun2)
 
                                            
 ## @knitr
@@ -1200,7 +1203,7 @@ ls.sizes <- function(howMany = 10, minSize = 1){
 	pf <- parent.frame()
 	obj <- ls(pf) # or ls(sys.frame(-1)) 
 	objSizes <- sapply(obj, function(x) {
-                               object.size(get(x, pf))
+                               pryr::object_size(get(x, pf))
                            })
 	## or sys.frame(-4) to get out of FUN, lapply(), sapply() and sizes()
 	objNames <- names(objSizes)
@@ -1223,6 +1226,7 @@ ls.sizes <- function(howMany = 10, minSize = 1){
 e <- new.env()
 e$x <- rnorm(1e7)
 object.size(e)
+object_size(e)
 length(serialize(e, NULL))
 
 ## size of a closure
@@ -1235,7 +1239,10 @@ f <- function(input){
 myFun <- f(x)
 rm(x)
 object.size(myFun)
+object_size(myFun)
 length(serialize(myFun, NULL))
+## note that our discussion of copy-on-change will tell us
+## why the 80 MB vs. 160 MB disagreement occurs
 
 
 ## @knitr inspect
@@ -1250,6 +1257,8 @@ obj <- list(a = rnorm(5), b = list(d = "adfs"))
 obj <- list(a = rnorm(5), b = list(d = "adfs"))
 address(x)  # from pryr
 address(obj$a)
+
+
 
 ## @knitr sequences
 
@@ -1336,7 +1345,6 @@ address(vals)
 ## @knitr copy-on-change-fun, eval=TRUE
 f <- function(x){
 	print(gc())
-	z <- x[1]
 	.Internal(inspect(x))
 	return(x)
 }

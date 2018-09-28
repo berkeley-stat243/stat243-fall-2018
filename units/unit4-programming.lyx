@@ -7026,8 +7026,13 @@ pryr
 \end_layout
 
 \begin_layout Standard
+
+\series bold
 In general, don't try to run this code within RStudio, as some of how RStudio
  works affects memory use.
+ Also, some of the output in this PDF is missing or incorrect relative to
+ running the code directly within R.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -8448,7 +8453,7 @@ If you're really trying to optimize memory use, you may also consider:
 \end_layout
 
 \begin_layout Itemize
-Using reference classes and similar strategies to pass by reference.
+Using R6 classes and similar strategies to pass by reference.
 \end_layout
 
 \begin_layout Itemize

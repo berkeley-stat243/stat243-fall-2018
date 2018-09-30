@@ -1,6 +1,6 @@
 #########################################################
-### Demo code for Unit 7 of Stat243, "Computer numbers"
-### Chris Paciorek, October 2015
+### Demo code for Unit 6 of Stat243, "Computer numbers"
+### Chris Paciorek, October 2018
 #########################################################
 
 ############################

@@ -1394,22 +1394,13 @@ address(y)
 
 
 ## @knitr named
-rm(x, y)
-f <- function(x) sum(x^2)
-y <- rnorm(10)
-## result of next line should be 1 if executed in clean R session
-refs(y)  # from pryr - reports on the NAMED count
-
-f(y)
-refs(y)
-address(y)
-y[3] <- 2
-address(y)
-
 a <- 1:5
+refs(a)
 b <- a
 address(a)
 address(b)
+refs(a)
+refs(b)
 a[2] <- 0
 b[2] <- 4
 address(a)
@@ -1426,6 +1417,19 @@ b[1] <- 1
 untracemem(a)   
 address(a)
 address(b)
+
+rm(x, y)
+f <- function(x) sum(x^2)
+y <- rnorm(10)
+## result of next line should be 1 if executed in clean R session
+refs(y)  # from pryr - reports on the NAMED count
+
+f(y)
+refs(y)
+address(y)
+y[3] <- 2
+address(y)
+
 
 
 

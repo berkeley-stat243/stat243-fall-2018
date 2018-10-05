@@ -1845,7 +1845,7 @@ status open
 
 \begin_layout Plain Layout
 
-<<drop-view, include=FALSE>>=
+<<drop-view, include=FALSE, eval=FALSE>>=
 \end_layout
 
 \begin_layout Plain Layout

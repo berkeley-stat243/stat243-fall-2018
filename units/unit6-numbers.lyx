@@ -1848,14 +1848,15 @@ catastrophic-cancel, tidy=FALSE
 \end_layout
 
 \begin_layout Standard
-The absolute error here, based on the larger value (which has the fewest
- error-free decimal places) is of the order 
-\begin_inset Formula $\epsilon x=2.2\times10^{-16}\cdot1\times10^{12}\approx1\times10^{-4}=.0001$
+The absolute error in the original numbers here, is of the order 
+\begin_inset Formula $\epsilon x=2.2\times10^{-16}\cdot1\times10^{11}\approx1\times10^{-5}=.00001$
 \end_inset
 
-, so while we might think that the result is close to the value 1 and should
- have error of about machine epsilon, we actually only have about four significa
-nt digits in our result.
+.
+ While we might think that the result is close to the value 1 and should
+ have error of about machine epsilon, the relevant absolute error is in
+ the original numbers, so we actually only have about five significant digits
+ in our result because we cancel out the other digits.
 \end_layout
 
 \begin_layout Standard
@@ -1897,8 +1898,8 @@ catastrophic-cancel-small, tidy=FALSE
 \end_layout
 
 \begin_layout Standard
-But the result is accurate only to 8 places + 21 = 29 places, as expected
- from a machine precision-based calculation, since the 
+But the result is accurate only to 8 places + 20 = 28 decimal places, as
+ expected from a machine precision-based calculation, since the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1906,9 +1907,9 @@ But the result is accurate only to 8 places + 21 = 29 places, as expected
 \begin_inset Quotes erd
 \end_inset
 
- is in the 13th position (13+16=29).
- Ideally, we would have accuracy to 37 places (16 + the 21), but we've lost
- 8 digits to catastrophic cancellation.
+ is in the 13th position, after 12 zeroes (12+16=28).
+ Ideally, we would have accuracy to 36 places (16 digits + the 20 zeroes),
+ but we've lost 8 digits to catastrophic cancellation.
 \end_layout
 
 \begin_layout Standard
@@ -1995,7 +1996,7 @@ magnitude-diff
 
 \begin_layout Standard
 The absolute error in representing the larger number is around 
-\begin_inset Formula $1\times10^{^{-4}}$
+\begin_inset Formula $1\times10^{^{-5}}$
 \end_inset
 
  and the smaller number is smaller than this.

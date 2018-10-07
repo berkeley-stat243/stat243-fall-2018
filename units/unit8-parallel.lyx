@@ -1,0 +1,2017 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage[unicode=true]{hyperref}
+\usepackage{/accounts/gen/vis/paciorek/latex/paciorek-asa,times,graphics}
+\input{/accounts/gen/vis/paciorek/latex/paciorekMacros}
+%\renewcommand{\baselinestretch}{1.5}
+\hypersetup{unicode=true, pdfusetitle,bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true,}
+\end_preamble
+\use_default_options false
+\begin_modules
+knitr
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize letterpaper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1in
+\topmargin 1in
+\rightmargin 1in
+\bottommargin 1in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Unit 8: Parallel Processing 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Chunk
+status open
+
+\begin_layout Plain Layout
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+chunk_setup, include=FALSE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+library(knitr)
+\end_layout
+
+\begin_layout Plain Layout
+
+library(parallel)
+\end_layout
+
+\begin_layout Plain Layout
+
+read_chunk("unit8-parallel.R")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+References: 
+\end_layout
+
+\begin_layout Itemize
+Tutorial on basic parallel processing: 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://github.com/berkeley-scf/tutorial-parallel-basics"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Tutorial on distributed parallel processing: 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://github.com/berkeley-scf/tutorial-parallel-distributed"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This unit will be fairly Linux-focused as most serious parallel computation
+ is done on systems where some variant of Linux is running.
+ The single-machine parallelization discussed here should work on Macs,
+ but only some of the approaches are likely to work on Windows machines.
+\end_layout
+
+\begin_layout Section
+Some scenarios for parallelization
+\end_layout
+
+\begin_layout Itemize
+You need to fit a single statistical/machine learning model, such as a random
+ forest or regression model, to your data.
+ 
+\end_layout
+
+\begin_layout Itemize
+You need to fit three different statistical/machine learning models to your
+ data.
+ 
+\end_layout
+
+\begin_layout Itemize
+You are running a prediction method on 10 cross-validation folds, possibly
+ using multiple statistical/machine learning models to do prediction.
+\end_layout
+
+\begin_layout Itemize
+You are running an ensemble prediction method such as 
+\emph on
+SuperLearner
+\emph default
+ or 
+\emph on
+Bayesian model averaging
+\emph default
+ over 10 cross-validation folds, with 30 statistical/machine learning methods
+ used for each fold.
+ 
+\end_layout
+
+\begin_layout Itemize
+You are running stratified analyses on a very large dataset (e.g., running
+ regression models once for each subgroup within a dataset).
+\end_layout
+
+\begin_layout Itemize
+You are running a simulation study with n=1000 replicates.
+ Each replicate involves fitting 10 statistical/machine learning methods.
+ 
+\end_layout
+
+\begin_layout Standard
+Given you are in such a situation, can you do things in parallel? Can you
+ do it on your laptop or a single computer? Will it be useful (e.g., faster
+ or provide access to sufficient memory) to use multiple computers, such
+ as multiple nodes in a Linux cluster? 
+\end_layout
+
+\begin_layout Standard
+All of the functionality discussed in this Unit applies ONLY if the iterations/l
+oops of your calculations can be done completely separately and do not depend
+ on one another; i.e., you can do the computation as separate processes without
+ communication between the processes.
+ This scenario is called an 
+\emph on
+embarrassingly parallel
+\emph default
+ computation
+\end_layout
+
+\begin_layout Subsection
+Embarrassingly parallel (EP) problems
+\end_layout
+
+\begin_layout Standard
+An EP problem is one that can be solved by doing independent computations
+ as separate processes without communication between the processes.
+ You can get the answer by doing separate tasks and then collecting the
+ results.
+ Examples in statistics include
+\end_layout
+
+\begin_layout Enumerate
+simulations with many independent replicates
+\end_layout
+
+\begin_layout Enumerate
+bootstrapping
+\end_layout
+
+\begin_layout Enumerate
+stratified analyses
+\end_layout
+
+\begin_layout Enumerate
+random forests
+\end_layout
+
+\begin_layout Enumerate
+cross-validation.
+\end_layout
+
+\begin_layout Standard
+The standard setup is that we have the same code running on different datasets.
+ (Note that different processes may need different random number streams,
+ as we will discuss in the Simulation Unit.)
+\end_layout
+
+\begin_layout Standard
+To do parallel processing in this context, you need to have control of multiple
+ processes.
+ Note that on a shared system with queueing/scheduling software set up,
+ this will generally mean requesting access to a certain number of processors
+ and then running your job in such a way that you use multiple processors.
+ 
+\end_layout
+
+\begin_layout Standard
+In general, except for some modest overhead, an EP problem can ideally be
+ solved with 
+\begin_inset Formula $1/p$
+\end_inset
+
+ the amount of time for the non-parallel implementation, given 
+\begin_inset Formula $p$
+\end_inset
+
+ cores.
+ This gives us a speedup of 
+\begin_inset Formula $p$
+\end_inset
+
+, which is called linear speedup (basically anytime the speedup is of the
+ form 
+\begin_inset Formula $kp$
+\end_inset
+
+ for some constant 
+\begin_inset Formula $k$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Section
+Overview of parallel processing
+\end_layout
+
+\begin_layout Subsection
+Computer architecture
+\end_layout
+
+\begin_layout Standard
+Computers now come with multiple processors for doing computation.
+ Basically, physical constraints have made it harder to keep increasing
+ the speed of individual processors, so the chip industry is now putting
+ multiple processing units in a given computer and trying/hoping to rely
+ on implementing computations in a way that takes advantage of the multiple
+ processors.
+\end_layout
+
+\begin_layout Standard
+Everyday personal computers usually have more than one processor (more than
+ one chip) and on a given processor, often have more than one core (multi-core).
+ A multi-core processor has multiple processors on a single computer chip.
+ On personal computers, all the processors and cores share the same memory.
+\end_layout
+
+\begin_layout Standard
+Supercomputers and computer clusters generally have tens, hundreds, or thousands
+ of 'nodes', linked by a fast local network.
+ Each node is essentially a computer with its own processor(s) and memory.
+ Memory is local to each node (distributed memory).
+ One basic principle is that communication between a processor and its memory
+ is much faster than communication between processors with different memory.
+ An example of a modern supercomputer is the Edison supercomputer at Lawrence
+ Berkeley National Lab, which has 5,586 nodes, each with two processors
+ and each processor with 12 cores, giving 134,064 total processing cores.
+ Each node has 64 GB of memory for a total of 357 TB of memory.
+\end_layout
+
+\begin_layout Standard
+There is little practical distinction between multi-processor and multi-core
+ situations.
+ The main issue is whether processes share memory or not.
+ In general, I won't distinguish between cores and processors.
+ We'll just focus on the number of cores on given personal computer or a
+ given node in a cluster.
+\end_layout
+
+\begin_layout Subsection
+Some useful terminology:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+cores
+\emph default
+: We'll use this term to mean the different processing units available on
+ a single node.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+nodes
+\emph default
+: We'll use this term to mean the different computers, each with their own
+ distinct memory, that make up a cluster or supercomputer.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+processes
+\emph default
+: instances of a program(s) executing on a machine; multiple processes may
+ be executing at once.
+ A given program may start up multiple processes at once.
+ Ideally we have no more processes than cores on a node.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+tasks
+\emph default
+: individual units of computation; one or more tasks might be executed by
+ a given process on a given core.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+threads
+\emph default
+: multiple paths of execution within a single process; the OS sees the threads
+ as a single process, but one can think of them as 'lightweight' processes.
+ Ideally when considering the processes and their threads, we would the
+ same number of cores as we have processes and threads combined.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+forking
+\emph default
+: child processes are spawned that are identical to the parent, but with
+ different process IDs and their own memory.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+sockets
+\emph default
+: some of R's parallel functionality involves creating new R processes (e.g.,
+ starting processes via 
+\emph on
+Rscript
+\emph default
+) and communicating with them via a communication technology called sockets.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+scheduler
+\emph default
+: a program that manages users' jobs on a cluster.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+load-balanced
+\emph default
+: when all the cores that are part of a computation are busy for the entire
+ period of time the computation is running.
+\end_layout
+
+\begin_layout Subsection
+Distributed vs.
+ shared memory
+\end_layout
+
+\begin_layout Standard
+There are two basic flavors of parallel processing (leaving aside GPUs):
+ distributed memory and shared memory.
+ With shared memory, multiple processors (which I'll call cores for the
+ rest of this document) share the same memory.
+ With distributed memory, you have multiple nodes, each with their own memory.
+ You can think of each node as a separate computer connected by a fast network.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+[see George's pdf for graphical representation, p.
+ 23]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Shared memory
+\end_layout
+
+\begin_layout Standard
+For shared memory parallelism, each core is accessing the same memory so
+ there is no need to pass information (in the form of messages) between
+ different machines.
+ But in some programming contexts one needs to be careful that activity
+ on different cores doesn't mistakenly overwrite places in memory that are
+ used by other cores.
+\end_layout
+
+\begin_layout Standard
+We'll cover two types of shared memory parallelism approaches in this unit:
+ 
+\end_layout
+
+\begin_layout Itemize
+threaded linear algebra 
+\end_layout
+
+\begin_layout Itemize
+multicore functionality 
+\end_layout
+
+\begin_layout Paragraph
+Threading
+\end_layout
+
+\begin_layout Standard
+Threads are multiple paths of execution within a single process.
+ If you are monitoring CPU usage (such as with 
+\emph on
+top
+\emph default
+ in Linux or Mac) and watching a job that is executing threaded code, you'll
+ see the process using more than 100% of CPU.
+ When this occurs, the process is using multiple cores, although it appears
+ as a single process rather than as multiple processes.
+\end_layout
+
+\begin_layout Standard
+Note that this is a different notion than a processor that is hyperthreaded.
+ With hyperthreading a single core appears as two cores to the operating
+ system.
+\end_layout
+
+\begin_layout Subsubsection
+Distributed memory
+\end_layout
+
+\begin_layout Standard
+Parallel programming for distributed memory parallelism requires passing
+ messages between the different nodes.
+ The standard protocol for doing this is MPI, of which there are various
+ versions, including 
+\emph on
+openMPI
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The R package 
+\emph on
+Rmpi
+\emph default
+ implements MPI in R.
+ The 
+\emph on
+pbdR
+\emph default
+ packages for R also implement MPI as well as distributed linear algebra
+ (linear algebra calculations across nodes).
+ In addition, there are various ways to do simple parallelization of multiple
+ computational tasks (across multiple nodes) that use MPI and other tools
+ on the back-end without users needing to understand them.
+ We'll only cover distributed memory parallelization very briefly in this
+ Unit, but we covered a flavor of it via Spark in Unit 7.
+\end_layout
+
+\begin_layout Subsection
+Some other approaches to parallel processing
+\end_layout
+
+\begin_layout Subsubsection
+GPUs
+\end_layout
+
+\begin_layout Standard
+GPUs (Graphics Processing Units) are processing units originally designed
+ for rendering graphics on a computer quickly.
+ This is done by having a large number of simple processing units for massively
+ parallel calculation.
+ The idea of general purpose GPU (GPGPU) computing is to exploit this capability
+ for general computation.
+ 
+\end_layout
+
+\begin_layout Standard
+Most researchers don't program for a GPU directly but rather use software
+ (often machine learning software such as Tensorflow, PyTorch, or Caffe)
+ that has been programmed to take advantage of a GPU if one is available.
+\end_layout
+
+\begin_layout Subsubsection
+Spark and Hadoop
+\end_layout
+
+\begin_layout Standard
+Spark and Hadoop are systems for implementing computations in a distributed
+ memory environment, using the MapReduce approach, as we saw.
+\end_layout
+
+\begin_layout Subsubsection
+Cloud computing
+\end_layout
+
+\begin_layout Standard
+Amazon (Amazon Web Services' EC2 service), Google (Google Cloud Platform's
+ Compute Engine service) and Microsoft (Azure) offer computing through the
+ cloud.
+ The basic idea is that they rent out their servers on a pay-as-you-go basis.
+ You get access to a virtual machine that can run various versions of Linux
+ or Microsoft Windows server and where you choose the number of processing
+ cores you want.
+ You configure the virtual machine with the applications, libraries, and
+ data you need and then treat the virtual machine as if it were a physical
+ machine that you log into as usual.
+ You can also assemble multiple virtual machines into your own virtual cluster
+ and use platforms such as Spark on the cloud provider's virtual machines.
+ 
+\end_layout
+
+\begin_layout Section
+Parallelization strategies
+\end_layout
+
+\begin_layout Standard
+Some of the considerations that apply when thinking about how effective
+ a given parallelization approach will be include:
+\end_layout
+
+\begin_layout Itemize
+the amount of memory that will be used by the various processes,
+\end_layout
+
+\begin_layout Itemize
+the amount of communication that needs to happen -- how much data will need
+ to be passed between processes,
+\end_layout
+
+\begin_layout Itemize
+the latency of any communication - how much delay/lag is there in sending
+ data between processes or starting up a worker process, and
+\end_layout
+
+\begin_layout Itemize
+to what extent do processes have to wait for other processes to finish before
+ they can do their next step.
+\end_layout
+
+\begin_layout Standard
+The following are some basic principles/suggestions for how to parallelize
+ your computation.
+\end_layout
+
+\begin_layout Itemize
+Should I use one machine/node or many machines/nodes?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If you can do your computation on the cores of a single node using shared
+ memory, that will be faster than using the same number of cores (or even
+ somewhat more cores) across multiple nodes.
+ Similarly, jobs with a lot of data/high memory requirements that one might
+ think of as requiring Spark or Hadoop may in some cases be much faster
+ if you can find a single machine with a lot of memory.
+ 
+\end_layout
+
+\begin_layout Itemize
+That said, if you would run out of memory on a single node, then you'll
+ need to use distributed memory.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+What level or dimension should I parallelize over?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If you have nested loops, you generally only want to parallelize at one
+ level of the code.
+ That said, there may be cases in which it is helpful to do both.
+ Keep in mind whether your linear algebra is being threaded.
+ Often you will want to parallelize over a loop and not use threaded linear
+ algebra.
+ 
+\end_layout
+
+\begin_layout Itemize
+Often it makes sense to parallelize the outer loop when you have nested
+ loops.
+ 
+\end_layout
+
+\begin_layout Itemize
+You generally want to parallelize in such a way that your code is load-balanced
+ and does not involve too much communication.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+How do I balance communication overhead with keeping my cores busy?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+If you have very few tasks, particularly if the tasks take different amounts
+ of time, often some processors will be idle and your code poorly load-balanced.
+ 
+\end_layout
+
+\begin_layout Itemize
+If you have very many tasks and each one takes little time, the communication
+ overhead of starting and stopping the tasks will reduce efficiency.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Should multiple tasks be pre-assigned to a process (i.e., a worker) (sometimes
+ called 
+\emph on
+prescheduling
+\emph default
+) or should tasks be assigned dynamically as previous tasks finish? 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Basically if you have many tasks that each take similar time, you want to
+ preschedule the tasks to reduce communication.
+ If you have few tasks or tasks with highly variable completion times, you
+ don't want to preschedule, to improve load-balancing.
+ 
+\end_layout
+
+\begin_layout Itemize
+For R in particular, some of R's parallel functions allow you to say whether
+ the tasks should be prescheduled.
+ E.g., the 
+\emph on
+mc.preschedule
+\emph default
+ argument in 
+\emph on
+mclapply()
+\emph default
+.
+ For 
+\emph on
+parLapply()
+\emph default
+ the documentation would suggest 
+\emph on
+parLapplyLB()
+\emph default
+ is the way to do this but there appears to be a bug in 
+\emph on
+parLapplyLB()
+\emph default
+ such that no load-balancing is done.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Illustrating the principles in specific case studies
+\end_layout
+
+\begin_layout Subsection
+Scenario 1: one model fit
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenario
+\series default
+: You need to fit a single statistical/machine learning model, such as a
+ random forest or regression model, to your data.
+\end_layout
+
+\begin_layout Subsubsection
+Scenario 1A:
+\end_layout
+
+\begin_layout Standard
+A given method may have been written to use parallelization and you simply
+ need to figure out how to invoke the method for it to use multiple cores.
+\end_layout
+
+\begin_layout Standard
+For example the documentation for the 
+\emph on
+randomForest
+\emph default
+ package doesn't indicate it can use multiple cores, but the 
+\emph on
+ranger
+\emph default
+ package can -- note the 
+\emph on
+num.threads
+\emph default
+ argument.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<ranger>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Scenario 1B:
+\end_layout
+
+\begin_layout Standard
+If a method does linear algebra computations on large matrices/vectors,
+ R can call out to parallelized linear algebra packages (the BLAS and LAPACK).
+\end_layout
+
+\begin_layout Standard
+The BLAS is the library of basic linear algebra operations (written in Fortran
+ or C).
+ A fast BLAS can greatly speed up linear algebra in R relative to the default
+ BLAS that comes with R.
+ Some fast BLAS libraries are
+\end_layout
+
+\begin_layout Itemize
+Intel's 
+\emph on
+MKL
+\emph default
+; available for educational use for free
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+OpenBLAS
+\emph default
+; open source and free 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+vecLib
+\emph default
+ for Macs; provided with your Mac
+\end_layout
+
+\begin_layout Standard
+In addition to being fast when used on a single core, all of these BLAS
+ libraries are threaded - if your computer has multiple cores and there
+ are free resources, your linear algebra will use multiple cores, provided
+ your program is linked against the threaded BLAS installed on your machine
+ and provided the environment variable OMP_NUM_THREADS is not set to one.
+ (Macs make use of VECLIB_MAXIMUM_THREADS rather than OMP_NUM_THREADS.)
+\end_layout
+
+\begin_layout Standard
+Threading in R is limited to linear algebra, provided R is linked against
+ a threaded BLAS.
+\end_layout
+
+\begin_layout Standard
+Here's some code that illustrates the speed of using a threaded BLAS:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<R-linalg, eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here the elapsed time indicates that using four threads gave us a two-three
+ times (2-3x) speedup in terms of real time, while the user time indicates
+ that the threaded calculation took a bit more total processing time (combining
+ time across all processors) because of the overhead of using multiple threads.
+ 
+\end_layout
+
+\begin_layout Standard
+Note that the code also illustrates use of an R package that can control
+ the number of threads from within R, but you could also have set OMP_NUM_THREAD
+S before starting R.
+\end_layout
+
+\begin_layout Standard
+To use an optimized BLAS with R, talk to your systems administrator, see
+ Section A.3 of the R Installation and Administration Manual (
+\begin_inset CommandInset href
+LatexCommand href
+target "https://cran.r-project.org/manuals.html"
+
+\end_inset
+
+), or see these instructions to use vecLib BLAS from Apple's Accelerate
+ framework on your own Mac:
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset CommandInset href
+LatexCommand href
+target "http://statistics.berkeley.edu/computing/blas"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+It's also possible to use an optimized BLAS with Python's 
+\emph on
+numpy
+\emph default
+ and 
+\emph on
+scipy
+\emph default
+ packages, on either Linux or using the Mac's vecLib BLAS.
+ Details will depend on how you install Python, numpy, and scipy.
+ 
+\end_layout
+
+\begin_layout Subsection
+Scenario 2: three different prediction methods on your data
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenario
+\series default
+: You need to fit three different statistical/machine learning models to
+ your data.
+\end_layout
+
+\begin_layout Standard
+What are some options?
+\end_layout
+
+\begin_layout Itemize
+use one core per model 
+\end_layout
+
+\begin_layout Itemize
+if you have rather more than three cores, apply the ideas here combined
+ with Scenario 1 above - with access to a cluster and parallelized implementatio
+ns of each model, you might use one node per model
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<mcparallel>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Why might this not have shown a perfect three-fold speedup?
+\end_layout
+
+\begin_layout Standard
+You could also have used tools like 
+\emph on
+foreach
+\emph default
+ and 
+\emph on
+parLapply
+\emph default
+ here as well, as we'll discuss next.
+\end_layout
+
+\begin_layout Subsection
+Scenario 3: 10-fold CV and 10 or fewer cores
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenario
+\series default
+: You are running a prediction method on 10 cross-validation folds.
+\end_layout
+
+\begin_layout Standard
+Here I'll illustrate parallel looping, using this simulated dataset and
+ basic use of 
+\emph on
+randomForest()
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<rf-example>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Using a parallelized for loop with 
+\emph on
+foreach
+\end_layout
+
+\begin_layout Standard
+The foreach package provides a 
+\emph on
+foreach
+\emph default
+ command that allows you to do this easily.
+ foreach can use a variety of parallel ``back-ends''.
+ For our purposes, the main one is use of the 
+\emph on
+parallel
+\emph default
+ package to use shared memory cores.
+ When using 
+\emph on
+parallel
+\emph default
+ as the back-end, you should see multiple processes (as many as you registered;
+ ideally each at 100%) when you monitor CPU usage.
+ The multiple processes are created by forking or using sockets.
+\end_layout
+
+\begin_layout Standard
+Note that 
+\emph on
+foreach
+\emph default
+ also provides functionality for collecting and managing the results to
+ avoid some of the bookkeeping you would need to do if writing your own
+ standard for loop.
+ The result of 
+\emph on
+foreach
+\emph default
+ will generally be a list, unless we request the results be combined in
+ different way, using the 
+\emph on
+.combine
+\emph default
+ argument.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<foreach>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+You can debug by running serially using 
+\family typewriter
+%do%
+\family default
+ rather than 
+\family typewriter
+%dopar%
+\family default
+.
+ Note that you may need to load packages within the 
+\emph on
+foreach
+\emph default
+ construct to ensure a package is available to all of the calculations.
+\end_layout
+
+\begin_layout Standard
+(Note that the printed statements from 
+\emph on
+cat
+\emph default
+ are not showing up in the creation of this document but should show if
+ you run the code.)
+\end_layout
+
+\begin_layout Subsubsection
+Alternatively using parallel apply statements
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+parallel
+\emph default
+ package has the ability to parallelize the various 
+\emph on
+apply
+\emph default
+ functions (
+\emph on
+apply
+\emph default
+, 
+\emph on
+lapply
+\emph default
+, 
+\emph on
+sapply
+\emph default
+, etc.).
+ It's a bit hard to find the vignette for the parallel package (
+\begin_inset CommandInset href
+LatexCommand href
+target "http://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf"
+
+\end_inset
+
+) because 
+\emph on
+parallel
+\emph default
+ is not listed as one of the contributed packages on CRAN (it gets installed
+ with R by default).
+\end_layout
+
+\begin_layout Standard
+We'll consider parallel 
+\emph on
+lapply
+\emph default
+ and 
+\emph on
+sapply
+\emph default
+.
+ These rely on having started a cluster using 
+\emph on
+makeCluster
+\emph default
+, which starts new jobs via 
+\emph on
+Rscript
+\emph default
+ and communicates via a technology called sockets.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<parallel-lsApply>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here the miniscule user time is probably because the time spent in the worker
+ processes is not counted at the level of the overall master process that
+ dispatches the workers.
+\end_layout
+
+\begin_layout Standard
+For help with these functions and additional related parallelization functions
+ (including 
+\emph on
+parApply()
+\emph default
+), see the help on 
+\emph on
+clusterApply
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Now suppose you have 4 cores (and therefore won't have an equal number of
+ tasks per core).
+ The approach in the next scenario should work better.
+ 
+\end_layout
+
+\begin_layout Subsection
+Scenario 4: parallelizing over prediction methods
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenario
+\series default
+: parallelizing over prediction methods or other cases where execution time
+ varies
+\end_layout
+
+\begin_layout Standard
+If you need to parallelize over prediction methods or in other contexts
+ in which the computation time for the different tasks varies widely, you
+ want to avoid having the parallelization tool group the tasks in advance,
+ because some cores may finish a lot more quickly than others.
+ In many cases, this sort of prescheduling or 'static' allocation of tasks
+ to workers is the default.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+mclapply()
+\emph default
+ is an alternative to 
+\emph on
+parSapply/parLapply
+\emph default
+ that uses forking to start up the worker processes.
+ Here we see how to use 
+\emph on
+mclapply
+\emph default
+ to avoid prescheduling in a toy example.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<parallel-mclapply-no-preschedule>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Scenario 5: 10-fold CV across multiple methods with many more than 10 cores
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenario
+\series default
+: You are running an ensemble prediction method such as SuperLearner or
+ Bayesian model averaging on 10 cross-validation folds, with many statistical/ma
+chine learning methods.
+\end_layout
+
+\begin_layout Standard
+Here you want to take advantage of all the cores you have available, so
+ you can't just parallelize over folds.
+ There are a couple ways we can deal with such nested parallelization.
+\end_layout
+
+\begin_layout Subsubsection
+Scenario 5A: nested parallelization
+\end_layout
+
+\begin_layout Standard
+One can always flatten the looping, either in a for loop or in similar ways
+ when using apply-style statements.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<unnested-code, eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+## original code: multiple loops 
+\end_layout
+
+\begin_layout Plain Layout
+
+for(fold in 1:n) { 
+\end_layout
+
+\begin_layout Plain Layout
+
+  for(method in 1:M) { 
+\end_layout
+
+\begin_layout Plain Layout
+
+     ### code here 
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+## revised code: flatten the loops 
+\end_layout
+
+\begin_layout Plain Layout
+
+output <- foreach(idx = 1:(n*M)) %dopar% { 
+\end_layout
+
+\begin_layout Plain Layout
+
+   fold <- idx %/% M + 1 
+\end_layout
+
+\begin_layout Plain Layout
+
+   method <- idx %% M + 1 
+\end_layout
+
+\begin_layout Plain Layout
+
+   ### code here 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Alternatively, 
+\emph on
+foreach
+\emph default
+ supports nested parallelization as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<nested-foreach-code, eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+output <- foreach(fold = 1:n) %:% 
+\end_layout
+
+\begin_layout Plain Layout
+
+  foreach(method = 1:M) %dopar% { 
+\end_layout
+
+\begin_layout Plain Layout
+
+     ## code here 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The `%:%` basically causes the nesting to be flattened, with n*M total tasks
+ run in parallel.
+\end_layout
+
+\begin_layout Subsubsection
+Scenario 5B: Parallelizing across multiple nodes
+\end_layout
+
+\begin_layout Standard
+If you have access to multiple machines networked together, including a
+ Linux cluster, you can use 
+\emph on
+foreach
+\emph default
+ across multiple nodes.
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+doSNOW
+\emph default
+ backend has the advantage over 
+\emph on
+doMPI
+\emph default
+ in that it doesn't need to have MPI installed on the system.
+ MPI can be tricky to install and keep working, so this is an easy approach
+ to using foreach across multiple machines.
+\end_layout
+
+\begin_layout Standard
+Simply start R as you usually would.
+ 
+\end_layout
+
+\begin_layout Standard
+Here's R code for using doSNOW as the back-end to foreach.
+ Make sure to use the 
+\family typewriter
+type = "SOCK"
+\family default
+ argument or doSNOW will actually use MPI behind the scenes.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<doSNOW, eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To use parallel variations on apply/sapply/lapply:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<sockets, eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Scenario 6: Stratified analysis on a very large dataset
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+unit7 R code from 2017 shows explicit look at addresses of objects in this
+ context
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenario
+\series default
+: You are doing stratified analysis on a very large dataset and want to
+ avoid unnecessary copies.
+\end_layout
+
+\begin_layout Standard
+In many of R's parallelization tools, if you try to parallelize this case
+ on a single node, you end up making copies of the original dataset, which
+ both takes up time and eats up memory.
+ Here R copies 'data' when it passes it in as the argument to the calls
+ to 
+\emph on
+testfun()
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<parallel-copy, eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+However, if you are working on a single machine (i.e., with shared memory)
+ you can avoid this by using parallelization strategies that fork the original
+ R process (i.e., make a copy of the process) and use the big data objects
+ in the global environment (yes, this violates the usual programming best
+ practices of not using global variables).
+ So here we avoid copying the original dataset.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<parallel-nocopy, eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Parallelizing across nodes requires copying any big data across machines
+ (one can't fork processes across nodes), which will be slow.
+\end_layout
+
+\begin_layout Subsection
+Scenario 7: Simulation study with n=1000 replicates: parallel random number
+ generation
+\end_layout
+
+\begin_layout Standard
+We won't cover this in class, though I will mention the issue in the simulation
+ unit when we talk about random number generation.
+\end_layout
+
+\begin_layout Standard
+In the previous example, we set the random number seed to different values
+ for each bootstrap sample.
+ One danger in setting the seed like that is that the random numbers in
+ the different bootstrap samples could overlap somewhat.
+ This is probably somewhat unlikely if you are not generating a huge number
+ of random numbers, but it's unclear how safe it is.
+\end_layout
+
+\begin_layout Standard
+The key thing when thinking about random numbers in a parallel context is
+ that you want to avoid having the same 'random' numbers occur on multiple
+ processes.
+ On a computer, random numbers are not actually random but are generated
+ as a sequence of pseudo-random numbers designed to mimic true random numbers.
+ The sequence is finite (but very long) and eventually repeats itself.
+ When one sets a seed, one is choosing a position in that sequence to start
+ from.
+ Subsequent random numbers are based on that subsequence.
+ All random numbers can be generated from one or more random uniform numbers,
+ so we can just think about a sequence of values between 0 and 1.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Scenario
+\series default
+: You are running a simulation study with n=1000 replicates.
+\end_layout
+
+\begin_layout Standard
+Each replicate involves fitting 20 statistical/machine learning methods.
+\end_layout
+
+\begin_layout Standard
+Here, unless you really have access to multiple hundreds of cores, you might
+ as well just parallelize across replicates.
+\end_layout
+
+\begin_layout Standard
+However, you need to think about random number generation.
+ If you have overlap in the random numbers the replications may not be fully
+ independent.
+\end_layout
+
+\begin_layout Standard
+In R, the 
+\emph on
+rlecuyer
+\emph default
+ package deals with this.
+ The L'Ecuyer algorithm has a period of $2^{191}$, which it divides into
+ subsequences of length $2^{127}$.
+ 
+\end_layout
+
+\begin_layout Standard
+Here's how you initialize independent sequences on different processes when
+ using the 
+\emph on
+parallel
+\emph default
+ package's parallel apply functionality (illustrated here with 
+\emph on
+parSapply
+\emph default
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<RNG-apply, eval=TRUE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Additional details and topics
+\end_layout
+
+\begin_layout Subsection
+Limitations in Windows
+\end_layout
+
+\begin_layout Standard
+Forking in R is not possible on Windows, so parallelization on Windows would
+ generally need to use approaches based on sockets and not based on forking.
+\end_layout
+
+\begin_layout Subsection
+Setting the number of threads (cores used) in threaded code (including parallel
+ linear algebra in R)
+\end_layout
+
+\begin_layout Standard
+In general, threaded code will detect the number of cores available on a
+ machine and make use of them.
+ However, you can also explicitly control the number of threads available
+ to a process.
+ 
+\end_layout
+
+\begin_layout Standard
+For most threaded code (that based on the openMP protocol), the number of
+ threads can be set by setting the OMP_NUM_THREADS environment variable
+ (VECLIB_MAXIMUM_THREADS on a Mac).
+ E.g., to set it for four threads in the bash shell:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<set-OMP, engine='bash', eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+export OMP_NUM_THREADS=4
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Do this before starting your R or Python session or before running your
+ compiled executable.
+ 
+\end_layout
+
+\begin_layout Standard
+Alternatively, you can set OMP_NUM_THREADS as you invoke your job, e.g., here
+ with R:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+<<set-OMP2, engine='bash', eval=FALSE>>=
+\end_layout
+
+\begin_layout Plain Layout
+
+OMP_NUM_THREADS=4 R CMD BATCH --no-save job.R job.out
+\end_layout
+
+\begin_layout Plain Layout
+
+@
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Important warnings about use of threaded BLAS
+\end_layout
+
+\begin_layout Subsubsection
+Speed and threaded BLAS
+\end_layout
+
+\begin_layout Standard
+In many cases, using multiple threads for linear algebra operations will
+ outperform using a single thread, but there is no guarantee that this will
+ be the case, in particular for operations with small matrices and vectors.
+ Testing with openBLAS suggests that sometimes a job may take more time
+ when using multiple threads; this seems to be less likely with ACML.
+ This presumably occurs because openBLAS is not doing a good job in detecting
+ when the overhead of threading outweights the gains from distributing the
+ computations.
+ You can compare speeds by setting OMP_NUM_THREADS to different values.
+ In cases where threaded linear algebra is slower than unthreaded, you would
+ want to set OMP_NUM_THREADS to 1.
+ 
+\end_layout
+
+\begin_layout Standard
+More generally, if you are using the parallel tools in Section 4 to simultaneous
+ly carry out many independent calculations (tasks), it is likely to be more
+ effective to use the fixed number of cores available on your machine so
+ as to split up the tasks, one per core, without taking advantage of the
+ threaded BLAS (i.e., restricting each process to a single thread).
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Conflicts between openBLAS and various R functionality
+\end_layout
+
+\begin_layout Standard
+In the past, I've seen various issues arising when using threaded linear
+ algebra.
+ In some cases when the parallelization uses forking, I have seen cases
+ where R hangs and doesn't finish the linear algebra calculation.
+\end_layout
+
+\begin_layout Standard
+I've also seen a conflict between threaded linear algebra and R profiling
+ (recall the discussion of profiling in Unit 4).
+\end_layout
+
+\begin_layout Standard
+Some solutions are to set OMP_NUM_THREADS to 1 to prevent the BLAS from
+ doing threaded calculations or to use parallelization approaches that avoid
+ forking.
+\end_layout
+
+\begin_layout Subsection
+Other packages for parallelization in R
+\end_layout
+
+\begin_layout Subsubsection
+The 
+\emph on
+future
+\emph default
+ package
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+future
+\emph default
+ package and related packages (
+\emph on
+future.apply
+\emph default
+, 
+\emph on
+future.batchtools
+\emph default
+) are an entire system for doing computations in parallel in an integrated
+ system where you can write your code once and then deploy it in multiple
+ different parallelization contexts by simply changing some initial code
+ that controls how the parallelization is done.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+The 
+\emph on
+partools
+\emph default
+ package
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+partools
+\emph default
+ is a new package developed by Norm Matloff at UC-Davis.
+ He has the perspective that Spark/Hadoop are not the right tools in many
+ cases when doing statistics-related work and has developed some simple
+ tools for parallelizing computation across multiple nodes, also referred
+ to as 
+\emph on
+Snowdoop
+\emph default
+.
+ The tools make use of the key idea in Hadoop of a distributed file system
+ and distributed data objects but avoid the complications of trying to ensure
+ fault tolerance, which is critical only on very large clusters of machines.
+\end_layout
+
+\begin_layout Subsubsection
+
+\emph on
+pbdR
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+pbdR
+\emph default
+ is an effort to enhance R's capability for distributed memory processing
+ called pbdR (
+\begin_inset CommandInset href
+LatexCommand href
+target "http://r-pbd.org"
+
+\end_inset
+
+).
+ For an extensive tutorial, see the pbdDEMO vignette (
+\begin_inset CommandInset href
+LatexCommand href
+target "https://github.com/wrathematics/pbdDEMO/blob/master/inst/doc/pbdDEMO-guide.pdf?raw=true"
+
+\end_inset
+
+).
+ 
+\emph on
+pbdR
+\emph default
+ is designed for SPMD processing in batch mode, which means that you start
+ up multiple processes in a non-interactive fashion using mpirun.
+ The same code runs in each R process so you need to have the code behavior
+ depend on the process ID.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+pbdR
+\emph default
+ provides the following capabilities:
+\end_layout
+
+\begin_layout Itemize
+the ability to do some parallel apply-style computations (this section),
+ 
+\end_layout
+
+\begin_layout Itemize
+the ability to do distributed linear algebra by interfacing to 
+\emph on
+ScaLapack
+\emph default
+, and 
+\end_layout
+
+\begin_layout Itemize
+an alternative to 
+\emph on
+Rmpi
+\emph default
+ for interfacing with MPI.
+\end_layout
+
+\begin_layout Standard
+Personally, I think the second of the three is the most exciting as it's
+ a functionality not readily available in R or even more generally in other
+ readily-accessible software.
+ 
+\end_layout
+
+\end_body
+\end_document

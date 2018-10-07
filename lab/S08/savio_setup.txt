@@ -1,0 +1,19 @@
+Important: assignment to be completed before Tuesday 10/17 section
+
+All, as I've mentioned, we'll be using the campus Savio cluster to do some parallel computing and computing with Spark.
+
+Section on Tuesday will be devoted to getting everyone up to speed on using the cluster.
+
+Before you come to section on Tuesday it's important that you set things up so you can login to Savio. This should take you 10-20 minutes.
+
+1) First, find your username in this Google spreadsheet:
+
+(TBD)
+
+1a) You should have already signed the user agreement. If you haven't (as indicated in the spreadsheet), do it now. 
+
+2) Then follow these instructions to set things up so you can login to Savio using Savio's one-time password system. This will involve setting up the Google authenticator app on your smartphone. If you don't have access to a smartphone, there is an alternative that sets up the Authy app on your laptop.
+
+http://research-it.berkeley.edu/services/high-performance-computing/logging-brc-clusters
+
+If you run into problems, please post a note on the Google group or stop by and chat with me in person.

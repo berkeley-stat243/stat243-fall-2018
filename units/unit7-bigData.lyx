@@ -352,7 +352,7 @@ Here's a
 \begin_inset CommandInset href
 LatexCommand href
 name "different way to summarize it"
-target "http://i2.wp.com/blog.datacamp.com/wp-content/uploads/2014/03/big-data.jpg"
+target "https://twitter.com/danariely/status/287952257926971392?lang=en"
 
 \end_inset
 
@@ -659,6 +659,22 @@ teacher ID 2
 
 \begin_layout Itemize
 teacher ID n 
+\end_layout
+
+\begin_layout Itemize
+teacher name 1
+\end_layout
+
+\begin_layout Itemize
+teacher name 2
+\end_layout
+
+\begin_layout Itemize
+...
+\end_layout
+
+\begin_layout Itemize
+teacher name n
 \end_layout
 
 \begin_layout Itemize

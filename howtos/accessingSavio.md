@@ -8,6 +8,8 @@ Each time you login, you'll need to login to `hpc.brc.berkeley.edu`, enter the l
 
 See the instructions for accessing the [Savio viz node](https://research-it.berkeley.edu/services/high-performance-computing/using-brc-visualization-node-realvnc). You'll need the VNCViewer Chrome plug-in or a VNC viewer application on your computer.
 
+Make sure you are NOT using the CalVisitor wireless when you do this.
+
 To start a browser in the remote desktop run `/global/scratch/kmuriki/otterbrowser`.
 
 To access the Spark UI, go to `http://n0070.savio2:8080` (replace 'n0070.savio2' with the name of the node that your Spark job is running on.

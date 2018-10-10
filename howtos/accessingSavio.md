@@ -10,6 +10,6 @@ See the instructions for accessing the [Savio viz node](https://research-it.berk
 
 Make sure you are NOT using the CalVisitor wireless when you do this.
 
-To start a browser in the remote desktop run `/global/scratch/kmuriki/otterbrowser`.
+To start a browser in the remote desktop run `/global/scratch/kmuriki/firefox`.
 
 To access the Spark UI, go to `http://n0070.savio2:8080` (replace 'n0070.savio2' with the name of the node that your Spark job is running on.

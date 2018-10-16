@@ -248,6 +248,7 @@ In addition, in some cases it can make sense to use the `--ntasks` (or `-n`) opt
 
 Here's an example job script for a job that uses Spark for parallelizing over multiple nodes:
 
+```
 #!/bin/bash
 # Job name:
 #SBATCH --job-name=test
@@ -273,6 +274,7 @@ source /global/home/groups/allhands/bin/spark_helper.sh
 spark-start
 spark-submit --master $SPARK_URL $HOME/stat243-fall-2018/units/test_batch.py
 spark-stop
+```
 
 When you write your code, you may need to specify information about the number of cores to use. (Though you shouldn't need to do this when using Spark on Savio. SLURM will provide a variety of variables that you can use in your code so that it adapts to the resources you have requested rather than being hard-coded. 
 

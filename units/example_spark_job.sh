@@ -12,14 +12,14 @@
 #SBATCH --partition=savio2
 #
 # Resources requested:
-#SBATCH --nodes=4
+#SBATCH --nodes=1
 #
 # Wall clock limit:
 #SBATCH --time=00:30:00
 #
 ## Command(s) to run:
 module purge
-module load java spark/2.1.0 
+module load java spark/2.1.0 python/3.5 
 source /global/home/groups/allhands/bin/spark_helper.sh
 spark-start
 # putting path to test_batch.py shouldn't be necessary but

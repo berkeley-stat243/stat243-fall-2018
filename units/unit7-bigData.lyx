@@ -4574,7 +4574,16 @@ test_batch.py
 \emph default
 .
  If you want to run a Spark job as a batch submission to the scheduler you
- can follow this example.
+ can follow that example, submitting the job using 
+\emph on
+sbatch
+\emph default
+: 
+\family typewriter
+sbatch name_of_job_script.sh
+\family default
+.
+ 
 \end_layout
 
 \begin_layout Paragraph

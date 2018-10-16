@@ -199,7 +199,7 @@ Let's see how to submit a simple job. If your job will only use the resources on
 
 Here's an example job script (see also *example_loo.sh*) that you can run. *example_loo.R* does leave-one-out cross-validation in parallel using R's foreach package, with the *registerDoParallel* function telling R how many CPUs to use. You can think of *foreach* simply as a for loop where the output of the loop is (usually) a list that contains the results of each iteration's calculation.
 
-
+```
 #!/bin/bash
 # Job name:
 #SBATCH --job-name=test
@@ -216,7 +216,7 @@ Here's an example job script (see also *example_loo.sh*) that you can run. *exam
 ## Command(s) to run:
 module load r r-packages
 R CMD BATCH --no-save example_loo.R example_loo.Rout
-
+```
 
 Now let's submit and monitor the job:
 
@@ -314,7 +314,7 @@ Consider the Wikipedia traffic data in */global/scratch/paciorek/wikistats_small
 
 Using either foreach or parSapply (or parLapply), write code that, in parallel, reads in the space-delimited file and filters to only the rows that refer to pages where "Barack_Obama" appears. Collect all the results across the 192 files into a single data frame. Run your code using an interactive session on either the Savio2 or Savio partition.
 
-You should be able to use *looFit.R* as a template for your answer here. In addition, Unit 8 has example R code for doing either a parallel for loop or a paralllel lapply/sapply. 
+You should be able to use *looFit.R* as a template for your answer here. In addition, Section 4.3 of Unit 8 has example R code for doing either a parallel for loop or a paralllel lapply/sapply. 
 
 Note that as we saw in class, the data are the number of hits on different Wikipedia pages for November 4, 2008. The columns are: date, time, language, webpage, number of hits, and page size.
 

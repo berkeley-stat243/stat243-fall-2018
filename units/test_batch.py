@@ -11,4 +11,4 @@ lines.getNumPartitions()  # 16590 (192 input files) for full dataset
 
 # note delayed evaluation
 num = lines.count()  # 9467817626 for full dataset
-print "There are " + str(num) "+ lines."
+print("There are " + str(num) + " lines.")

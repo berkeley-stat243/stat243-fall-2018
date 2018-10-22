@@ -326,7 +326,8 @@ val2 = B%*%z2/z2 + val1
 ### 5.2 Sparse matrices
 
 require(spam)
-mat = matrix(c(0,0,1,0,10,0,0,0,100,0,rep(0,5),1000,rep(0,4)), nrow = 4, byrow = TRUE)
+mat = matrix(c(0,0,1,0,10,0,0,0,100,0,rep(0,5),1000,rep(0,4)),
+             nrow = 4, byrow = TRUE)
 mat = as.spam(mat)
 mat@entries
 mat@rowpointers

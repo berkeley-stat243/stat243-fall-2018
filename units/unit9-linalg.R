@@ -80,13 +80,13 @@ norm2 <- function(x) sqrt(sum(x^2))
 A <- matrix(c(10,7,8,7,7,5,6,5,8,6,10,9,7,5,9,10),4)
 e <- eigen(A)
 b <- c(32, 23, 33, 31)
-bPerturb <- c(32.1, 22.9, 33.1, 30.9)
+bPerturbed <- c(32.1, 22.9, 33.1, 30.9)
 x <- solve(A, b)
-xPerturb <- solve(A, bPerturb)
-norm2(x - xPerturb)
-norm2(b - bPerturb)
-norm2(x - xPerturb)/norm2(x)
-(e$val[1]/e$val[4])*norm2(b - bPerturb)/norm2(b)
+xPerturbed <- solve(A, bPerturbed)
+norm2(x - xPerturbed)  ## delta x
+norm2(b - bPerturbed)  ## delta b
+norm2(x - xPerturbed)/norm2(x)
+(e$val[1]/e$val[4])*norm2(b - bPerturbed)/norm2(b)
 
 ## @knitr improve-cond
 x1 <- 1990:2010
@@ -326,7 +326,8 @@ val2 = B%*%z2/z2 + val1
 ### 5.2 Sparse matrices
 
 require(spam)
-mat = matrix(c(0,0,1,0,10,0,0,0,100,0,rep(0,5),1000,rep(0,4)), nrow = 4, byrow = TRUE)
+mat = matrix(c(0,0,1,0,10,0,0,0,100,0,rep(0,5),1000,rep(0,4)),
+             nrow = 4, byrow = TRUE)
 mat = as.spam(mat)
 mat@entries
 mat@rowpointers

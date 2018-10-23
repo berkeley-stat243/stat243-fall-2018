@@ -218,7 +218,7 @@ ugur$ cd /home/ugur/project
 ugur$ git pull /home/omid/myrepo master
 ```
 
-This merges the changes from Omid's "master" branch into Ugur's current branch. If Ugur has made her own changes in the meantime, then he may need to manually fix any conflicts.
+This merges the changes from Omid's "master" branch into Ugur's current branch. If Ugur has made his own changes in the meantime, then he may need to manually fix any conflicts.
 
 The `pull` command thus performs two operations: it fetches changes from a remote branch, then merges them into the current branch.
 

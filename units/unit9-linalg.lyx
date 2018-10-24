@@ -3697,8 +3697,8 @@ One additional complexity is that we want to avoid dividing by very small
  Complete pivoting also considers interchanging columns, and while theoretically
  better, partial pivoting is generally sufficient and requires fewer computation
 s.
- Note that partial pivoting can be expressed as multiplying along the way
- by permutation matrices, 
+ Partial pivoting can be expressed as multiplying along the way by permutation
+ matrices, 
 \begin_inset Formula $P_{1},\ldots P_{n-1}$
 \end_inset
 
@@ -3708,13 +3708,14 @@ status open
 
 \begin_layout Plain Layout
 see Monahan, who says this though it's not obvious since n the fac you have
- LPLPLP..LPA
+ LPLPLP..LPA; alternatively see http://www4.ncsu.edu/~kksivara/ma505/handouts/lu-piv
+ot.pdf 
 \end_layout
 
 \end_inset
 
 .
- Based on pivoting, we have 
+ One can show with some work that based on pivoting, we have 
 \begin_inset Formula $PA=LU$
 \end_inset
 

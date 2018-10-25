@@ -149,6 +149,8 @@ But then you need to remember to instead of stopCluster() at the end do:
 stopImplicitCluster()
 ```
 
+In fact for problem 4 on PS6, you should use `registerDoParallel(no_cores)` because using *makeCluster* causes more memory to be used for reasons we need to look into.
+
 The `foreach` function can be viewed as being a more controlled version of the `parSapply` that allows combining the results into a suitable format. By specifying the `.combine` argument we can choose how to combine our results, below is a vector, matrix, and a list example:
 
 ```{r}

@@ -5092,6 +5092,79 @@ In the regression context, as we work through the individual transformations,
  
 \end_layout
 
+\begin_layout Standard
+Final side note: you might wonder why we need 
+\begin_inset Formula $Q_{p}$
+\end_inset
+
+ since after 
+\begin_inset Formula $p-1$
+\end_inset
+
+ reflections, we don't need to zero anything else out (since the last column
+ of 
+\begin_inset Formula $R$
+\end_inset
+
+ has 
+\begin_inset Formula $p$
+\end_inset
+
+ non-zero elements).
+ It turns out that if we go back to thinking about a Householder reflection
+ in general, there is a lack of uniqueness in choosing 
+\begin_inset Formula $\tilde{x}$
+\end_inset
+
+.
+ It could either be 
+\begin_inset Formula $(||x||,0,\ldots,0)$
+\end_inset
+
+ or 
+\begin_inset Formula $(-||x||,0,\ldots,0)$
+\end_inset
+
+.
+ For better numerical stability, one chooses from the two of those such
+ that 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ is of the opposite sign to 
+\begin_inset Formula $\tilde{x}_{1}$
+\end_inset
+
+, so that one avoids cancellation of numbers that may be of the same magnitude
+ when doing 
+\begin_inset Formula $x-\tilde{x}$
+\end_inset
+
+.
+ The transformation 
+\begin_inset Formula $Q_{p}$
+\end_inset
+
+ is the last step of taking that approach of choosing the sign at each step.
+ 
+\begin_inset Formula $Q_{p}$
+\end_inset
+
+ doesn't zero anything out; it just basically just involves potentially
+ setting 
+\begin_inset Formula $R_{pp}$
+\end_inset
+
+ to be 
+\begin_inset Formula $-R_{pp}$
+\end_inset
+
+.
+ (To be honest, I'm not clear on why one would bother to do that last step,
+ but that seems to be how it is presented in discussions of the Householder
+ approach.)
+\end_layout
+
 \begin_layout Paragraph
 Rotations
 \end_layout

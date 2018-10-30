@@ -5093,7 +5093,15 @@ In the regression context, as we work through the individual transformations,
 \end_layout
 
 \begin_layout Standard
-Final side note: you might wonder why we need 
+Final side note: if 
+\begin_inset Formula $X$
+\end_inset
+
+ is square (so 
+\begin_inset Formula $n=p)$
+\end_inset
+
+ you might wonder why we need 
 \begin_inset Formula $Q_{p}$
 \end_inset
 
@@ -5107,7 +5115,7 @@ Final side note: you might wonder why we need
 \end_inset
 
  has 
-\begin_inset Formula $p$
+\begin_inset Formula $n$
 \end_inset
 
  non-zero elements).
@@ -5162,7 +5170,23 @@ Final side note: you might wonder why we need
 .
  (To be honest, I'm not clear on why one would bother to do that last step,
  but that seems to be how it is presented in discussions of the Householder
- approach.)
+ approach.) Of course in the case of 
+\begin_inset Formula $p<n$
+\end_inset
+
+, we definitely need 
+\begin_inset Formula $Q_{p}$
+\end_inset
+
+ so that the last 
+\begin_inset Formula $n-p$
+\end_inset
+
+ rows of 
+\begin_inset Formula $R$
+\end_inset
+
+ are zero and we can then discard them when just using the skinny QR.
 \end_layout
 
 \begin_layout Paragraph

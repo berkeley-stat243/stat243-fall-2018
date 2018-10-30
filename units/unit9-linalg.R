@@ -196,6 +196,7 @@ y <- crossprod(U, rnorm(n)) # i.e., t(U)%*%rnorm(n), but much faster
 
 # numerically not positive definite
 library(fields)
+set.seed(1)
 locs <- runif(100)
 rho <- .1
 C <- exp(-rdist(locs)^2/rho^2)

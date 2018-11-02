@@ -135,6 +135,11 @@ k
 status open
 
 \begin_layout Plain Layout
+suggest that may reduce --executor-memory if having spark fail; may need
+ more memory available for master process?
+\end_layout
+
+\begin_layout Plain Layout
 do Spark example in section?
 \end_layout
 

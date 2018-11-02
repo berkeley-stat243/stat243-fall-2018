@@ -113,13 +113,13 @@ length(samps2)/2000 # empirical acceptance rate
 
 ## plots here are done on the standardized scale for simplicity
 par(mfrow = c(1,3))
-plot(y, u)
-points(y[u <= exp(-(y-lamStar)^2/2)], u[u <= exp(-(y-lamStar)^2/2)], col = 'red')  # we accept red points and reject black
 
 ## this shows f(x) and c*g(x) on the standardized scale
 yvals <- seq(tauStd, 5, len = 100)
 plot(yvals, c*dexp(yvals - tauStd, rate = lamStar), type = 'l')
 lines(yvals, dnorm(yvals)/(1-pnorm(tauStd)), col = 'red')
+legend('topright', lty=c(1,1), col=c('red','black'),
+       legend = c('f(x)', 'c*g(x)'))
 ## exp is a nice envelope
 
 yvals <- seq(5, 10, len = 100)
@@ -127,6 +127,8 @@ plot(yvals, c*dexp(yvals - tauStd, rate = lamStar), type = 'l')
 lines(yvals, dnorm(yvals)/(1-pnorm(tauStd)), col = 'red')
 ## in tail, exp is much fatter than normal, but few proposals are in tail anyway
 
+plot(y, u, pch = 16)
+points(y[u <= exp(-(y-lamStar)^2/2)], u[u <= exp(-(y-lamStar)^2/2)], col = 'red', pch = 16)  # we accept red points and reject black
 
 ### 5.5 Importance sampling
 

@@ -1503,8 +1503,11 @@ mod
 \begin_layout Standard
 Given the construction, such sequences are periodic if the subsequence ever
  reappears, which is of course guaranteed because there is a finite number
- of possible values given that all the values are remainders of divisions
- by a fixed number 
+ of possible subsequence values given that all the 
+\begin_inset Formula $u_{k}$
+\end_inset
+
+ values are remainders of divisions by a fixed number 
 \begin_inset Note Note
 status open
 
@@ -2134,7 +2137,7 @@ set.seed(mySeed)
 \emph default
  in R on every process.
  More details on parallel RNG are given in the Section 5 of the tutorial
- on basic paralell processing (
+ on basic parallel processing (
 \begin_inset CommandInset href
 LatexCommand href
 target "https://github.com/berkeley-scf/tutorial-parallel-basics"

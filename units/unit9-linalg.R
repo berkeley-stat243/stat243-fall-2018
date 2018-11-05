@@ -1,6 +1,6 @@
 ################################################################
 ### Demo code for Unit 9 of Stat243, "Numerical linear algebra"
-### Chris Paciorek, October 2017
+### Chris Paciorek, October 2018
 ################################################################
 
 ########################

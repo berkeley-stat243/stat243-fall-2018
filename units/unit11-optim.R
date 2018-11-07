@@ -95,7 +95,7 @@ xvals
 
 # oscillates and comes close to diverging but converges
 plot(xs, f(xs), type = 'l', xlab = 'x', ylab = "f'(x)", lwd = 2,
-     main = 'converges to minimum')
+     main = 'converges to minimum, nearly diverges')
 lines(xs, fp(xs))
 lines(xs, fpp(xs), lty = 2)
 legend('bottomright', lty = c(1,1,2), lwd = c(2, 1, 1),

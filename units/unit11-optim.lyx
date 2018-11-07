@@ -147,17 +147,6 @@ v67 of JSS has nice paper on lme4 that goes into profile likelihood, reml,
  and lin alg for optimization of mixed models 
 \end_layout
 
-\begin_layout Plain Layout
-I found this optimization simulator that helped me gain a better intuition
- for Nelder-Mead.
- It also has some other cool simulations for gradient descent.
- Enjoy!
-\end_layout
-
-\begin_layout Plain Layout
-http://www.benfrederickson.com/numerical-optimization/
-\end_layout
-
 \end_inset
 
 
@@ -506,7 +495,7 @@ In one dimension, minimization is the same as root-finding with the derivative
 \end_inset
 
 , 
-\begin_inset Formula $f(y)\leq f(x^{*})$
+\begin_inset Formula $f(y)\geq f(x^{*})$
 \end_inset
 
 , or (for twice differentiable functions) 
@@ -3568,6 +3557,18 @@ nelder-example
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Here's an 
+\begin_inset CommandInset href
+LatexCommand href
+name "online graphical illustration"
+target "http://www.benfrederickson.com/numerical-optimization/"
+
+\end_inset
+
+ of Nelder-Mead.
 \end_layout
 
 \begin_layout Standard

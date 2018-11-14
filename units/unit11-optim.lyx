@@ -2722,7 +2722,7 @@ x_{t+1}=x_{t}-\alpha_{t}f\p(x_{t})
 \begin_layout Standard
 The basic idea of stochastic gradient descent is to replace the gradient
  with a function whose expected value is the gradient, 
-\begin_inset Formula $E(g(x_{t})=f\p(x_{t})$
+\begin_inset Formula $E(g(x_{t}))=f\p(x_{t})$
 \end_inset
 
 :

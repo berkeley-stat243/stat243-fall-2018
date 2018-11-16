@@ -136,7 +136,10 @@ Unit 3: Data input/output and webscraping
 status open
 
 \begin_layout Plain Layout
-For some reason this is only compiling by outputing .tex and then using pdflatex
+For some reason this is only compiling by outputing .tex and then using pdflatex;
+ see JD Bunker email from Nov 13 2018 about setting Locale and using reticulate.
+ Not sure that is the primary issue but it seems plausible that the locale
+ might be an issue given the section in this doc about UTF.
 \end_layout
 
 \end_inset

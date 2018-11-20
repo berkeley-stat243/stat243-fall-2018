@@ -4510,7 +4510,7 @@ It turns out the EM algorithm that many of you have heard about is a special
 \begin_layout Standard
 The EM algorithm is most readily motivated from a missing data perspective.
  Suppose you want to maximize 
-\begin_inset Formula $L(\theta|X=x)=f(x|\theta)$
+\begin_inset Formula $L(\theta|x)=f(x;\theta)$
 \end_inset
 
  based on available data in a missing data context.
@@ -4538,7 +4538,7 @@ The EM algorithm is most readily motivated from a missing data perspective.
 
 \begin_layout Standard
 In general, 
-\begin_inset Formula $L(\theta|x)$
+\begin_inset Formula $\log L(\theta;x)$
 \end_inset
 
  may be hard to optimize because it involves an integral over the missing
@@ -4549,7 +4549,7 @@ In general,
 :
 \begin_inset Formula 
 \[
-f(x|\theta)=\int f(x,z|\theta)dz,
+f(x;\theta)=\int f(x,z;\theta)dz,
 \]
 
 \end_inset
@@ -4561,7 +4561,7 @@ rd for many problems.
 \begin_layout Standard
 The algorithm is as follows.
  Let 
-\begin_inset Formula $\theta_{t}$
+\begin_inset Formula $\theta^{t}$
 \end_inset
 
  be the current value of 
@@ -4572,7 +4572,7 @@ The algorithm is as follows.
  Then define 
 \begin_inset Formula 
 \[
-Q(\theta|\theta_{t})=E(\log L(\theta|Y)|x,\theta_{t})
+Q(\theta|\theta^{t})=E(\log L(\theta|Y)|x;\theta^{t})
 \]
 
 \end_inset
@@ -4582,7 +4582,7 @@ The algorithm is
 
 \begin_layout Enumerate
 E step: Compute 
-\begin_inset Formula $Q(\theta|\theta_{t})$
+\begin_inset Formula $Q(\theta|\theta^{t})$
 \end_inset
 
 , ideally calculating the expectation over the missing data in closed form.
@@ -4607,7 +4607,7 @@ E step: Compute
 \end_inset
 
  so 
-\begin_inset Formula $Q(\theta|\theta_{t})$
+\begin_inset Formula $Q(\theta|\theta^{t})$
 \end_inset
 
  will involve both 
@@ -4615,7 +4615,7 @@ E step: Compute
 \end_inset
 
  and 
-\begin_inset Formula $\theta_{t}$
+\begin_inset Formula $\theta^{t}$
 \end_inset
 
 
@@ -4635,7 +4635,7 @@ E step: Compute
 
 \begin_layout Enumerate
 M step: Maximize 
-\begin_inset Formula $Q(\theta|\theta_{t})$
+\begin_inset Formula $Q(\theta|\theta^{t})$
 \end_inset
 
  with respect to 
@@ -4643,7 +4643,7 @@ M step: Maximize
 \end_inset
 
 , finding 
-\begin_inset Formula $\theta_{t+1}$
+\begin_inset Formula $\theta^{t+1}$
 \end_inset
 
 .
@@ -4665,7 +4665,7 @@ Ideally both the E and M steps can be done analytically.
 \end_inset
 
  from 
-\begin_inset Formula $f(z|x,\theta_{t})$
+\begin_inset Formula $f(z|x,\theta^{t})$
 \end_inset
 
  and approximate 
@@ -4673,7 +4673,7 @@ Ideally both the E and M steps can be done analytically.
 \end_inset
 
  as a Monte Carlo average of 
-\begin_inset Formula $\log f(x,z_{j}|\theta)$
+\begin_inset Formula $\log f(x,z_{j};\theta)$
 \end_inset
 
 , and then optimize over this approximation to the expectation.
@@ -4701,7 +4701,7 @@ EM can be show to increase the value of the function at each step using
 \end_inset
 
  at 
-\begin_inset Formula $\theta_{t}$
+\begin_inset Formula $\theta^{t}$
 \end_inset
 
  and lies below 
@@ -4713,10 +4713,11 @@ EM can be show to increase the value of the function at each step using
 
 \begin_layout Standard
 A standard example is a mixture model.
- Suppose we have 
+ (Here we'll assume a mixture of normal distributions, but other distributions
+ could be used.) Therefore we have 
 \begin_inset Formula 
 \[
-f(x)=\sum_{k=1}^{K}\pi_{k}f_{k}(x;\phi_{k})
+f(x;\theta)=\sum_{k=1}^{K}\pi_{k}f_{k}(x;\mu_{k},\sigma_{k})
 \]
 
 \end_inset
@@ -4731,7 +4732,7 @@ where we have
 
  are the (marginal) probabilities of being in each component.
  The complete parameter vector is 
-\begin_inset Formula $\theta=\{\{\pi_{k}\},\{\phi_{k}\}\}$
+\begin_inset Formula $\theta=\{\{\pi_{k}\},\{\mu_{k}\},\{\sigma_{k}\}\}$
 \end_inset
 
 .
@@ -4798,16 +4799,25 @@ The complete log likelihood given
  is
 \begin_inset Formula 
 \[
-\log\prod_{i}f(x_{i}|z_{i},\theta)\mbox{Pr}(Z_{i}=z_{i}|\pi)
+\log\prod_{i}f(x_{i}|z_{i};\theta)\mbox{Pr}(Z_{i}=z_{i}|\theta)
 \]
 
 \end_inset
 
 which can be expressed as
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
 \begin_inset Formula 
-\[
-\log L(x,z|\theta)=\sum_{i}\sum_{k}I(z_{i}=k)(\log f_{k}(x_{i}|\phi_{k})+\log\pi_{k})
-\]
+\begin{eqnarray*}
+\log L(x,z|\theta) & = & \sum_{i}\log f(x_{i};\mu_{z_{i}},\sigma_{z_{i}})+\log\pi_{z_{i}}\\
+ & = & \sum_{i}\sum_{k}I(z_{i}=k)(\log f_{k}(x_{i};\mu_{k},\sigma_{k})+\log\pi_{k})
+\end{eqnarray*}
 
 \end_inset
 
@@ -4818,13 +4828,13 @@ with
  equal to 
 \begin_inset Formula 
 \[
-Q(\theta|\theta_{t})=\sum_{i}\sum_{k}E(I(z_{i}=k)|x_{i},\theta_{t})(\log f_{k}(y_{i}|\phi_{k})+\log\pi_{k})
+Q(\theta|\theta^{t})=\sum_{i}\sum_{k}E(I(z_{i}=k)|x_{i};\theta^{t})(\log f_{k}(x_{i};\mu_{k},\sigma_{k})+\log\pi_{k})
 \]
 
 \end_inset
 
 where 
-\begin_inset Formula $E(I(z_{i}=k)|x_{i},\theta_{t})$
+\begin_inset Formula $E(I(z_{i}=k)|x_{i};\theta^{t})$
 \end_inset
 
  is equal to the probability that the 
@@ -4846,13 +4856,13 @@ th group given
 , which is calculated from Bayes theorem as 
 \begin_inset Formula 
 \[
-p_{ikt}=\frac{\pi_{k,t}f_{k}(x_{i}|\theta_{t})}{\sum_{j}\pi_{j,t}f_{j}(x_{i}|\theta_{t})}
+p_{ik}^{t}=\frac{\pi_{k}^{t}f_{k}(x_{i}|\mu_{k}^{t},\sigma_{k}^{t})}{\sum_{j}\pi_{j}^{t}f_{j}(x_{i}|\mu_{k}^{t},\sigma_{k}^{t})}
 \]
 
 \end_inset
 
 We can now separately maximize 
-\begin_inset Formula $Q(\theta|\theta_{t})$
+\begin_inset Formula $Q(\theta|\theta^{t})$
 \end_inset
 
  with respect to 
@@ -4860,15 +4870,15 @@ We can now separately maximize
 \end_inset
 
  and 
-\begin_inset Formula $\phi_{k}$
+\begin_inset Formula $\mu_{k},\sigma_{k}$
 \end_inset
 
  to find 
-\begin_inset Formula $\pi_{k,t+1}$
+\begin_inset Formula $\pi_{k}^{t+1}$
 \end_inset
 
  and 
-\begin_inset Formula $\phi_{k,t+1}$
+\begin_inset Formula $\mu_{k}^{t+1},\sigma_{k}^{t+1}$
 \end_inset
 
 , since the expression is the sum of a term involving the parameters of

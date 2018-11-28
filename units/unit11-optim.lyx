@@ -6075,7 +6075,7 @@ This is fine, but the new objective function is not differentiable so we
  giving the new objective function
 \begin_inset Formula 
 \[
-\tilde{f}(x)=f(x)+\sum_{j=1}^{m}-(1/t)\log(-h_{j}(x)),
+\tilde{f}(x)=f(x)+\sum_{j=1}^{m}-(1/t^{*})\log(-h_{j}(x)),
 \]
 
 \end_inset
@@ -6089,7 +6089,7 @@ which is convex and differentiable.
  approaches the boundary, nearing points for which the inequality constraints
  are not met.
  The 
-\begin_inset Formula $-\sum(1/t)\log(-h_{j}(x))$
+\begin_inset Formula $-\sum(1/t^{*})\log(-h_{j}(x))$
 \end_inset
 
  term is called the log barrier, since it keeps the solution in the feasible
@@ -6101,11 +6101,19 @@ which is convex and differentiable.
 
 ) is then applied.
  The key thing is then to have 
+\begin_inset Formula $t^{*}$
+\end_inset
+
+ get larger (i.e., 
+\begin_inset Formula $t^{*}$
+\end_inset
+
+ is some increasing function of iteration time 
 \begin_inset Formula $t$
 \end_inset
 
- get larger as the iterations proceed, which allows the solution to get
- closer to the boundary if that is indeed where the minimum lies.
+) as the iterations proceed, which allows the solution to get closer to
+ the boundary if that is indeed where the minimum lies.
 \end_layout
 
 \begin_layout Standard

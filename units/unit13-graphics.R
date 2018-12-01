@@ -16,6 +16,19 @@ barplot(VADeaths, legend = TRUE, ylab = "Deaths per 1000", main = "Virginia Deat
 ## side-by-side barplots are better
 barplot(VADeaths, beside = TRUE, legend = TRUE, ylab = "Deaths per 1000", main = "Virginia Death Rates, 1940")
 
+VADeathsDF <- as.data.frame(VADeaths)
+VADeathsDF$age <- row.names(VADeathsDF)
+VADeathsDF$age <- as.numeric(substring(as.character(VADeathsDF$age), 1, 2)) + 2
+
+library(magrittr)
+library(ggplot2)
+library(tidyr)
+VADeathsDF <- VADeathsDF %>% gather(demographic, rate, 1:4)
+ggplot(VADeathsDF) + geom_line(aes(x = age, y = rate, color = demographic))
+
+ggplot(VADeathsDF) + geom_line(aes(x = age, y = rate, color = demographic)) +
+  scale_y_log10()
+
 #############################
 # 2: Base R graphics
 #############################
